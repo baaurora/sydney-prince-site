@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sydney Prince Redesign</title>
+<meta name="description" content="Two design directions for sydneyhprince.com, side by side.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="shared/base.css">
+<style>
+  :root {
+    --bg: #F4F2EF; --card: #FFFFFF; --text: #1C1A19; --muted: #5F5A57; --line: #E2DED9; --accent: #1C1A19;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #121112; --card: #1C1A1C; --text: #F2EFEC; --muted: #ABA4A6; --line: #2E2A2E; --accent: #F2EFEC; }
+  }
+  :root[data-theme="dark"] { --bg: #121112; --card: #1C1A1C; --text: #F2EFEC; --muted: #ABA4A6; --line: #2E2A2E; --accent: #F2EFEC; }
+  body { background: var(--bg); color: var(--text); font: 400 16px/1.6 'Inter', system-ui, sans-serif; }
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 32px 16px 64px; }
+  header h1 { font: 500 clamp(30px, 4.5vw, 48px)/1.1 'Fraunces', Georgia, serif; }
+  header p { color: var(--muted); max-width: 70ch; margin-top: 10px; }
+  .grid { display: grid; gap: 24px; margin-top: 32px; }
+  @media (min-width: 1000px) { .grid { grid-template-columns: 1fr 1fr; } .wrap { padding: 48px 32px 80px; } }
+  .option { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .option h2 { font: 500 28px/1.15 'Fraunces', Georgia, serif; }
+  .option .idea { color: var(--muted); }
+  .swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+  .swatches span { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border: 1px solid var(--line); border-radius: 999px; font: 500 13px/1 ui-monospace, Menlo, monospace; color: var(--muted); }
+  .swatches i { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+  .frame { position: relative; aspect-ratio: 16 / 10; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; }
+  .frame iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; border: 0; transform-origin: 0 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid var(--accent); color: var(--text); background: transparent; font: 600 14px/1 'Inter', sans-serif; text-decoration: none; cursor: pointer; transition: transform .4s cubic-bezier(.34,1.56,.64,1); }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.primary { background: var(--accent); color: var(--bg); }
+  .pages { font-size: 14px; color: var(--muted); }
+  .pages a { color: var(--text); }
+  .note { margin-top: 28px; padding: 16px 20px; border-left: 3px solid var(--accent); background: var(--card); border-radius: 0 16px 16px 0; color: var(--muted); max-width: 80ch; }
+  .note strong { color: var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Sydney Prince: two directions</h1>
+    <p>Same copy, photos and pages as <a href="https://www.sydneyhprince.com" style="color:inherit">sydneyhprince.com</a>, in two different looks. Click inside a preview to try it, or open either one full screen.</p>
+  </header>
+
+  <div class="grid">
+    <section class="option" aria-labelledby="a-h">
+      <h2 id="a-h">A. The Matchbook</h2>
+      <p class="idea">Her site as a vintage venue matchbook from her collection. Warm, collected, a little nostalgic. Photos are tilted matchbook covers that lift and straighten; the loader strikes a match.</p>
+      <div class="swatches" aria-label="Palette">
+        <span><i style="background:#F6EEDF"></i>#F6EEDF</span><span><i style="background:#D9442B"></i>#D9442B</span><span><i style="background:#1F1B18"></i>#1F1B18</span><span><i style="background:#8A6A4F"></i>#8A6A4F</span>
+      </div>
+      <div class="frame"><iframe src="version-a/index.html" title="Version A preview" loading="lazy" data-key="sp-loader-a"></iframe></div>
+      <div class="actions">
+        <a class="btn primary" href="version-a/index.html">Open Version A</a>
+        <button class="btn" type="button" data-replay="0">Replay loader</button>
+      </div>
+      <p class="pages">Pages: <a href="version-a/index.html">Home</a> · <a href="version-a/about.html">About</a> · <a href="version-a/resume.html">Resumes</a> · <a href="version-a/contact.html">Contact</a></p>
+    </section>
+
+    <section class="option" aria-labelledby="b-h">
+      <h2 id="b-h">B. Standby / Spotlight</h2>
+      <p class="idea">The site as a show about to start, and Sydney is calling it. "Standby..." then "Go." and a spotlight opens; a soft light follows the cursor and brightens the photos it passes.</p>
+      <div class="swatches" aria-label="Palette">
+        <span><i style="background:#141214"></i>#141214</span><span><i style="background:#F2C46D"></i>#F2C46D</span><span><i style="background:#7A1F2B"></i>#7A1F2B</span><span><i style="background:#FFFFFF"></i>#FFFFFF</span>
+      </div>
+      <div class="frame"><iframe src="version-b/index.html" title="Version B preview" loading="lazy" data-key="sp-loader-b"></iframe></div>
+      <div class="actions">
+        <a class="btn primary" href="version-b/index.html">Open Version B</a>
+        <button class="btn" type="button" data-replay="1">Replay loader</button>
+      </div>
+      <p class="pages">Pages: <a href="version-b/index.html">Home</a> · <a href="version-b/about.html">About</a> · <a href="version-b/resume.html">Resumes</a> · <a href="version-b/contact.html">Contact</a></p>
+    </section>
+  </div>
+
+  <p class="note"><strong>Note:</strong> Version B's dark palette is a bigger departure from her current light site. If she wants to stay closer to what she has, A is the safer pick.</p>
+</div>
+<script>
+  (function () {
+    var frames = document.querySelectorAll('.frame iframe');
+    function fit() {
+      frames.forEach(function (f) { f.style.transform = 'scale(' + (f.parentNode.clientWidth / 1280) + ')'; });
+    }
+    fit();
+    if ('ResizeObserver' in window) new ResizeObserver(fit).observe(document.body); else window.addEventListener('resize', fit);
+    document.querySelectorAll('[data-replay]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = frames[+b.dataset.replay];
+        try { sessionStorage.removeItem(f.dataset.key); } catch (e) {}
+        f.src = f.src.split('#')[0].replace(/[^/]*$/, 'index.html');
+      });
+    });
+  })();
+</script>
+</body>
+</html>
