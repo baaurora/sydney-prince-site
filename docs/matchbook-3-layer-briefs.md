@@ -1,12 +1,18 @@
 # Realistic matchbooks: three layers per venue (Version C)
 
-Each matchbook on the site is built from **three separate images** stacked on top of each other, so the cover can swing open like a real one:
+> **Scope: only three venues need the realistic three-layer matchbooks:**
+> **Cherry Lane Theatre, Iron Bloom Creative Production and NBA All-Star.**
+> These are the three on the home page under "What's Happening These Days?", where the cover swings open.
+>
+> The other six (Ars Nova, Spellbound, NYC Children's Theater, Lincoln Center, Little Island, The Public Theater) only appear as small closed matchbooks in the jar on the About page. They stay **regular matchbooks**: the site already draws them, and they don't need ChatGPT art. Section 6 has an optional single-image prompt if you ever want to upgrade them.
+
+Each of the three home-page matchbooks is built from **three separate images** stacked on top of each other, so the cover can swing open like a real one:
 
 1. **Cover**: the front of the matchbook, with the venue's real logo. This is the part that swings up.
 2. **Paper**: a blank paper insert that sits in front of the matches. The site prints Sydney's role and description on it.
 3. **Inside**: the open interior: card stock, a row of paper matches, the striker strip and staple.
 
-Make all three for each venue below. The same three-image set is also used for the small matchbooks in the jar on the About page.
+Make all three images for **Cherry Lane, Iron Bloom and NBA All-Star only**.
 
 ---
 
@@ -53,23 +59,17 @@ All three images for a venue are **the same canvas: 1000 × 1333 px, transparent
 **C. Cover** (`mb-[slug]-cover.png`), *attach the venue's logo*
 > The closed front cover of a vintage paper matchbook, straight-on, filling the top 90% of a 1000×1333 canvas (y 0–1200); the bottom 10% stays fully transparent. Cover card stock in [COVER COLOUR]. Print the attached logo, reproduced faithfully and exactly, centered in the upper two-thirds of the cover, in [LOGO COLOUR]. A thin printed border inset from the edges in [BORDER COLOUR]. Subtle wear on the corners. No other text. Transparent background.
 
-## 3. Venues, colours and where to find each logo
+## 3. The three venues: colours and where to find each logo
 
 | Venue | Slug | Logo source | Cover | Logo | Border | Match heads | Card (inside) |
 |---|---|---|---|---|---|---|---|
 | Cherry Lane Theatre | `cherry-lane` | cherrylanetheatre.org | tomato red | cream | cream | tomato red | kraft brown |
 | Iron Bloom Creative Production | `iron-bloom` | ironbloomny.com | deep navy | cream | cream | tomato red | navy |
 | NBA All-Star | `nba-all-star` | nba.com/allstar | baby blue | navy and red (original logo colours) | navy | tomato red | cream |
-| Ars Nova | `ars-nova` | arsnovanyc.com | black | white | white | tomato red | black |
-| Spellbound Theatre | `spellbound` | spellboundtheatre.com | deep red | cream | cream | cream | deep red |
-| NYC Children's Theater | `nyc-childrens` | nycchildrenstheater.org | mustard yellow | navy | navy | tomato red | cream |
-| Lincoln Center | `lincoln-center` | lincolncenter.org | cream | black | black | tomato red | cream |
-| Little Island | `little-island` | littleisland.org | kraft brown | cream | cream | tomato red | kraft brown |
-| The Public Theater | `public-theater` | publictheater.org | white | black (their logo is black type) | black | tomato red | white |
 
 For each venue, the paper insert's small logo uses the **Logo** colour from the table.
 
----
+That's **9 images in total**: 3 venues × (cover, paper, inside).
 
 ## 4. Checklist before you download
 - All three images for a venue are **1000 × 1333** and transparent where specified
@@ -79,3 +79,13 @@ For each venue, the paper insert's small logo uses the **Logo** colour from the 
 
 ## 5. Where the files go
 Save them into **`/Users/bianca/sydney-prince-site/assets/img/objects/`** named exactly, for example `mb-cherry-lane-cover.png`, `mb-cherry-lane-paper.png`, `mb-cherry-lane-inside.png`. Or just drop them anywhere in the project folder and tell Claude. They'll be converted and wired in, and the site switches to them automatically.
+
+---
+
+## 6. Optional: the other six venues (regular matchbooks in the jar)
+
+Not required. The site already draws these as simple matchbooks with each venue's name. If you ever want them as photos, make **one image each** (the closed cover only, no layers):
+
+> A single closed vintage paper matchbook, front view, straight-on, on a fully transparent background, 600 × 800 px. Cover in [COLOUR] with the attached logo printed in the centre, reproduced faithfully. A folded striker strip across the bottom with one small staple. Real paper texture, soft light from the upper left.
+
+Name them `mb-[slug]-cover.png` (slugs: `ars-nova`, `spellbound`, `nyc-childrens`, `lincoln-center`, `little-island`, `public-theater`) and they'll replace the drawn ones in the jar automatically.
