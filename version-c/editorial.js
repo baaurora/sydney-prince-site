@@ -62,7 +62,7 @@
   }
 
   /* tap or press Enter on a matchbook to open or close it */
-  document.querySelectorAll('.book').forEach(function (b) {
+  document.querySelectorAll('.track-card .book, .track-card .sq').forEach(function (b) {
     var toggle = function () { b.closest('.track-card').classList.toggle('is-open'); };
     b.addEventListener('click', toggle);
     b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
@@ -249,13 +249,23 @@
     var open = function () { this.classList.add('is-open'); };
     var close = function () { this.classList.remove('is-open'); };
     cards.forEach(function (card) { card.classList.remove('is-open'); card.addEventListener('mouseenter', open); card.addEventListener('mouseleave', close); });
+    /* square cards swing in from an angle and settle flat as the row slides past */
+    list.querySelectorAll('.sq').forEach(function (sq, i) {
+      gsap.fromTo(sq, { rotateY: -38, rotateZ: i % 2 ? -3 : 3, y: 0, transformPerspective: 1200 },
+        { rotateY: 0, rotateZ: 0, ease: 'none', immediateRender: false,
+          scrollTrigger: { trigger: sq, containerAnimation: move, start: 'left 100%', end: 'left 45%', scrub: 0.6 } });
+    });
     return function () { cards.forEach(function (card) { card.removeEventListener('mouseenter', open); card.removeEventListener('mouseleave', close); }); };
   });
 
   /* phones: each matchbook opens when it reaches the middle of the screen */
   mm.add('(max-width: 899px)', function () {
     gsap.utils.toArray('.track-card').forEach(function (card) {
-      ScrollTrigger.create({ trigger: card.querySelector('.book'), start: 'top 55%', end: 'bottom 35%', toggleClass: { targets: card, className: 'is-open' } });
+      var bk = card.querySelector('.book');
+      if (bk) ScrollTrigger.create({ trigger: bk, start: 'top 55%', end: 'bottom 35%', toggleClass: { targets: card, className: 'is-open' } });
+      /* square cards tip up into place as they arrive; a tap flips them */
+      var sq = card.querySelector('.sq');
+      if (sq) gsap.from(sq, { rotateX: 32, y: 70, autoAlpha: 0, transformPerspective: 1100, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: sq, start: 'top 90%', once: true } });
     });
   });
 
