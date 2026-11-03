@@ -567,3 +567,17 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
   /* the welcome line sits toward the right of the hero */
   .hero-welcome { max-width: 760px; margin: 0 var(--g) 0 auto !important; padding: 0 !important; text-align: right !important; }
 }
+/* left-hand photos start below their cue number so they never cover it */
+@media (min-width: 900px) { .side.l { margin-top: 34px !important; } }
+/* phones: a slightly wider matchbook and smaller paper type so the longest description fits */
+@media (max-width: 899px) {
+  .track-card { --bk: min(86vw, 360px); }
+  .book-paper { font-size: 12.5px; line-height: 1.45; inset: 6% 6% 13%; }
+}
+/* desktop: slightly larger matchbooks so the paper always holds the full description */
+@media (min-width: 900px) {
+  .track-card { --bk: min(30vw, 330px, 50svh); }
+}
+@media (min-width: 900px) and (max-width: 1200px) {
+  .book-paper { font-size: 12.5px; line-height: 1.45; inset: 6% 6% 13%; }
+}
