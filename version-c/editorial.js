@@ -115,7 +115,6 @@
     var win = hero.querySelector('.hero-window');
     var photo = hero.querySelector('.hero-photo');
     var roles = hero.querySelector('.hero-roles');
-    var welcome = hero.querySelector('.hero-welcome');
     var header = document.querySelector('.site-header');
     var chars = split(inner, 'chars');
     gsap.set(header, { autoAlpha: 0 });
@@ -136,7 +135,7 @@
     };
 
     /* scroll (desktop): the hero holds; the name slides sideways like a marquee, the photo rises
-       behind it, the roles give way to the welcome line. No zoom. */
+       behind it. No zoom. */
     mm.add('(min-width: 900px)', function () {
       gsap.timeline({
         defaults: { ease: 'none' },
@@ -144,8 +143,6 @@
       })
         .fromTo(inner, { xPercent: 0 }, { xPercent: -38, duration: 1, immediateRender: false }, 0)
         .fromTo(win, { yPercent: 0 }, { yPercent: -14, duration: 1, immediateRender: false }, 0)
-        .fromTo(roles, { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: 20, duration: 0.3, immediateRender: false }, 0)
-        .fromTo(welcome, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.45, immediateRender: false }, 0.4)
         .to({}, { duration: 0.2 });
     });
     /* phones: the name drifts as you scroll past */
