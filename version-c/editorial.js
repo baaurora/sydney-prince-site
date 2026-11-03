@@ -231,6 +231,34 @@
     heroReady(false);
   }
 
+  /* ---------- What's Happening as a venue list: the venue's photo follows the cursor ---------- */
+  var venues = document.querySelector('.venues');
+  if (venues) {
+    var vf = venues.querySelector('.venue-float');
+    var vfImg = vf.querySelector('img');
+    var finePointer = window.matchMedia('(min-width: 900px) and (hover: hover) and (pointer: fine)');
+    var vx = gsap.quickTo(vf, 'x', { duration: 0.7, ease: 'power3.out' });
+    var vy = gsap.quickTo(vf, 'y', { duration: 0.7, ease: 'power3.out' });
+    venues.querySelectorAll('.venue').forEach(function (v) {
+      v.addEventListener('mouseenter', function (e) {
+        if (!finePointer.matches) return;
+        if (!vf.classList.contains('is-on')) { gsap.set(vf, { x: placeX(e.clientX), y: e.clientY }); }
+        vfImg.src = v.dataset.img;
+        vf.dataset.fit = v.dataset.fit;
+        v.classList.add('is-open');
+        vf.classList.add('is-on');
+      });
+      v.addEventListener('mouseleave', function () { v.classList.remove('is-open'); vf.classList.remove('is-on'); });
+    });
+    /* x follows the cursor but stays in the right-hand part of the section; y tracks it freely */
+    var placeX = function (cx) {
+      var w = vf.firstElementChild.offsetWidth, r = venues.getBoundingClientRect();
+      return Math.min(Math.max(cx + 40, r.left + r.width * 0.55), r.right - w);
+    };
+    venues.addEventListener('mousemove', function (e) { if (finePointer.matches) { vx(placeX(e.clientX)); vy(e.clientY); } });
+    window.addEventListener('scroll', function () { venues.querySelectorAll('.venue.is-open').length || vf.classList.remove('is-on'); }, { passive: true });
+  }
+
   /* ---------- pinned sideways track (desktop) ---------- */
   mm.add('(min-width: 900px)', function () {
     var track = document.querySelector('.track');
