@@ -616,3 +616,7 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
 .jar-link[hidden] { display: none; }
 /* resume: the credits you arrived for are marked */
 .credit.is-focus { background: var(--peri-soft); box-shadow: inset 3px 0 0 var(--red); border-radius: var(--r); padding-left: 14px !important; padding-right: 10px; transition: background-color .6s var(--ease); }
+/* matchbooks size to the screen height too, so the open cover and the venue name always fit */
+@media (min-width: 900px) {
+  .track-card { --bk: min(30vw, 330px, calc((100svh - 110px) / 1.96)); }
+}

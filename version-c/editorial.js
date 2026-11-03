@@ -217,9 +217,12 @@
     var list = document.querySelector('.track-list');
     if (!track || !list) return;
     var distance = function () { return Math.max(0, list.scrollWidth - window.innerWidth); };
+    /* the heading scrolls away first, so the pinned view is all matchbooks and their names */
+    var head = track.querySelector('.track-title');
+    var headOffset = function () { return head ? Math.round(head.offsetTop + head.offsetHeight) : 0; };
     var move = gsap.to(list, {
       x: function () { return -distance(); }, ease: 'none',
-      scrollTrigger: { trigger: track, start: 'top top', end: function () { return '+=' + distance(); }, scrub: 0.8, pin: true, anticipatePin: 1, invalidateOnRefresh: true }
+      scrollTrigger: { trigger: track, start: function () { return 'top+=' + headOffset() + ' top'; }, end: function () { return '+=' + distance(); }, scrub: 0.8, pin: true, anticipatePin: 1, invalidateOnRefresh: true }
     });
     /* each matchbook opens as it slides through the middle of the screen */
     list.querySelectorAll('.track-card').forEach(function (card) {
