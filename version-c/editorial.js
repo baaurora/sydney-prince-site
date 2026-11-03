@@ -118,26 +118,38 @@
     var roles = hero.querySelector('.hero-roles');
     var header = document.querySelector('.site-header');
     gsap.set(header, { autoAlpha: 0 });
-    gsap.set(win, { clipPath: 'inset(100% 0% 0% 0% round 14px)' });
+    gsap.set(win, { clipPath: 'inset(100% 0% 0% 0% round 4px)' });
     gsap.set([n1, n2, roles], { autoAlpha: 0 });
     root.classList.add('motion-ready');
 
+    var welcome = hero.querySelector('.hero-welcome');
+    var c1 = split(n1, 'chars'), c2 = split(n2, 'chars');
+    gsap.set([n1, n2], { autoAlpha: 1 });
+
+    /* entrance: the window opens, each name rises letter by letter, the roles follow */
     heroReady = function () {
-      gsap.timeline({ defaults: { ease: EASE } })
-        .to(win, { clipPath: 'inset(0% 0% 0% 0% round 14px)', duration: 1.3, ease: 'expo.inOut' }, 0)
-        .from(photo, { scale: 1.25, duration: 1.8 }, 0.1)
-        .fromTo(n1, { autoAlpha: 0, x: 60 }, { autoAlpha: 1, x: 0, duration: 1.3 }, 0.55)
-        .fromTo(n2, { autoAlpha: 0, x: -60 }, { autoAlpha: 1, x: 0, duration: 1.3 }, 0.55)
-        .fromTo(roles, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.9 }, 1.0)
-        .to(header, { autoAlpha: 1, duration: 0.9 }, 1.0);
+      gsap.timeline({ defaults: { ease: 'expo.out' } })
+        .to(win, { clipPath: 'inset(0% 0% 0% 0% round 4px)', duration: 1.5, ease: 'expo.inOut' }, 0)
+        .from(photo, { scale: 1.18, duration: 2.2 }, 0)
+        .from(c1 ? c1.chars : n1, { yPercent: 110, duration: 1.3, stagger: 0.04 }, 0.5)
+        .from(c2 ? c2.chars : n2, { yPercent: 110, duration: 1.3, stagger: 0.04 }, 0.62)
+        .fromTo(roles, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.2 }, 1.05)
+        .to(header, { autoAlpha: 1, duration: 1 }, 1.1);
     };
 
-    /* scrolling away: the two words drift apart and the photo rises a little. No zoom. */
+    /* scroll (desktop): the hero holds while the names part, the photo glides left at the same size,
+       and the welcome line arrives on the right. No zoom. */
     mm.add('(min-width: 900px)', function () {
-      var st = { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.6 };
-      gsap.to(n1, { xPercent: -14, autoAlpha: 0.15, ease: 'none', scrollTrigger: st });
-      gsap.to(n2, { xPercent: 14, autoAlpha: 0.15, ease: 'none', scrollTrigger: st });
-      gsap.to(win, { yPercent: -12, ease: 'none', scrollTrigger: st });
+      var tl = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: { trigger: hero, start: 'top top', end: '+=110%', scrub: 1, pin: true, anticipatePin: 1 }
+      });
+      tl.to(n1, { xPercent: -60, autoAlpha: 0, duration: 0.5 }, 0)
+        .to(n2, { xPercent: 60, autoAlpha: 0, duration: 0.5 }, 0)
+        .fromTo(roles, { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: 30, duration: 0.4, immediateRender: false }, 0)
+        .to(win, { left: '27%', duration: 1 }, 0.1)
+        .fromTo(welcome, { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.45)
+        .to({}, { duration: 0.25 });
     });
   }
 
