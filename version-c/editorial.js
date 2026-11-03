@@ -176,11 +176,11 @@
       gsap.set(lines, { autoAlpha: 0, y: 50 });
       glide = function (tl, at) {
         tl.to(win, { x: shift, duration: 1.6, ease: 'power3.inOut' }, at)
-          .to(inner, { x: function () { return shift() - window.innerWidth * 0.03; }, duration: 1.9, ease: 'power3.inOut' }, at)
+          .to(inner, { x: shift, duration: 1.6, ease: 'power3.inOut' }, at)
           .to(lines, { autoAlpha: 1, y: 0, duration: 1.1, stagger: 0.18, ease: 'expo.out' }, at + 0.9);
       };
       /* keep the end position right if the window is resized afterwards */
-      var onResize = function () { if (gsap.getProperty(win, 'x')) { gsap.set(win, { x: shift() }); gsap.set(inner, { x: shift() - window.innerWidth * 0.03 }); } };
+      var onResize = function () { if (gsap.getProperty(win, 'x')) { gsap.set(win, { x: shift() }); gsap.set(inner, { x: shift() }); } };
       window.addEventListener('resize', onResize);
       return function () { glide = null; window.removeEventListener('resize', onResize); };
     });

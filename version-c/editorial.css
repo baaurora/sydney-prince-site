@@ -630,3 +630,16 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
   }
   .hero-roles .hr-1, .hero-roles .hr-2, .hero-roles .hr-3 { display: block; }
 }
+
+/* ---------- hero v7 (desktop): the photo is exactly as wide as her name; bigger stacked roles ---------- */
+@media (min-width: 900px) {
+  .hero-stage { --ww: min(38vw, 58svh, 620px); --wt: 12%; }
+  .hero-window { aspect-ratio: 4 / 5 !important; }
+  .hero-window img { object-position: 50% 24%; }
+  /* "Sydney Prince" in Newsreader is about 6 times its font size wide */
+  .hero-name { --ns: calc(var(--ww) / 6.02); top: calc(var(--wt) + var(--ww) * 1.25 * .85); }
+  .hero-roles { top: calc(var(--wt) + var(--ww) * 1.25 / 2); font-size: clamp(44px, 5.4vw, 96px) !important; }
+}
+@media (min-width: 900px) {
+  .hero-roles { left: 51.5vw !important; font-size: clamp(44px, 5vw, 92px) !important; white-space: nowrap; }
+}
