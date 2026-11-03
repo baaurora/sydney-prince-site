@@ -91,3 +91,34 @@ Five images for the "What's Happening These Days?" matchbooks on Version A (The 
 - If the match heads come back round, reply: *"Make every match head a tall upright oval, about 1:1.8, solid tomato red."*
 - If ChatGPT won't letter a real organization's name, ask it to leave a blank banner. We can set the name in the site's own font instead.
 - ChatGPT may output a slightly different size. That's fine, as long as the aspect ratio is close.
+
+---
+
+# Part 2: spot illustrations for the About page
+
+Same conversation as above (or paste the Style brief first in a new one). Each object: **1024 × 1024 PNG on a transparent background**, the object centered with breathing room, no shadow on the ground, no text unless given. Save into `assets/img/illustrations/` with the filename shown.
+
+**Batch prompt (paste once, then ask for them one at a time):**
+
+> Using the exact style brief from before (flat hand-drawn, wobbly near-black ink outline, flat fills only in cream, paper white, tomato red, deep red, striker brown and dark brown, light paper grain, slightly bouncy and charming, no gradients, no 3D, no photorealism), I need a set of single spot illustrations for a stage manager's About page. Each one: 1024×1024 PNG, **transparent background**, one object centered, no ground shadow, no extra scenery. They must look like they were drawn by the same hand as a vintage matchbook cover. I'll request them one at a time by name. Confirm, then wait.
+
+Then send one line at a time:
+
+1. `ill-creativity.png`: "A paintbrush with a single fat red paint drip, leaning against a small stage spotlight that throws a cream beam. Show 'creativity'."
+2. `ill-logistics.png`: "A clipboard holding a checklist with red ticks, a pencil tucked under the clip, and a small stopwatch hanging off the corner. Show 'logistics'."
+3. `ill-headset.png`: "A stage manager's single-ear headset with a boom mic, coiled cord."
+4. `ill-gaffer-tape.png`: "A roll of black gaffer tape with a torn strip curling off it."
+5. `ill-spike-marks.png`: "Three spike-tape marks as seen on a stage floor: a red T, a cream L and a brown X, slightly uneven."
+6. `ill-cue-light.png`: "A small theatrical cue light box with one lamp lit red and one unlit."
+7. `ill-prompt-book.png`: "A fat three-ring prompt book, closed, with colorful tab dividers sticking out and a pencil on top."
+8. `ill-go-blue.png`: "A felt college pennant in deep navy blue and maize yellow that reads 'GO BLUE' in bouncy serif letters. No university logo or block letter M." (*This is the only image allowed navy `#1B2A4A` and maize `#F2C230`.*)
+9. `ill-pippin.png`: "A small, scruffy, happy puppy (a cavapoo-type mix with curly tan-and-white fur) sitting, tongue out. Charming, not realistic."
+10. `ill-marquee.png`: "A tiny Off-Broadway theatre marquee with chaser bulbs and a blank sign panel."
+11. `ill-subway-token.png`: "An old New York subway token, brass colored using striker brown and mustard, with a cut-out Y in the center."
+12. `ill-spent-matches.png`: "Three spent paper matches lying at angles, burnt black tips, one with a tiny curl of smoke drawn as a single squiggle line."
+
+**For the organizations ("the collection"):** one matchbook per organization, closed, front view, 600×840 PNG on transparent background:
+
+> "A closed vintage matchbook, front view, in the established style, with the name '[ORG NAME]' hand-lettered on the cover and a simple original emblem that suits it. Do not copy their real logo. Striker strip along the bottom fold. Use [COLOR] as the main cover color."
+
+Org names and suggested cover colors: Ars Nova (ink), Spellbound Theatre (deep red), NYC Children's Theater (mustard), Lincoln Center (cream), Little Island (striker brown), The Public Theater (tomato red), NBA (ink with red). Filenames: `org-ars-nova.png`, `org-spellbound.png`, `org-nyc-childrens.png`, `org-lincoln-center.png`, `org-little-island.png`, `org-public-theater.png`, `org-nba.png`.

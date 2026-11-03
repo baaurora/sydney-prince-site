@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Version A Options</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..700,100;1,9..144,400..600,100&family=Inter:wght@400;500;600&family=Caveat:wght@500;700&display=swap">
+<link rel="stylesheet" href="../shared/base.css">
+<style>
+  :root {
+    --cream: #F6EEDF; --cream-2: #EFE3CC; --paper: #FBF6EC; --red: #D9442B; --red-deep: #B8381F;
+    --ink: #1F1B18; --brown: #8A6A4F; --brown-text: #6E533C; --gold: #F2A33A;
+    --display: 'Fraunces', Georgia, serif; --body: 'Inter', system-ui, sans-serif; --hand: 'Caveat', 'Bradley Hand', cursive;
+    --ease: cubic-bezier(.22, 1, .36, 1);
+  }
+  body { background: var(--cream); color: var(--ink); font: 400 16px/1.6 var(--body); }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 16px 96px; }
+  @media (min-width: 800px) { .wrap { padding: 56px 40px 120px; } }
+  h1 { font: 600 clamp(36px, 5vw, 56px)/1.05 var(--display); }
+  h2 { font: 600 clamp(26px, 3.4vw, 36px)/1.1 var(--display); margin: 72px 0 8px; }
+  h3 { font: 600 20px/1.2 var(--display); margin-top: 18px; }
+  .lede { color: var(--brown-text); max-width: 68ch; margin-top: 10px; }
+  .grid { display: grid; gap: 48px 32px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin-top: 32px; }
+  .opt { display: flex; flex-direction: column; }
+  .opt p { color: var(--brown-text); font-size: 15px; margin-top: 4px; }
+  .tag { display: inline-block; margin-top: 8px; font: 600 11px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--red-deep); }
+  .stage { height: 380px; display: grid; place-items: center; }
+  .stage > * { transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+  .stage > *:hover { transform: translateY(-8px) rotate(0deg) !important; }
+  .photo { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  /* 1. Clean matchbook cover: the photo IS the cover; a printed fold with striker makes it read as a matchbook */
+  .f1 { width: 220px; border-radius: 14px; background: var(--red-deep); padding: 8px 8px 0; rotate: -2deg; box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 24px 30px -20px rgba(31,27,24,.55); }
+  .f1 .photo { height: 250px; border-radius: 8px; }
+  .f1 .fold { margin: 8px -8px 0; padding: 9px 0 0; border-top: 1px solid rgba(0,0,0,.25); text-align: center; font: 600 10px/1 var(--body); letter-spacing: .28em; color: var(--paper); }
+  .f1 .strike { height: 16px; margin-top: 8px; border-radius: 0 0 14px 14px; background: radial-gradient(rgba(0,0,0,.35) 1px, transparent 1.4px) 0 0/4px 4px, var(--brown); }
+
+  /* 2. Ticket stub */
+  .f2 { width: 280px; height: 200px; display: grid; grid-template-columns: 1fr 70px; background: var(--paper); rotate: 3deg; border-radius: 10px;
+        -webkit-mask: radial-gradient(circle 11px at calc(100% - 70px) 0, transparent 98%, #000) top/100% 51% no-repeat, radial-gradient(circle 11px at calc(100% - 70px) 100%, transparent 98%, #000) bottom/100% 51% no-repeat;
+                mask: radial-gradient(circle 11px at calc(100% - 70px) 0, transparent 98%, #000) top/100% 51% no-repeat, radial-gradient(circle 11px at calc(100% - 70px) 100%, transparent 98%, #000) bottom/100% 51% no-repeat;
+        filter: drop-shadow(0 16px 14px rgba(31,27,24,.28)); }
+  .f2 .photo { padding: 10px 0 10px 10px; border-radius: 16px; }
+  .f2 .stub { border-left: 2px dashed var(--brown); display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .f2 .stub span { writing-mode: vertical-rl; rotate: 180deg; font: 700 13px/1 var(--display); letter-spacing: .2em; color: var(--red-deep); }
+  .f2 .stub small { writing-mode: vertical-rl; font: 500 10px/1 var(--body); letter-spacing: .15em; color: var(--brown-text); }
+
+  /* 3. Lighting-gel swatch card */
+  .f3 { width: 190px; padding: 12px 12px 14px; background: var(--paper); border-radius: 16px; rotate: -3deg; box-shadow: 0 20px 24px -18px rgba(31,27,24,.5);
+        -webkit-mask: radial-gradient(circle 7px at 50% 16px, transparent 98%, #000); mask: radial-gradient(circle 7px at 50% 16px, transparent 98%, #000); }
+  .f3 .gel { position: relative; margin-top: 22px; height: 230px; border-radius: 10px; overflow: hidden; }
+  .f3 .gel::after { content: ''; position: absolute; inset: 0; background: rgba(217, 68, 43, .28); mix-blend-mode: multiply; }
+  .f3 .label { display: flex; justify-content: space-between; margin-top: 10px; font: 600 12px/1.2 var(--body); }
+  .f3 .label b { color: var(--red-deep); }
+
+  /* 4. Prompt-book page: photo taped in, red-pencil cue marks */
+  .f4 { position: relative; width: 270px; height: 340px; padding: 28px 22px 0 40px; rotate: 1.5deg;
+        background: repeating-linear-gradient(transparent 0 23px, rgba(110,83,60,.18) 23px 24px), var(--paper);
+        box-shadow: 0 18px 24px -18px rgba(31,27,24,.5); }
+  .f4::before { content: ''; position: absolute; top: 0; bottom: 0; left: 28px; width: 1.5px; background: rgba(217,68,43,.55); }
+  .f4 .photo { height: 200px; border: 6px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,.2); rotate: -3deg; }
+  .f4 .tape { position: absolute; width: 74px; height: 22px; background: rgba(233, 220, 186, .82); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+  .f4 .t1 { top: 18px; left: 34px; rotate: -24deg; } .f4 .t2 { top: 196px; right: 12px; rotate: -18deg; }
+  .f4 .cue { position: absolute; font: 700 22px/1 var(--hand); color: var(--red); }
+  .f4 .c1 { right: 6px; top: 236px; rotate: -6deg; } .f4 .c2 { left: 46px; top: 262px; rotate: 2deg; font-size: 19px; }
+  .f4 .circle { position: absolute; left: 44px; top: 288px; width: 34px; height: 30px; border: 2px solid var(--red); border-radius: 50%; rotate: -8deg; display: grid; place-items: center; font: 700 15px/1 var(--hand); color: var(--red); }
+
+  /* 5. Souvenir postage stamp */
+  .f5 { width: 230px; padding: 14px; background: var(--paper); rotate: -4deg; filter: drop-shadow(0 14px 12px rgba(31,27,24,.28));
+        -webkit-mask: radial-gradient(circle 6px, transparent 98%, #000) -7px -7px/14px 14px; mask: radial-gradient(circle 6px, transparent 98%, #000) -7px -7px/14px 14px; }
+  .f5 .inner { position: relative; height: 270px; border: 2px solid var(--red-deep); padding: 6px; }
+  .f5 .photo { filter: sepia(.15) saturate(1.05); }
+  .f5 .denom { position: absolute; top: 12px; left: 12px; background: var(--red-deep); color: var(--paper); font: 700 15px/1 var(--display); padding: 6px 8px; }
+  .f5 .country { position: absolute; bottom: 12px; right: 12px; color: var(--paper); font: 700 12px/1 var(--body); letter-spacing: .2em; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+
+  /* 6. Scrapbook mount with photo corners and a handwritten caption */
+  .f6 { width: 250px; padding: 20px 20px 16px; background: #2B2420; rotate: 2deg; box-shadow: 0 20px 24px -18px rgba(31,27,24,.6); }
+  .f6 .mount { position: relative; }
+  .f6 .photo { height: 250px; }
+  .f6 .mount i { position: absolute; width: 26px; height: 26px; background: var(--cream-2); clip-path: polygon(0 0, 100% 0, 0 100%); }
+  .f6 .mount i:nth-child(2) { top: -6px; left: -6px; } .f6 .mount i:nth-child(3) { top: -6px; right: -6px; rotate: 90deg; }
+  .f6 .mount i:nth-child(4) { bottom: -6px; right: -6px; rotate: 180deg; } .f6 .mount i:nth-child(5) { bottom: -6px; left: -6px; rotate: 270deg; }
+  .f6 .cap { margin-top: 12px; text-align: center; font: 600 22px/1 var(--hand); color: var(--cream); }
+
+  /* About concepts */
+  .concepts { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 28px; }
+  .concept { background: var(--paper); border: 1.5px solid var(--ink); border-radius: 22px; padding: 22px; }
+  .concept.rec { box-shadow: 0 0 0 4px var(--cream), 0 0 0 6px var(--red-deep); }
+  .concept ul { margin: 10px 0 0; padding-left: 18px; color: var(--brown-text); font-size: 15px; }
+  .concept li + li { margin-top: 6px; }
+  .wire { height: 210px; margin: 14px 0 4px; border-radius: 14px; background: var(--cream); position: relative; overflow: hidden; }
+  .wire b { position: absolute; background: var(--cream-2); border: 1.5px solid var(--brown); border-radius: 6px; }
+  .wire .p { background: var(--red); opacity: .75; border: 0; }
+  .wire .o { background: var(--gold); opacity: .8; border: 0; border-radius: 50%; }
+  .wire .t { height: 6px; background: var(--brown); border: 0; opacity: .5; border-radius: 3px; }
+  .list { columns: 2 260px; margin-top: 20px; padding-left: 18px; color: var(--ink); }
+  .list li { break-inside: avoid; margin-bottom: 8px; }
+  .list span { color: var(--brown-text); }
+  .note { margin-top: 24px; padding: 16px 20px; border-left: 3px solid var(--red-deep); background: var(--paper); border-radius: 0 16px 16px 0; max-width: 80ch; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Version A: options to pick from</h1>
+  <p class="lede">Working page, not linked from the site. Hover a frame to see it lift. Tell me which frame (or mix) you like, and which About-page concept, and I'll build it.</p>
+
+  <h2>1. Photo frames</h2>
+  <p class="lede">For the home hero photo and the About photos. All six are clean, no wobbly cartoon outline. Each says "theatre" or "collection" in a different way.</p>
+  <div class="grid">
+    <div class="opt">
+      <div class="stage"><div class="f1"><img class="photo" src="../assets/img/hero-portrait.webp" alt=""><div class="fold">SYDNEY PRINCE · NEW YORK</div><div class="strike"></div></div></div>
+      <h3>A. Clean matchbook cover</h3><p>The photo is the cover. A printed fold with her name and a real striker strip make it unmistakably a matchbook. Closest to the brief.</p>
+    </div>
+    <div class="opt">
+      <div class="stage"><div class="f2"><img class="photo" src="../assets/img/hero-portrait.webp" alt=""><div class="stub"><small>No. 0024</small><span>ADMIT ONE</span></div></div></div>
+      <h3>B. Ticket stub</h3><p>Notched, perforated ticket with a tear-off stub. Instantly theatrical, and it pairs well with the matchbook "collection" idea.</p>
+    </div>
+    <div class="opt">
+      <div class="stage"><div class="f3"><div class="gel"><img class="photo" src="../assets/img/hero-portrait.webp" alt=""></div><div class="label"><b>R26</b><span>Light Red</span></div></div></div>
+      <h3>C. Lighting-gel swatch</h3><p>Like a page from a gel swatch book, with a punched hole and a gel number. An insider detail stage people will recognise.</p>
+    </div>
+    <div class="opt">
+      <div class="stage"><div class="f4"><img class="photo" src="../assets/img/hero-portrait.webp" alt=""><span class="tape t1"></span><span class="tape t2"></span><span class="cue c1">LX 12 — GO</span><span class="cue c2">standby sound</span><span class="circle">Q4</span></div></div>
+      <h3>D. Prompt-book page</h3><p>Taped into a stage manager's prompt book with red-pencil cue marks. Shows the logistics side without saying it.</p>
+    </div>
+    <div class="opt">
+      <div class="stage"><div class="f5"><div class="inner"><img class="photo" src="../assets/img/hero-portrait.webp" alt=""><span class="denom">24¢</span><span class="country">NEW YORK</span></div></div></div>
+      <h3>E. Souvenir stamp</h3><p>Perforated postage-stamp edge. Collected and nostalgic, works well scattered at small sizes.</p>
+    </div>
+    <div class="opt">
+      <div class="stage"><div class="f6"><div class="mount"><img class="photo" src="../assets/img/hero-portrait.webp" alt=""><i></i><i></i><i></i><i></i></div><p class="cap">Sydney, NYC</p></div></div>
+      <h3>F. Scrapbook mount</h3><p>Photo corners on dark album paper with a handwritten caption. Personal and warm, good for the family and puppy photos.</p>
+    </div>
+  </div>
+  <p class="note"><strong>My pick:</strong> A (clean matchbook) for the home hero, so the matchbook idea reads instantly. Then D (prompt-book page) for the About page, where it carries the story.</p>
+
+  <h2>2. About page concepts</h2>
+  <p class="lede">Each one keeps three photos around "Get to know Sydney!", breaks the long text up with photos on alternating sides, and adds illustrated objects (in the matchbook drawing style) that show creativity and logistics instead of telling.</p>
+  <div class="concepts">
+    <div class="concept rec">
+      <span class="tag">Recommended</span>
+      <h3>The Prompt Book</h3>
+      <div class="wire">
+        <b class="p" style="left:6%;top:10%;width:18%;height:38%;rotate:-6deg"></b>
+        <b style="left:32%;top:16%;width:36%;height:14%;background:var(--ink);opacity:.8;border:0"></b>
+        <b class="p" style="right:6%;top:6%;width:16%;height:30%;rotate:5deg"></b>
+        <b class="p" style="left:40%;top:36%;width:20%;height:18%;rotate:2deg"></b>
+        <b class="t" style="left:8%;top:62%;width:50%"></b><b class="t" style="left:8%;top:68%;width:46%"></b><b class="t" style="left:8%;top:74%;width:50%"></b>
+        <b class="p" style="right:8%;top:60%;width:26%;height:28%;rotate:-3deg"></b>
+        <b class="o" style="left:62%;top:80%;width:22px;height:22px"></b><b class="o" style="left:4%;top:84%;width:18px;height:18px"></b>
+      </div>
+      <ul>
+        <li>The page is Sydney's prompt book. Text sits on lined pages, and photos are taped in on alternating sides.</li>
+        <li>Red-pencil cue marks ("Q1 — GO") lead from one section to the next as you scroll, and each mark draws itself in.</li>
+        <li>"creativity" and "logistics" each get an illustrated vignette: a paintbrush and spotlight, then a clipboard checklist, headset and gaffer tape.</li>
+        <li>The organizations become small matchbooks from her collection, each labelled with the shows she did there (from her credits). That gives them the context they're missing now.</li>
+        <li>"Go Blue!" gets an illustrated Michigan pennant.</li>
+      </ul>
+    </div>
+    <div class="concept">
+      <h3>The Collection Drawer</h3>
+      <div class="wire">
+        <b style="left:4%;top:6%;width:28%;height:40%"></b><b class="p" style="left:6%;top:9%;width:24%;height:34%"></b>
+        <b style="left:36%;top:6%;width:28%;height:40%"></b><b class="o" style="left:44%;top:16%;width:40px;height:40px"></b>
+        <b style="left:68%;top:6%;width:28%;height:40%"></b><b class="p" style="left:70%;top:9%;width:24%;height:34%"></b>
+        <b class="t" style="left:6%;top:56%;width:86%"></b><b class="t" style="left:6%;top:62%;width:80%"></b>
+        <b style="left:4%;top:72%;width:44%;height:24%"></b><b style="left:52%;top:72%;width:44%;height:24%"></b><b class="o" style="left:68%;top:76%;width:30px;height:30px"></b>
+      </div>
+      <ul>
+        <li>A wooden type-drawer or shadow box. Photos and illustrated objects sit in compartments like a collector's display.</li>
+        <li>Each paragraph sits between two drawer rows, so the text is always broken up by something to look at.</li>
+        <li>Hovering a compartment lifts the item out, like taking a matchbook out of a collection.</li>
+      </ul>
+    </div>
+    <div class="concept">
+      <h3>The Cue Sheet</h3>
+      <div class="wire">
+        <b style="left:49%;top:0;width:2px;height:100%;background:var(--red);border:0"></b>
+        <b class="p" style="left:8%;top:6%;width:30%;height:22%"></b><b class="t" style="left:56%;top:12%;width:36%"></b>
+        <b class="t" style="left:8%;top:40%;width:36%"></b><b class="p" style="left:60%;top:34%;width:30%;height:22%"></b>
+        <b class="p" style="left:8%;top:66%;width:30%;height:22%"></b><b class="o" style="left:47%;top:20%;width:14px;height:14px"></b><b class="o" style="left:47%;top:46%;width:14px;height:14px"></b><b class="o" style="left:47%;top:74%;width:14px;height:14px"></b>
+      </div>
+      <ul>
+        <li>A red cue line runs down the page. Each paragraph is a numbered cue, with its photo on the opposite side.</li>
+        <li>Illustrated props are "preset" along the line: headset, clipboard, cue light, Michigan pennant.</li>
+        <li>A cue light at the top of the line turns green as you reach each cue.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>3. Illustrations to show, not tell</h2>
+  <p class="lede">All drawn in the same style as the matchbook logo: wobbly ink line, flat cream, tomato red and striker brown. The ChatGPT briefs for these are in the chat.</p>
+  <ul class="list">
+    <li><b>Creativity</b> <span>paintbrush with a red drip, a hand-drawn spotlight, a sketched set model</span></li>
+    <li><b>Logistics</b> <span>clipboard with a ticked checklist, a stopwatch, a budget spreadsheet scrap</span></li>
+    <li><b>Stage manager kit</b> <span>headset, gaffer tape roll, spike-tape marks, a cue light</span></li>
+    <li><b>Michigan</b> <span>a maize-and-blue "GO BLUE" pennant</span></li>
+    <li><b>Home life</b> <span>a small drawing of Pippin the puppy next to the family photo</span></li>
+    <li><b>New York</b> <span>a subway token or a little Off-Broadway marquee</span></li>
+    <li><b>The collection</b> <span>matchbooks for Ars Nova, Spellbound, NYC Children's Theater, Lincoln Center, Little Island, The Public and the NBA</span></li>
+    <li><b>Section breaks</b> <span>a single struck match, a scatter of spent matches</span></li>
+  </ul>
+
+  <h2>4. More photos of Sydney</h2>
+  <p class="note">The live site only has the photos already in use, so 6 to 8 more would help: rehearsal or backstage shots, calling a show in a headset, at Cherry Lane, at an Iron Bloom event, at the NBA All-Star setup. Candid ones are best for the prompt-book idea.</p>
+</div>
+</body>
+</html>
