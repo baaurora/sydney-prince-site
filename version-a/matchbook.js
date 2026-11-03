@@ -401,20 +401,49 @@
     if (!btns.length) return;
     var nameEl = document.querySelector('.jar-name');
     var showsEl = document.querySelector('.jar-shows');
+    /* a picked matchbook links to where that venue appears on the resume */
+    var KEYS = { 'Spellbound Theatre': 'Spellbound', 'NYC Children’s Theater': 'Children', 'The Public Theater': 'Public Theater' };
+    var link = document.createElement('a');
+    link.className = 'jar-link';
+    link.hidden = true;
+    link.textContent = 'See it on the resume';
+    nameEl.parentNode.appendChild(link);
+    function resumeUrl(b) { return 'resume.html#at=' + encodeURIComponent(KEYS[b.dataset.name] || b.dataset.name); }
     function pick(b) {
       btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       nameEl.textContent = b ? b.dataset.name : '';
       showsEl.textContent = b ? b.dataset.shows : '';
+      link.hidden = !b;
+      if (b) link.href = resumeUrl(b);
     }
     btns.forEach(function (b) {
       b.addEventListener('click', function (e) {
         e.stopPropagation();
-        pick(b.getAttribute('aria-pressed') === 'true' ? null : b);
+        /* clicking the matchbook that's already out opens the resume at that venue */
+        if (b.getAttribute('aria-pressed') === 'true') { window.location.href = resumeUrl(b); return; }
+        pick(b);
       });
     });
     document.addEventListener('click', function (e) { if (!e.target.closest('.jar-wrap')) pick(null); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') pick(null); });
   }
+
+  /* resume: arriving from the jar (#at=Venue) scrolls to that venue's credits and marks them */
+  function creditFocus(scroller) {
+    var m = window.location.hash.match(/^#at=(.+)$/);
+    if (!m) return;
+    var key = decodeURIComponent(m[1]).toLowerCase();
+    var rows = Array.prototype.filter.call(document.querySelectorAll('.credit'), function (r) {
+      return r.textContent.toLowerCase().indexOf(key) > -1;
+    });
+    if (!rows.length) return;
+    rows.forEach(function (r) { r.classList.add('is-focus'); });
+    setTimeout(function () {
+      var y = rows[0].getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.28;
+      if (scroller) scroller.scrollTo(y, { duration: 1.4 }); else window.scrollTo({ top: y, behavior: 'smooth' });
+    }, 700);
+  }
+  creditFocus(null);
 
   var scrubbing = playLoader();
   if (!scrubbing) SP.runLoader({ key: 'sp-loader-a', durationMs: 4650, fadeMs: 550 });
