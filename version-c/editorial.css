@@ -2,7 +2,7 @@
    Sydney's own identity: baby blue is her colour (calm fields: hero and footer),
    tomato red is the spark (the matchbook, the flame, buttons), deep navy ink for type.
    A warm high-contrast serif for display and a clean grotesk for text.
-   One bold moment (the matchbook opening), then calm editorial pages. */
+   One bold moment (the match strike on load), then calm pages with pinned, scrubbed scroll scenes. */
 :root {
   --paper: #F7F6F2;
   --surface: #FFFFFF;
@@ -66,73 +66,55 @@ nav ul { display: flex; align-items: center; gap: clamp(16px, 3.4vw, 44px); }
 
 main { display: block; }
 
-/* ---------- home: intro with the matchbook ---------- */
-.intro { background: var(--peri); }
-.intro-stage {
-  position: relative; min-height: 100svh; max-width: var(--max); margin: 0 auto;
-  display: grid; grid-template-columns: 1fr; align-items: end; gap: 40px;
-  padding: 120px var(--g) 56px;
-}
-.intro-copy { min-width: 0; }
-.intro-roles { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 0 0 22px; font: 600 12.5px/1.3 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
-.intro-roles li::before { content: ''; display: inline-block; width: 7px; height: 7px; margin-right: 9px; border-radius: 50%; background: var(--red); vertical-align: 1px; }
-.intro-name { margin: 0; font: 400 clamp(64px, 11vw, 188px)/.92 var(--display); letter-spacing: -.035em; color: var(--ink); }
-.intro-name .nm > span { display: block; }
-.intro-name .nm-2 { padding-left: .55em; }
-.intro-line { margin: 26px 0 0; max-width: 38ch; font-size: 17px; color: var(--ink); }
+/* ---------- loading screen: a match strikes in the dark, then the curtain rises ---------- */
+#loader { position: fixed; inset: 0; z-index: 100; align-items: center; justify-content: center; background: #0B0A0C; overflow: hidden; }
+.ld-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 50%; opacity: 0; transition: opacity .6s var(--ease); }
+.ld-video.is-on { opacity: 1; }
+.ld-name { position: absolute; left: 0; right: 0; bottom: 12vh; margin: 0; text-align: center; font: 400 clamp(28px, 3.4vw, 46px)/1 var(--display); font-variation-settings: 'opsz' 72; letter-spacing: -.01em; color: #F7F1EA; opacity: 0; }
 
-.book-wrap { --bw: min(74vw, 400px); perspective: 2400px; perspective-origin: 50% 30%; justify-self: center; width: var(--bw); }
-.matchbook { position: relative; aspect-ratio: 3 / 4; border-radius: 14px; box-shadow: 0 40px 60px -40px rgba(28, 31, 63, .55); transform-style: preserve-3d; }
-.mb-window { position: absolute; inset: 0 0 6% 0; overflow: hidden; border-radius: 14px 14px 0 0; background: #120E0C; }
-.mb-window video, .mb-window img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.mb-window video { object-position: 62% 50%; }
-.mb-window img { object-position: 50% 20%; }
-.mb-strike { position: absolute; left: 0; right: 0; bottom: 0; height: 6%; border-radius: 0 0 14px 14px; background: var(--grain), var(--striker); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18); }
-.mb-lid { position: absolute; inset: 0 0 6% 0; transform-origin: 50% 0; transform-style: preserve-3d; z-index: 2; }
-.mb-lid-front, .mb-lid-back { position: absolute; inset: 0; border-radius: 14px 14px 4px 4px; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
-.mb-lid-front {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
-  background: linear-gradient(rgba(255, 255, 255, .06), rgba(0, 0, 0, .08)), var(--red);
-  color: #FFF4EC;
+/* ---------- home: hero, her name either side of the photo window ---------- */
+.hero { background: var(--peri); }
+.hero-stage { position: relative; min-height: 100svh; display: grid; place-items: center; padding: 96px var(--g) 56px; overflow: hidden; }
+.hero-row { display: flex; align-items: center; justify-content: center; gap: clamp(14px, 2.6vw, 44px); width: 100%; }
+.hn { font: 400 clamp(56px, 8.6vw, 156px)/1 var(--display); font-variation-settings: 'opsz' 72; letter-spacing: -.035em; color: var(--ink); white-space: nowrap; }
+.hero-window { position: relative; flex: none; width: clamp(200px, 24vw, 400px); aspect-ratio: 3 / 4; border-radius: 14px; overflow: hidden; background: var(--peri-soft); box-shadow: 0 40px 60px -40px rgba(28, 31, 63, .5); }
+.hero-window img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
+.hero-roles { position: absolute; left: var(--g); right: var(--g); bottom: clamp(24px, 6vh, 56px); margin: 0; text-align: center; font: 600 12.5px/1.4 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+@media (min-width: 900px) {
+  /* the window sits dead centre; the two words hang off its edges, so it can grow evenly to full bleed */
+  .hero-stage { padding: 0; }
+  .hero-row { --ww: clamp(220px, 24vw, 400px); position: relative; display: block; width: 100%; height: 100svh; }
+  .hero-window { position: absolute; left: 50%; top: 50%; width: var(--ww); translate: -50% -50%; }
+  .hn { position: absolute; top: 50%; translate: 0 -50%; }
+  .hn-1 { right: calc(50% + var(--ww) / 2 + clamp(18px, 2.6vw, 44px)); }
+  .hn-2 { left: calc(50% + var(--ww) / 2 + clamp(18px, 2.6vw, 44px)); }
 }
-.lid-name { font: 500 clamp(26px, 3vw, 38px)/1 var(--display); letter-spacing: -.01em; }
-.lid-rule { width: 38%; height: 1.5px; background: rgba(255, 244, 236, .7); }
-.mb-lid-back { transform: rotateX(180deg); background: linear-gradient(rgba(0, 0, 0, .05), rgba(0, 0, 0, .22)), #B8361F; }
-/* without the motion script the lid stays open so the photo shows */
-.no-motion .mb-lid, html:not(.js) .mb-lid { display: none; }
-
-/* hold the intro until the motion script takes over (shows anyway after 2.5s) */
-.js .intro-copy, .js .book-wrap { visibility: hidden; animation: show-anyway 0s 2.5s forwards; }
-.js.motion-ready .intro-copy, .js.motion-ready .book-wrap, .js.no-motion .intro-copy, .js.no-motion .book-wrap { visibility: visible; animation: none; }
+/* hold the hero until the motion script takes over (shows anyway after 3.5s) */
+.js .hero-stage > * { visibility: hidden; animation: show-anyway 0s 3.5s forwards; }
+.js.motion-ready .hero-stage > *, .js.no-motion .hero-stage > * { visibility: visible; animation: none; }
 @keyframes show-anyway { to { visibility: visible; } }
-@media (prefers-reduced-motion: reduce) { .js .intro-copy, .js .book-wrap { visibility: visible; animation: none; } }
 
 /* ---------- home: welcome statement ---------- */
 .welcome { max-width: 1040px; margin: 0 auto; padding: clamp(96px, 16vh, 180px) var(--g) clamp(80px, 12vh, 140px); }
 .welcome-title { margin: 0 0 24px; font: 600 12.5px/1.3 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--red-text); }
 .welcome-text { margin: 0; font: 400 clamp(26px, 3.3vw, 46px)/1.18 var(--display); letter-spacing: -.012em; text-wrap: balance; }
 
-/* ---------- home: stacked cards ---------- */
-.stack { max-width: var(--max); margin: 0 auto; padding: 0 var(--g); }
-.section-title { margin: 0 0 32px; font: 500 clamp(34px, 4.6vw, 68px)/1 var(--display); letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
-ul.stack-list { display: grid; gap: 28px; }
-.stack-card { position: relative; }
-.sc-inner {
-  display: grid; gap: 22px; padding: 18px; border-radius: 18px; background: var(--surface); border: 1px solid var(--peri-soft);
-  box-shadow: 0 1px 0 var(--hair), 0 30px 50px -40px rgba(28, 31, 63, .45);
-  transform-origin: 50% 0; will-change: transform;
-}
-.sc-media { position: relative; aspect-ratio: 16 / 10; border-radius: 12px; overflow: hidden; background: var(--peri-soft); }
-.sc-media img { width: 100%; height: 100%; object-fit: cover; transition: scale 1.2s var(--ease); }
-.sc-inner:hover .sc-media img { scale: 1.03; }
-.sc-logo { background: var(--ink); }
-.sc-logo img { object-fit: contain; padding: 12% 0; }
-.sc-text { align-self: center; padding: 4px 8px 8px; }
-.sc-role { margin: 0 0 10px; font: 600 12.5px/1.3 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--red-text); }
-.sc-text h3 { margin: 0 0 14px; font: 500 clamp(28px, 3vw, 44px)/1.02 var(--display); letter-spacing: -.015em; }
-.sc-text h3 a { color: var(--ink); text-decoration: none; background: linear-gradient(var(--red), var(--red)) 0 100% / 0 1.5px no-repeat; transition: background-size .5s var(--ease); }
-.sc-text h3 a:hover { background-size: 100% 1.5px; }
-.sc-text p:last-child { margin: 0; color: var(--ink); max-width: 56ch; }
+/* ---------- home: pinned sideways track ---------- */
+.section-title { margin: 0 0 32px; font: 400 clamp(36px, 4.8vw, 72px)/1 var(--display); letter-spacing: -.025em; color: var(--ink); text-wrap: balance; }
+.track { position: relative; }
+.track-pin { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 36px; padding: 104px 0 56px; overflow: hidden; }
+.track-title { margin: 0; padding: 0 var(--g); }
+ul.track-list { display: flex; gap: clamp(28px, 4vw, 64px); padding: 0 var(--g); width: max-content; will-change: transform; }
+.track-card { width: min(58vw, 760px); flex: none; }
+.tc-media { position: relative; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; background: var(--peri-soft); }
+.tc-media img { position: absolute; top: 0; left: -6%; width: 112%; height: 100%; object-fit: cover; }
+.tc-logo { background: var(--ink); }
+.tc-logo img { left: 0; width: 100%; object-fit: contain; padding: 12% 0; }
+.tc-role { margin: 20px 0 6px; font: 600 12.5px/1.3 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--red-text); }
+.track-card h3 { margin: 0 0 12px; font: 400 clamp(28px, 2.8vw, 42px)/1.05 var(--display); font-variation-settings: 'opsz' 72; letter-spacing: -.02em; }
+.track-card h3 a { color: var(--ink); text-decoration: none; background: linear-gradient(var(--red), var(--red)) 0 100% / 0 1.5px no-repeat; transition: background-size .5s var(--ease); }
+.track-card h3 a:hover { background-size: 100% 1.5px; }
+.tc-text { margin: 0; max-width: 62ch; font-size: 16px; }
 
 /* ---------- home: outro ---------- */
 .outro { position: relative; margin: clamp(80px, 14vh, 160px) var(--g) 0; border-radius: 18px; overflow: hidden; min-height: 54vh; display: grid; place-items: center; background: var(--ink); }
@@ -265,12 +247,8 @@ em.c-sub { display: block; font-variant-caps: normal; font-size: 15px; letter-sp
   .cue { position: absolute; left: -76px; top: .45em; width: 56px; text-align: right; }
   .jar-wrap { grid-template-columns: 1fr 1fr; }
   .jar-note { text-align: left; }
-  .sc-inner { grid-template-columns: 1.15fr 1fr; padding: 22px; gap: 36px; }
 }
 @media (min-width: 960px) {
-  .intro-stage { grid-template-columns: 1.4fr 1fr; align-items: end; padding-top: 96px; padding-bottom: 64px; }
-  .intro-copy { align-self: end; padding-bottom: 24px; }
-  .book-wrap { --bw: min(27vw, 380px, 46svh); justify-self: end; }
   .intro-grid { grid-template-columns: 1fr 1.6fr 1fr; gap: 40px; }
   .intro-c { grid-column: auto; order: 0; padding-top: 28px; }
   .intro-l { margin-top: 60px; } .intro-r { margin-top: 160px; }
@@ -278,15 +256,21 @@ em.c-sub { display: block; font-variant-caps: normal; font-size: 15px; letter-sp
   .side.r { float: right; margin: 6px -90px 28px 40px; }
   .side.l { float: left; margin: 6px 40px 28px -90px; }
   .contact { grid-template-columns: 1.15fr 1fr; }
-  /* stacked cards: each one sticks and the next slides over it */
-  .stack-card { position: sticky; top: calc(110px + var(--i) * 22px); }
-  ul.stack-list { gap: 12vh; padding-bottom: 10vh; }
+}
+@media (max-width: 899px) {
+  .hero-row { flex-direction: column; gap: 10px; }
+  .hn { font-size: clamp(54px, 17vw, 110px); line-height: .95; }
+  .hero-window { width: min(72vw, 360px); }
+  .hero-stage { padding-top: 92px; padding-bottom: 72px; }
+  .hero-roles { position: static; margin-top: 22px; }
+  .track-pin { min-height: 0; padding-top: 40px; }
+  ul.track-list { flex-direction: column; width: auto; }
+  .track-card { width: 100%; }
+  .tc-media img { left: 0; width: 100%; }
 }
 @media (max-width: 799px) {
   .wordmark { font-size: 19px; white-space: nowrap; }
   nav ul { gap: 14px; }
   .nav-link { font-size: 15px; }
   .site-header .btn { min-height: 38px; padding: 0 14px; font-size: 14.5px; }
-  .intro-stage { padding-top: 104px; gap: 56px; }
-  .intro-name .nm-2 { padding-left: .35em; }
 }

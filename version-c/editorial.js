@@ -8,7 +8,6 @@
   'use strict';
 
   var root = document.documentElement;
-  root.classList.add('is-loaded'); // no loader screen on this version; the home intro plays instead
   var reduce = SP.reducedMotion();
   var hasGsap = !!(window.gsap && window.ScrollTrigger);
 
@@ -42,7 +41,11 @@
     onScroll();
   }
 
-  if (reduce || !hasGsap) { root.classList.add('no-motion'); return; }
+  if (reduce || !hasGsap) {
+    root.classList.add('no-motion', 'is-loaded');
+    var ld = document.getElementById('loader'); if (ld) ld.remove();
+    return;
+  }
 
   var gsap = window.gsap;
   gsap.registerPlugin(window.ScrollTrigger);
@@ -67,47 +70,72 @@
 
   var mm = gsap.matchMedia();
 
-  /* ---------- home intro: the matchbook arrives, its lid flips open, the match strikes ---------- */
-  var intro = document.querySelector('.intro');
-  if (intro) {
-    var roles = intro.querySelectorAll('.intro-roles li');
-    var name = intro.querySelector('.intro-name .nm');
-    var line = intro.querySelector('.intro-line');
-    var book = intro.querySelector('.matchbook');
-    var lid = intro.querySelector('.mb-lid');
-    var photo = intro.querySelector('.intro-photo');
-    var video = intro.querySelector('.intro-video');
-    var header = document.querySelector('.site-header');
-    var chars = split(name, 'chars');
+  /* ---------- loading screen (home, once per session): a match strikes, the curtain rises ---------- */
+  var loader = document.getElementById('loader');
+  var loaderActive = !!loader && !root.classList.contains('no-loader');
+  var heroReady = function () {};   // replaced below; called when the page is revealed
 
+  /* ---------- home hero: name either side of the window; pinned, the window grows to full bleed ---------- */
+  var hero = document.querySelector('.hero');
+  if (hero) {
+    var win = hero.querySelector('.hero-window');
+    var photo = hero.querySelector('.hero-photo');
+    var n1 = hero.querySelector('.hn-1');
+    var n2 = hero.querySelector('.hn-2');
+    var roles = hero.querySelector('.hero-roles');
+    var header = document.querySelector('.site-header');
     gsap.set(header, { autoAlpha: 0 });
-    if (video) gsap.set(photo, { autoAlpha: 0 });
+    gsap.set(win, { clipPath: 'inset(100% 0% 0% 0% round 14px)' });
+    gsap.set([n1, n2, roles], { autoAlpha: 0 });
     root.classList.add('motion-ready');
 
-    var tl = gsap.timeline({ defaults: { ease: EASE } });
-    tl.from(book, { y: 80, rotation: -7, autoAlpha: 0, duration: 1.3 }, 0.1)
-      .from(chars ? chars.chars : name, { yPercent: 115, duration: 1.15, stagger: 0.028 }, 0.3)
-      .from(roles, { y: 14, autoAlpha: 0, duration: 0.8, stagger: 0.08 }, 0.85)
-      .from(line, { y: 14, autoAlpha: 0, duration: 0.8 }, 1.0)
-      /* the cover swings toward you and up over the top, like opening a matchbook */
-      .to(lid, { rotationX: 120, duration: 1.4, ease: 'expo.inOut' }, 1.1)
-      /* ...and once the match is lit it folds the rest of the way back and falls away, leaving a clean frame */
-      .to(lid, { rotationX: 178, autoAlpha: 0, duration: 1.1, ease: 'power2.in' }, 3.1)
-      .to(header, { autoAlpha: 1, duration: 0.9 }, 1.5);
-    if (video) {
-      tl.call(function () { try { video.currentTime = 0; video.play().catch(function () { gsap.set(photo, { autoAlpha: 1 }); }); } catch (e) { gsap.set(photo, { autoAlpha: 1 }); } }, null, 1.2)
-        .to(photo, { autoAlpha: 1, duration: 1.4, ease: 'power2.inOut' }, 4.4)
-        .from(photo, { scale: 1.12, duration: 2.4 }, 4.4)
-        .call(function () { video.pause(); }, null, 6);
-    }
+    heroReady = function () {
+      gsap.timeline({ defaults: { ease: EASE } })
+        .to(win, { clipPath: 'inset(0% 0% 0% 0% round 14px)', duration: 1.3, ease: 'expo.inOut' }, 0)
+        .from(photo, { scale: 1.25, duration: 1.8 }, 0.1)
+        .fromTo(n1, { autoAlpha: 0, x: 60 }, { autoAlpha: 1, x: 0, duration: 1.3 }, 0.55)
+        .fromTo(n2, { autoAlpha: 0, x: -60 }, { autoAlpha: 1, x: 0, duration: 1.3 }, 0.55)
+        .fromTo(roles, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.9 }, 1.0)
+        .to(header, { autoAlpha: 1, duration: 0.9 }, 1.0);
+    };
 
-    /* scrolling away: the two lines of the name drift apart, the matchbook lifts and tilts */
-    mm.add('(min-width: 960px)', function () {
-      var st = { trigger: intro, start: 'top top', end: 'bottom top', scrub: 0.6 };
-      gsap.to('.nm-1', { xPercent: -5, ease: 'none', scrollTrigger: st });
-      gsap.to('.nm-2', { xPercent: 7, ease: 'none', scrollTrigger: st });
-      gsap.to('.book-wrap', { yPercent: -14, rotation: 3, ease: 'none', scrollTrigger: st });
+    mm.add('(min-width: 900px)', function () {
+      var tl = gsap.timeline({
+        scrollTrigger: { trigger: hero, start: 'top top', end: '+=120%', scrub: 0.7, pin: true, anticipatePin: 1 }
+      });
+      tl.to(n1, { xPercent: -40, autoAlpha: 0, ease: 'none' }, 0)
+        .to(n2, { xPercent: 40, autoAlpha: 0, ease: 'none' }, 0)
+        .to(roles, { autoAlpha: 0, y: 20, ease: 'none' }, 0)
+        .to(win, { width: '100vw', height: '100svh', borderRadius: 0, ease: 'none' }, 0)
+        .to(photo, { scale: 1.06, ease: 'none' }, 0);
     });
+  }
+
+  if (loaderActive) {
+    SP.store.set('sp-loader-c', '1');
+    var video = loader.querySelector('.ld-video');
+    var ldName = loader.querySelector('.ld-name');
+    var finish = function () {
+      if (finish.done) return; finish.done = true;
+      gsap.timeline({ onComplete: function () { loader.remove(); root.classList.add('is-loaded'); } })
+        .to(ldName, { autoAlpha: 0, y: -20, duration: 0.5, ease: 'power2.in' }, 0)
+        .to(loader, { yPercent: -100, duration: 1.1, ease: 'expo.inOut' }, 0.15)   /* the curtain rises */
+        .call(heroReady, null, 0.6);
+    };
+    var start = function () {
+      try { video.currentTime = 0; } catch (e) {}
+      var p = video.play();
+      video.classList.add('is-on');
+      if (p && p.catch) p.catch(function () { finish(); });
+      gsap.fromTo(ldName, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 1, ease: EASE, delay: 1.1 });
+      gsap.delayedCall(3.2, finish);
+    };
+    if (video.readyState >= 2) start(); else { video.addEventListener('loadeddata', start, { once: true }); gsap.delayedCall(2.5, function () { if (!video.classList.contains('is-on')) finish(); }); }
+    loader.addEventListener('click', finish);
+  } else {
+    if (loader) loader.remove();
+    root.classList.add('is-loaded');
+    heroReady();
   }
 
   /* ---------- masked line reveals for statement text ---------- */
@@ -128,20 +156,25 @@
     });
   });
 
-  /* ---------- stacked cards: each settles back as the next slides over it ---------- */
-  mm.add('(min-width: 960px)', function () {
-    var cards = gsap.utils.toArray('.stack-card');
-    cards.forEach(function (card, i) {
-      var next = cards[i + 1];
-      if (!next) return;
-      gsap.to(card.querySelector('.sc-inner'), {
-        scale: 0.93, filter: 'brightness(.97)', ease: 'none',
-        scrollTrigger: { trigger: next, start: 'top bottom', end: 'top 20%', scrub: true }
+  /* ---------- pinned sideways track (desktop) ---------- */
+  mm.add('(min-width: 900px)', function () {
+    var track = document.querySelector('.track');
+    var list = document.querySelector('.track-list');
+    if (!track || !list) return;
+    var distance = function () { return Math.max(0, list.scrollWidth - window.innerWidth); };
+    var move = gsap.to(list, {
+      x: function () { return -distance(); }, ease: 'none',
+      scrollTrigger: { trigger: track, start: 'top top', end: function () { return '+=' + distance(); }, scrub: 0.8, pin: true, anticipatePin: 1, invalidateOnRefresh: true }
+    });
+    list.querySelectorAll('.tc-media:not(.tc-logo) img').forEach(function (img) {
+      gsap.fromTo(img, { xPercent: -5 }, {
+        xPercent: 5, ease: 'none',
+        scrollTrigger: { trigger: img.parentNode, containerAnimation: move, start: 'left right', end: 'right left', scrub: true }
       });
     });
   });
-  mm.add('(max-width: 959px)', function () {
-    gsap.utils.toArray('.stack-card').forEach(function (c) {
+  mm.add('(max-width: 899px)', function () {
+    gsap.utils.toArray('.track-card').forEach(function (c) {
       gsap.from(c, { y: 40, autoAlpha: 0, duration: 1, ease: EASE, scrollTrigger: { trigger: c, start: 'top 88%', once: true } });
     });
   });
