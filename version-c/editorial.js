@@ -156,20 +156,54 @@
   if (loaderActive) {
     var video = loader.querySelector('.ld-video');
     var ldName = loader.querySelector('.ld-name');
+    var glow = document.createElement('div');
+    glow.className = 'ld-glow';
+    document.body.appendChild(glow);   /* above the dark layer, so the revealed page looks lit by it */
+
+    /* where the flame sits on screen: the video is 1920x1080, cover-fitted at object-position 62% 50%,
+       and the lit match settles at about 69% across, 40% down the frame */
+    var flame = function () {
+      var vw = window.innerWidth, vh = window.innerHeight;
+      var sc = Math.max(vw / 1920, vh / 1080), w = 1920 * sc, h = 1080 * sc;
+      return { x: (vw - w) * 0.62 + 0.69 * w, y: (vh - h) * 0.5 + 0.40 * h };
+    };
+    var place = function () {
+      var f = flame();
+      loader.style.setProperty('--fx', f.x + 'px');
+      loader.style.setProperty('--fy', f.y + 'px');
+      glow.style.left = f.x + 'px'; glow.style.top = f.y + 'px';
+      /* her name sits just left of the flame, at its height, as if lit by it */
+      var nw = ldName.offsetWidth;
+      ldName.style.left = Math.max(16, f.x - nw - Math.max(28, window.innerWidth * 0.035)) + 'px';
+      ldName.style.top = (f.y - ldName.offsetHeight * 0.55) + 'px';
+    };
+    place();
+    window.addEventListener('resize', place);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+
     var finish = function () {
       if (finish.done) return; finish.done = true;
-      gsap.timeline({ onComplete: function () { loader.remove(); root.classList.add('is-loaded'); } })
-        .to(ldName, { autoAlpha: 0, y: -20, duration: 0.5, ease: 'power2.in' }, 0)
-        .to(loader, { yPercent: -100, duration: 1.1, ease: 'expo.inOut' }, 0.15)   /* the curtain rises */
-        .call(heroReady, null, 0.6);
+      place();
+      gsap.timeline({ onComplete: function () { window.removeEventListener('resize', place); loader.remove(); glow.remove(); root.classList.add('is-loaded'); } })
+        /* the warm light swells... */
+        .to(glow, { scale: 3.2, autoAlpha: 0.9, duration: 1.1, ease: 'power2.in' }, 0)
+        /* ...and spreads outward from the flame, dissolving the dark into the page */
+        .fromTo(loader, { '--r': '-26vmax' }, { '--r': '150vmax', duration: 2, ease: 'power2.inOut' }, 0.35)
+        .to(ldName, { autoAlpha: 0, duration: 0.9, ease: 'power1.in' }, 0.9)
+        .to(glow, { autoAlpha: 0, duration: 0.9, ease: 'power1.out' }, 1.5)
+        .call(heroReady, null, 1.2);
     };
     var start = function () {
       try { video.currentTime = 0; } catch (e) {}
       var p = video.play();
       video.classList.add('is-on');
       if (p && p.catch) p.catch(function () { finish(); });
-      gsap.fromTo(ldName, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 1, ease: EASE, delay: 1.1 });
-      gsap.delayedCall(3.2, finish);
+      /* the name catches the light just after the match does, with a faint flicker */
+      gsap.timeline({ delay: 1.15 })
+        .to(glow, { autoAlpha: 0.55, duration: 0.6, ease: 'power2.out' }, 0)
+        .fromTo(ldName, { autoAlpha: 0, filter: 'blur(6px)' }, { autoAlpha: 1, filter: 'blur(0px)', duration: 1.3, ease: 'power2.out' }, 0.15)
+        .to(ldName, { opacity: 0.86, duration: 0.12, repeat: 7, yoyo: true, ease: 'sine.inOut' }, 1.5);
+      gsap.delayedCall(3.7, finish);
     };
     if (video.readyState >= 2) start(); else { video.addEventListener('loadeddata', start, { once: true }); gsap.delayedCall(2.5, function () { if (!video.classList.contains('is-on')) finish(); }); }
     loader.addEventListener('click', finish);
