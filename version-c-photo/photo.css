@@ -40,3 +40,56 @@
 }
 .book-photo { position: relative; }
 .book-photo { padding: 0 !important; height: auto !important; }
+
+/* ---------- Cherry Lane: a printed red cover flips up and the inside of the lid appears ---------- */
+.mbp-cover { display: none; }
+@media (min-width: 900px) {
+  .tc-photo.tc-cherry-lane { width: min(34vw, calc(64svh / 1.9), 360px) !important; }
+  .mbp-lid .mbp { perspective: 1500px; }
+  .mbp-lid .mbp-base { clip-path: inset(var(--hinge) 0 0 0); transition: clip-path .85s cubic-bezier(.22, .8, .2, 1) .12s; }
+  .track-card.is-open .mbp-lid .mbp-base { clip-path: inset(0 0 0 0); }
+  .mbp-cover {
+    display: grid; place-items: center; position: absolute; left: 0; right: 0; top: var(--hinge); height: calc(var(--striker) - var(--hinge) + .8%);
+    border-radius: 3px; background: radial-gradient(120% 90% at 40% 30%, #D8392F, #B32823 70%, #9E2420);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12), 0 10px 18px -12px rgba(60, 10, 8, .55);
+    transform-origin: 50% 0; transform: rotateX(0deg); backface-visibility: hidden;
+    transition: transform .85s cubic-bezier(.22, .8, .2, 1);
+  }
+  .mbp-cover span {
+    padding: 14px 8%; border-top: 1px solid rgba(246, 235, 221, .7); border-bottom: 1px solid rgba(246, 235, 221, .7);
+    font: 400 clamp(17px, 1.7vw, 25px)/1.15 var(--display); letter-spacing: .16em; text-transform: uppercase; text-align: center; color: #F6EBDD;
+  }
+  .track-card.is-open .mbp-lid .mbp-cover { transform: rotateX(178deg); }
+  .mbp-lid + .mbp-text, .mbp-lid .mbp-text { font-size: clamp(11.5px, .95vw, 14px); }
+}
+
+/* ---------- Iron Bloom: the tray slides out of the sleeve, the paper sheet swings out beside it ---------- */
+@media (min-width: 900px) {
+  .tc-photo.tc-iron-bloom { width: min(44vw, calc(64svh * 1.31), 620px) !important; }
+  .mbp-drawer .mbp-base { clip-path: inset(0 calc(100% - var(--split)) calc(100% - var(--sleeve)) 0); z-index: 2; }
+  .mbp-drawer .mbp-tray { clip-path: inset(var(--sleeve) calc(100% - var(--split)) 0 0); z-index: 1;
+    transform: translateY(-33%); transition: transform .9s cubic-bezier(.22, .8, .2, 1); }
+  .track-card.is-open .mbp-drawer .mbp-tray { transform: translateY(0); }
+  .mbp-drawer .mbp-flap { clip-path: inset(0 0 0 var(--paper)); transform-origin: var(--paper) 50%; transition-delay: .15s; }
+}
+
+/* phones: each photo shows open, sized to its shape, with the text below */
+@media (max-width: 899px) {
+  .tc-photo .mbp-tray { display: none; }
+  .tc-cherry-lane .mbp { width: min(52%, 220px); }
+  .tc-iron-bloom .mbp { width: min(36%, 150px); }
+}
+@media (min-width: 900px) {
+  .track-list { gap: clamp(56px, 7vw, 120px) !important; }
+}
+@media (min-width: 900px) {
+  /* sit the row lower so the tall Cherry Lane lid has room under the header when it opens */
+  .track-list { padding-top: 14svh !important; }
+}
+@media (min-width: 900px) {
+  /* text scales with its own matchbook, so it always fits the paper at any screen size */
+  .book-photo { container-type: inline-size; }
+  .mbp-fold .mbp-text { font-size: 1.95cqw !important; }
+  .mbp-drawer .mbp-text { font-size: 2.45cqw !important; }
+  .mbp-lid .mbp-text { font-size: 4.35cqw !important; }
+}
