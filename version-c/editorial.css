@@ -274,3 +274,67 @@ em.c-sub { display: block; font-variant-caps: normal; font-size: 15px; letter-sp
   .nav-link { font-size: 15px; }
   .site-header .btn { min-height: 38px; padding: 0 14px; font-size: 14.5px; }
 }
+
+/* =====================================================================
+   Restraint pass (Framer guidance: two fonts, a small fixed set of sizes,
+   one content width, consistent spacing, no decoration that isn't doing a job).
+   Type scale: 15 / 17 / 22 / 32 / 48 / display. Spacing: multiples of 8.
+   One radius (4px). No shadows. No tracked all-caps labels.
+   ===================================================================== */
+:root { --r: 4px; --max: 1200px; }
+
+/* labels become plain text, sentence case */
+.hero-roles, .welcome-title, .tc-role, .sc-role, .tagline, .cue, .jar-hint, .credits-head, .field label {
+  font-family: var(--sans); font-weight: 400; font-size: 15px; letter-spacing: 0; text-transform: none;
+}
+.hero-roles { color: var(--ink); font-size: 17px; }
+.welcome-title { color: var(--muted); font-size: 17px; margin-bottom: 24px; }
+.tc-role { color: var(--muted); margin: 16px 0 4px; }
+.tagline { color: var(--muted); font-size: 17px; }
+.cue { color: var(--red-text); font-weight: 500; }
+.jar-hint { color: var(--muted); }
+.credits-head { color: var(--ink); font-weight: 500; font-size: 15px; padding-bottom: 8px; }
+.field label { color: var(--ink); font-weight: 500; }
+.intro-roles li::before { display: none; }
+
+/* header: solid, not frosted glass */
+.site-header.is-scrolled { background: var(--paper); -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 1px 0 var(--hair); }
+
+/* buttons: rectangular, navy; red stays for the match and small accents */
+.btn, .contact-form .pill { border-radius: var(--r); background: var(--ink); color: #fff; }
+.btn:hover, .contact-form .pill:hover { background: var(--red-text); transform: none; }
+.btn[aria-current="page"] { background: var(--red-text); }
+
+/* one radius, no shadows */
+.hero-window { border-radius: var(--r); box-shadow: none; }
+.tc-media, .pic .ph, .frame-a .ph, .band, .outro-photo { border-radius: var(--r); }
+.frame-a .ph { outline: none; }
+.frame-f .ph { border-radius: var(--r); }
+.frame-d .ph { border-radius: var(--r) var(--r) 0 0; }
+.frame-d::after { border-radius: 0 0 var(--r) var(--r); }
+.jbk-cover { border-radius: 2px; }
+
+/* left-aligned editorial layout, one content width */
+.welcome { max-width: var(--max); padding-left: var(--g); padding-right: var(--g); display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; }
+.welcome > * { grid-column: 1 / -1; }
+.welcome-text { font-size: clamp(26px, 3vw, 44px); line-height: 1.2; text-wrap: pretty; }
+@media (min-width: 900px) {
+  .welcome-title { grid-column: 1 / 4; padding-top: .55em; }
+  .welcome-text { grid-column: 4 / -1; }
+}
+.track-pin, .track-title { max-width: none; }
+.section-title { font-size: clamp(32px, 4vw, 56px); }
+.about-intro, .resume, .contact { max-width: var(--max); }
+.page-about .about-intro::before { display: none; }
+
+/* outro: a plain link beside a photo, no overlay panel */
+.outro { max-width: var(--max); margin: clamp(96px, 14vh, 160px) auto 0; padding: 0 var(--g); min-height: 0; display: grid; gap: 32px; align-items: end; background: none; border-radius: 0; overflow: visible; }
+.outro::after { display: none; }
+.outro-photo { position: static; inset: auto; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.outro-link { padding: 0; text-align: left; color: var(--ink); font-size: clamp(40px, 5.6vw, 84px); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .12em; text-decoration-color: var(--red); }
+.outro-link:hover { color: var(--red-text); }
+@media (min-width: 900px) { .outro { grid-template-columns: 1fr 1.2fr; } }
+
+/* footer: quiet */
+.site-footer { background: var(--paper); margin-top: clamp(96px, 14vh, 160px); }
+.footer-inner { border-top: 1px solid var(--hair); }
