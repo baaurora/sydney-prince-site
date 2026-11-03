@@ -12,11 +12,20 @@ Two design directions for [sydneyhprince.com](https://www.sydneyhprince.com), bu
 
 Version B's dark palette is a bigger departure from her current light site. If she wants to stay closer to what she has, A is the safer pick.
 
+## Version C: Editorial (newest)
+
+Branch `version-c-editorial`, folder `version-c/`. A professional rebuild modelled on jeremiebouchard.com:
+- White page, one tomato red, Tanker (Fontshare, free) for display, Fraunces for text.
+- Motion: GSAP + ScrollTrigger + SplitText and Lenis smooth scroll (the code equivalents of Framer's appear, scroll-transform, pin and text effects), View Transitions between pages.
+- Home intro: role words land, a window opens on a real match striking (Pexels video), Sydney fades in, and scrolling grows the window to full bleed. "What's Happening" is a pinned horizontal track.
+- Free stock photos (credits in `assets/img/stock/CREDITS.md`). Photo slots in `assets/img/objects/` fill automatically from the briefs in `docs/photoreal-briefs.md`.
+
 ## Branches
 
 - `main` — both versions plus the side-by-side comparison page at `/index.html`.
 - `version-a-matchbook` — the shared scaffold + Version A only.
 - `version-b-spotlight` — the shared scaffold + Version B only.
+- `version-c-editorial` — Version A's base plus the new Version C.
 
 ## Layout
 

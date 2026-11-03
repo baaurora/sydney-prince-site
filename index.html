@@ -22,7 +22,8 @@
   header h1 { font: 500 clamp(30px, 4.5vw, 48px)/1.1 'Fraunces', Georgia, serif; }
   header p { color: var(--muted); max-width: 70ch; margin-top: 10px; }
   .grid { display: grid; gap: 24px; margin-top: 32px; }
-  @media (min-width: 1000px) { .grid { grid-template-columns: 1fr 1fr; } .wrap { padding: 48px 32px 80px; } }
+  @media (min-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } .wrap { padding: 48px 32px 80px; } }
+  .option.featured { grid-column: 1 / -1; }
   .option { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
   .option h2 { font: 500 28px/1.15 'Fraunces', Georgia, serif; }
   .option .idea { color: var(--muted); }
@@ -49,6 +50,19 @@
   </header>
 
   <div class="grid">
+    <section class="option featured" aria-labelledby="c-h">
+      <h2 id="c-h">C. Editorial (newest)</h2>
+      <p class="idea">Rebuilt for a professional finish, modelled on jeremiebouchard.com: one tomato red, a condensed display face, a real match-strike video that opens into Sydney's photo, a pinned sideways "What's Happening" track, and smooth scroll. Free stock photos replace the drawings.</p>
+      <div class="swatches" aria-label="Palette">
+        <span><i style="background:#FFFCF7"></i>#FFFCF7</span><span><i style="background:#E8452C"></i>#E8452C</span><span><i style="background:#1A1614"></i>#1A1614</span>
+      </div>
+      <div class="frame"><iframe src="version-c/index.html" title="Version C preview" loading="lazy" data-key="sp-loader-c"></iframe></div>
+      <div class="actions">
+        <a class="btn primary" href="version-c/index.html">Open Version C</a>
+        <button class="btn" type="button" data-replay="0">Replay intro</button>
+      </div>
+      <p class="pages">Pages: <a href="version-c/index.html">Home</a> · <a href="version-c/about.html">About</a> · <a href="version-c/resume.html">Resumes</a> · <a href="version-c/contact.html">Contact</a></p>
+    </section>
     <section class="option" aria-labelledby="a-h">
       <h2 id="a-h">A. The Matchbook</h2>
       <p class="idea">Her site as a vintage venue matchbook from her collection. Warm, collected, a little nostalgic. Photos are tilted matchbook covers that lift and straighten; the loader strikes a match.</p>
@@ -58,7 +72,7 @@
       <div class="frame"><iframe src="version-a/index.html" title="Version A preview" loading="lazy" data-key="sp-loader-a"></iframe></div>
       <div class="actions">
         <a class="btn primary" href="version-a/index.html">Open Version A</a>
-        <button class="btn" type="button" data-replay="0">Replay loader</button>
+        <button class="btn" type="button" data-replay="1">Replay loader</button>
       </div>
       <p class="pages">Pages: <a href="version-a/index.html">Home</a> · <a href="version-a/about.html">About</a> · <a href="version-a/resume.html">Resumes</a> · <a href="version-a/contact.html">Contact</a></p>
     </section>
@@ -72,7 +86,7 @@
       <div class="frame"><iframe src="version-b/index.html" title="Version B preview" loading="lazy" data-key="sp-loader-b"></iframe></div>
       <div class="actions">
         <a class="btn primary" href="version-b/index.html">Open Version B</a>
-        <button class="btn" type="button" data-replay="1">Replay loader</button>
+        <button class="btn" type="button" data-replay="2">Replay loader</button>
       </div>
       <p class="pages">Pages: <a href="version-b/index.html">Home</a> · <a href="version-b/about.html">About</a> · <a href="version-b/resume.html">Resumes</a> · <a href="version-b/contact.html">Contact</a></p>
     </section>
