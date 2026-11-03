@@ -104,3 +104,27 @@ h3, .jar-name { font-weight: 700; letter-spacing: .01em; }
   .hero-roles { font-size: clamp(28px, 3.55vw, 70px) !important; }
 }
 @media (max-width: 899px) { .hero-name { --ns: 10vw !important; } }
+
+/* ---------- straight edges: no rounded corners, no tilts, no lifts ---------- */
+*, *::before, *::after { border-radius: 0 !important; }
+.logo-mark rect { rx: 0; ry: 0; }
+.intro-l, .intro-m, .intro-r, .side.r, .side.l, .obj-pair .obj, .obj-float { rotate: none !important; }
+.intro-l, .intro-r { translate: none !important; }
+.btn:hover, .btn:focus-visible { transform: none !important; translate: none !important; }
+.jar-items li:hover { translate: none !important; }
+.jar-items li { transition-duration: .28s !important; transition-timing-function: ease-out !important; }
+.pic:hover img, .track-card:hover .sq-front img { scale: 1 !important; }
+/* quicker, flatter matchbook openings (no overshoot) */
+.mbp-flap, .mbp-tray, .mbp-cover { transition-duration: .55s !important; transition-timing-function: cubic-bezier(.3, 0, .2, 1) !important; }
+.track-card.is-open .mbp-text { transition-delay: .4s !important; }
+
+/* the hand-drawn red pen marks become plain red text */
+.mk svg, .mk-circle, .mk-under { display: none !important; }
+.mk { color: var(--red-text); }
+.mk::before, .mk::after { display: none !important; }
+
+/* About: highlighted phrases are simply bold ivory caps (no sweep) */
+.ink, .motion-ready .ink, .js:not(.no-motion) .ink { background: none !important; -webkit-background-clip: border-box !important; background-clip: border-box !important; color: var(--ink) !important; }
+.mk-u, .mk-u.is-in { background: none !important; }
+.mk { white-space: normal; }
+.about-intro .pic .ph, .book .pic .ph { border-radius: 0 !important; }

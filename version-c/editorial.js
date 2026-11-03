@@ -8,6 +8,8 @@
   'use strict';
 
   var root = document.documentElement;
+  /* Version D runs a quieter motion set: quick fades only, no drops, glides, tilts or scaling */
+  var QUIET = document.body.classList.contains('theme-d');
   var reduce = SP.reducedMotion();
   var hasGsap = !!(window.gsap && window.ScrollTrigger);
 
@@ -156,7 +158,7 @@
     var header = document.querySelector('.site-header');
     var chars = split(inner, 'chars');
     gsap.set(header, { autoAlpha: 0 });
-    gsap.set(win, { autoAlpha: 0, y: -90, filter: 'blur(10px)' });
+    gsap.set(win, QUIET ? { autoAlpha: 0 } : { autoAlpha: 0, y: -90, filter: 'blur(10px)' });
     gsap.set(roles, { autoAlpha: 0 });
     root.classList.add('motion-ready');
 
@@ -165,15 +167,16 @@
     heroReady = function (afterLoader) {
       var tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
       /* the photo fades up out of the blue first, then drops softly into place */
-      tl.to(win, { autoAlpha: 1, filter: 'blur(0px)', duration: 1.0, ease: 'power1.out' }, 0)
+      if (QUIET) tl.to(win, { autoAlpha: 1, duration: 0.6, ease: 'power1.out' }, 0);
+      else tl.to(win, { autoAlpha: 1, filter: 'blur(0px)', duration: 1.0, ease: 'power1.out' }, 0)
         .to(win, { y: 0, duration: 1.2, ease: 'power3.inOut' }, 0.25)
         .to(header, { autoAlpha: 1, duration: 1 }, 1.0);
-      if (!afterLoader) tl.from(chars ? chars.chars : inner, { yPercent: 110, duration: 1.3, stagger: 0.035 }, 0.35);
+      if (!afterLoader) tl.from(QUIET ? inner : (chars ? chars.chars : inner), QUIET ? { autoAlpha: 0, duration: 0.5 } : { yPercent: 110, duration: 1.3, stagger: 0.035 }, QUIET ? 0.1 : 0.35);
       /* once everything has landed, undo the letter split so no mask can clip a descender */
       tl.eventCallback('onComplete', function () { if (chars) chars.revert(); });
       /* on phones the roles sit under the name from the start; on desktop they wait for the scroll */
-      if (glide) glide(tl, 1.2);
-      if (!window.matchMedia('(min-width: 900px)').matches) tl.fromTo(roles, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.2 }, afterLoader ? 0.2 : 0.9);
+      if (glide) glide(tl, QUIET ? 0.45 : 1.2);
+      if (!window.matchMedia('(min-width: 900px)').matches) tl.fromTo(roles, { autoAlpha: 0, y: QUIET ? 0 : 24 }, { autoAlpha: 1, y: 0, duration: QUIET ? 0.45 : 1.2 }, afterLoader ? 0.2 : 0.9);
     };
 
     /* desktop: once the photo has landed, it and her name glide to the left on their own (the name
@@ -183,8 +186,12 @@
       var lines = roles.querySelectorAll('.hr-1, .hr-2, .hr-3');
       var shift = function () { return -window.innerWidth * 0.2; };
       gsap.set(roles, { autoAlpha: 1 });
-      gsap.set(lines, { autoAlpha: 0, y: 50 });
-      glide = function (tl, at) {
+      gsap.set(lines, { autoAlpha: 0, y: QUIET ? 0 : 50 });
+      if (QUIET) {
+        /* the photo and name sit in their final place from the start; the roles fade in beside them */
+        gsap.set(win, { x: shift() }); gsap.set(inner, { x: shift() });
+        glide = function (tl, at) { tl.to(lines, { autoAlpha: 1, duration: 0.35, stagger: 0.12, ease: 'power1.out' }, at); };
+      } else glide = function (tl, at) {
         tl.to(win, { x: shift, duration: 1.3, ease: 'power3.inOut' }, at)
           .to(inner, { x: shift, duration: 1.3, ease: 'power3.inOut' }, at)
           .to(lines, { autoAlpha: 1, y: 0, duration: 1.0, stagger: 0.14, ease: 'expo.out' }, at + 0.7);
@@ -307,14 +314,17 @@
     var tsplit = split(title, 'chars');
     var prints = gsap.utils.toArray('.about-intro .pic');
     var tl = gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.15, onComplete: function () { if (tsplit) tsplit.revert(); } });
-    if (tsplit) tl.from(tsplit.chars, { yPercent: 110, duration: 1.2, stagger: 0.025 }, 0);
-    tl.from(intro.querySelector('.tagline'), { autoAlpha: 0, y: 16, duration: 1 }, 0.4);
+    if (QUIET) tl.from(title, { autoAlpha: 0, duration: 0.5, ease: 'power1.out' }, 0);
+    else if (tsplit) tl.from(tsplit.chars, { yPercent: 110, duration: 1.2, stagger: 0.025 }, 0);
+    tl.from(intro.querySelector('.tagline'), { autoAlpha: 0, y: QUIET ? 0 : 16, duration: QUIET ? 0.5 : 1 }, QUIET ? 0.2 : 0.4);
     prints.forEach(function (pic, i) {
       var dir = i % 2 ? 1 : -1;
+      if (QUIET) { tl.from(pic, { autoAlpha: 0, duration: 0.5, ease: 'power1.out' }, 0.25 + i * 0.1); return; }
       tl.from(pic, { y: 160, x: dir * 60, rotation: dir * 12, scale: 0.86, autoAlpha: 0, duration: 1.7 }, 0.25 + i * 0.16);
       tl.from(pic.querySelector('img'), { scale: 1.25, duration: 2.2 }, 0.25 + i * 0.16);
     });
     mm.add('(min-width: 900px)', function () {
+      if (QUIET) return;
       prints.forEach(function (pic, i) {
         gsap.to(pic, { yPercent: [-14, -6, -22][i % 3], ease: 'none', scrollTrigger: { trigger: intro, start: 'top top', end: 'bottom top', scrub: true } });
       });
@@ -322,6 +332,7 @@
   }
   gsap.utils.toArray('.book .pic').forEach(function (pic) {
     var dir = (pic.classList.contains('l') ? -1 : 1) * (window.innerWidth < 900 ? 0 : 1);
+    if (QUIET) { gsap.from(pic, { autoAlpha: 0, duration: 0.45, ease: 'power1.out', scrollTrigger: { trigger: pic, start: 'top 88%', once: true } }); return; }
     gsap.from(pic, { y: 120, x: dir * 50, rotation: dir * 9, autoAlpha: 0, duration: 1.5, ease: 'expo.out', scrollTrigger: { trigger: pic, start: 'top 88%', once: true } });
     gsap.from(pic.querySelector('img'), { scale: 1.2, duration: 2, ease: 'expo.out', scrollTrigger: { trigger: pic, start: 'top 88%', once: true } });
   });
@@ -330,7 +341,7 @@
     gsap.fromTo(el, { '--p': 0 }, { '--p': 1, ease: 'none', scrollTrigger: { trigger: el, start: 'top 85%', end: 'top 55%', scrub: 0.6 } });
   });
   var jarEl = document.querySelector('.jar');
-  if (jarEl) gsap.from(jarEl, { y: 80, scale: 0.92, autoAlpha: 0, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: jarEl, start: 'top 85%', once: true } });
+  if (jarEl) gsap.from(jarEl, QUIET ? { autoAlpha: 0, duration: 0.5, ease: 'power1.out', scrollTrigger: { trigger: jarEl, start: 'top 85%', once: true } } : { y: 80, scale: 0.92, autoAlpha: 0, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: jarEl, start: 'top 85%', once: true } });
 
   /* fonts change line breaks; re-measure once they're in */
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
