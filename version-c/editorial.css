@@ -73,7 +73,7 @@ main { display: block; }
 .ld-name {
   position: absolute; margin: 0; white-space: nowrap; z-index: 2; opacity: 0;
   font: 400 clamp(30px, 3.6vw, 54px)/1 var(--display); font-variation-settings: 'opsz' 72; letter-spacing: -.01em;
-  color: #FFE7C4; text-shadow: 0 0 2px rgba(255, 214, 160, .7), 0 0 26px rgba(255, 168, 82, .55), 0 0 60px rgba(255, 140, 60, .25);
+  color: #F4EDE4;
 }
 .ld-glow { position: fixed; width: 46vmax; height: 46vmax; margin: -23vmax 0 0 -23vmax; border-radius: 50%; z-index: 101; opacity: 0; pointer-events: none;
   background: radial-gradient(circle, rgba(255, 178, 96, .42), rgba(255, 150, 70, .16) 42%, transparent 70%); mix-blend-mode: normal; }
