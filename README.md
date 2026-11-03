@@ -8,7 +8,7 @@ Two design directions for [sydneyhprince.com](https://www.sydneyhprince.com), bu
 | Palette | cream `#F6EEDF`, tomato red `#D9442B`, ink `#1F1B18`, striker brown `#8A6A4F` | house black `#141214`, spot gold `#F2C46D`, velvet red `#7A1F2B`, white |
 | Loader | Pencil-sketched matchbook draws in, a match strikes, the flame catches, the glow fades into the page | "Standby..." then "Go." then a circle of light opens to reveal the page |
 | Signature | Photos as tilted matchbook covers that lift, straighten and spring back; "What's happening" cards whose flaps flip open | A soft spotlight follows the cursor and brightens the dimmed photos it passes |
-| Folder / branch | `version-a/` · branch `version-a-matchbook` | `version-b/` · branch `version-b-spotlight` |
+| Folder / branch | `version-a/` · branch `version-a-matchbook` | `version-c/` · branch `version-c-editorial` |
 
 Version B's dark palette is a bigger departure from her current light site. If she wants to stay closer to what she has, A is the safer pick.
 
@@ -24,7 +24,7 @@ Branch `version-c-editorial`, folder `version-c/`. A professional rebuild modell
 
 - `main` — both versions plus the side-by-side comparison page at `/index.html`.
 - `version-a-matchbook` — the shared scaffold + Version A only.
-- `version-b-spotlight` — the shared scaffold + Version B only.
+- `version-c-editorial` — Version C (Editorial).
 - `version-c-editorial` — Version A's base plus the new Version C.
 
 ## Layout
@@ -32,7 +32,7 @@ Branch `version-c-editorial`, folder `version-c/`. A professional rebuild modell
 ```
 index.html            comparison page (main only)
 version-a/            index, about, resume, contact + matchbook.css/js
-version-b/            index, about, resume, contact + spotlight.css/js
+version-c/            index, about, resume, contact + editorial.css/js
 shared/site.js        loader-once-per-session, scroll reveal, touch fallbacks, mailto form
 shared/base.css       reset, skip link, reduced-motion rules
 shared/content.md     verbatim copy reference
@@ -48,7 +48,7 @@ Any static server works. From the repo root:
 python3 -m http.server 8080
 ```
 
-Then open http://localhost:8080 (comparison), http://localhost:8080/version-a/ or http://localhost:8080/version-b/.
+Then open http://localhost:8080 (comparison), http://localhost:8080/version-a/ or http://localhost:8080/version-c/.
 
 The loader plays once per browser tab session. To see it again, open a new tab or run `sessionStorage.clear()` in the console. It is skipped entirely when the OS has "reduce motion" turned on.
 
@@ -56,9 +56,9 @@ The loader plays once per browser tab session. To see it again, open a new tab o
 
 1. Push to GitHub (already done for `baaurora/sydney-prince-site`).
 2. Repo → **Settings → Pages** → Source: **Deploy from a branch** → Branch: `main`, folder `/ (root)` → Save.
-3. After a minute the site is live at `https://<user>.github.io/sydney-prince-site/`, with each version at `/version-a/` and `/version-b/`.
+3. After a minute the site is live at `https://<user>.github.io/sydney-prince-site/`, with each version at `/version-a/` and `/version-c/`.
 
-To preview one direction on its own, point Pages at `version-a-matchbook` or `version-b-spotlight` instead. To use a custom domain, add it under Settings → Pages and point DNS at GitHub (A records to the four GitHub Pages IPs, or a CNAME for `www`).
+To preview one direction on its own, point Pages at `version-a-matchbook` or `version-c-editorial` instead. To use a custom domain, add it under Settings → Pages and point DNS at GitHub (A records to the four GitHub Pages IPs, or a CNAME for `www`).
 
 ## Contact form
 
@@ -70,7 +70,7 @@ Squarespace keeps its own page structure, so the simplest path is to keep the ex
 
 1. **Host the assets.** Either keep this repo on GitHub Pages and reference the CSS/JS by URL, or paste the file contents directly into Squarespace.
 2. **Fonts.** In Settings → Advanced → Code Injection → **Header**, add the Google Fonts `<link>` tags from the top of any page in the version you picked.
-3. **Styles.** Paste the version's CSS (`version-a/matchbook.css` or `version-b/spotlight.css`) into **Design → Custom CSS**. Selectors are written for this repo's markup, so expect to retarget some of them to Squarespace classes (`.header`, `.sqs-block-image`, `.gallery-grid-item`, etc.). Palette and type tokens live in `:root` at the top of each file, so those carry over unchanged.
+3. **Styles.** Paste the version's CSS (`version-a/matchbook.css` or `version-c/editorial.css`) into **Design → Custom CSS**. Selectors are written for this repo's markup, so expect to retarget some of them to Squarespace classes (`.header`, `.sqs-block-image`, `.gallery-grid-item`, etc.). Palette and type tokens live in `:root` at the top of each file, so those carry over unchanged.
 4. **Loader.** Paste the `#loader` markup plus the small inline `<script>` from the page `<head>` into Code Injection → **Header**, and `shared/site.js` + the version's JS into **Footer**. The loader logic is self-contained and only needs `#loader` to exist.
 5. **Signature interactions.**
    - A: add the `photo-card` class to image blocks via a Code Block wrapper, or target `.sqs-block-image` in the CSS.
