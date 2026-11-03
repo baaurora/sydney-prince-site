@@ -48,3 +48,36 @@ html { background: var(--paper); color-scheme: dark; }
 /* photos and objects get a deeper shadow on charcoal */
 .pic .ph, .book .pic .ph, .about-intro .pic .ph { box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .7) !important; }
 .credit.is-focus { background: var(--peri-soft); }
+
+/* ---------- type: an all-caps grotesk for headings; running text stays in the clean sans ---------- */
+:root { --display: 'Clash Grotesk', 'Helvetica Neue', Arial, sans-serif; }
+h1, h2, h3, .hero-name, .hero-roles, .section-title, .page-title, .welcome-title, .lead, .jar-name, .footer-name,
+.footer-stack, .c-title, .bp-role, .outro-link, .vn-text, .tagline, .wordmark, .lid-name {
+  text-transform: uppercase; font-variation-settings: normal; font-style: normal;
+}
+.hero-name { font-weight: 500 !important; letter-spacing: .01em !important; }
+.hero-roles { font-weight: 400 !important; letter-spacing: .02em !important; }
+.section-title, .page-title, .welcome-title, .lead { font-weight: 500 !important; letter-spacing: .01em !important; }
+.page-title { font-size: clamp(44px, 7vw, 116px) !important; line-height: .95 !important; }
+.footer-stack { font-weight: 400 !important; letter-spacing: .02em; font-size: clamp(24px, 3vw, 44px) !important; }
+.footer-name { font-weight: 500 !important; letter-spacing: .04em; }
+.bp-role { font-weight: 500 !important; letter-spacing: .06em; font-size: 1.05em !important; }
+.c-title { font-variant-caps: normal !important; letter-spacing: .04em; font-size: 16px !important; font-weight: 500 !important; }
+h3, .jar-name { letter-spacing: .03em; font-weight: 500; }
+/* sentence-length text goes back to the sans, in normal case */
+.welcome-text, .lead-2, .c-role { font-family: var(--sans) !important; font-style: normal !important; text-transform: none; font-variation-settings: normal; }
+.welcome-text { font-weight: 400 !important; font-size: clamp(22px, 2.2vw, 32px) !important; line-height: 1.4 !important; }
+.lead-2 { font-size: clamp(18px, 1.6vw, 22px) !important; }
+/* inked phrases on About: sans caps instead of serif italic */
+.ink { font-family: var(--sans) !important; font-style: normal !important; text-transform: uppercase; letter-spacing: .05em; font-size: .9em !important; font-weight: 500; }
+@media (min-width: 900px) {
+  /* "SYDNEY PRINCE" in Clash Grotesk caps is about 7.34 times its size wide: keep it exactly the photo's width */
+  .hero-name { --ns: calc(var(--ww) / 7.34) !important; }
+  .hero-roles { font-size: clamp(36px, 4.5vw, 84px) !important; }
+}
+@media (max-width: 899px) {
+  .hero-name { --ns: 11.2vw !important; }
+}
+.hero-roles, .welcome-title, .tagline, .bp-role, .c-title, .jar-name, .section-title, .page-title { text-transform: uppercase !important; }
+/* caps "PRODUCTION MANAGER." is about 11.1 times its size wide; this keeps it inside the right margin */
+@media (min-width: 900px) { .hero-roles { font-size: clamp(30px, 3.95vw, 76px) !important; } }
