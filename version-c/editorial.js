@@ -90,7 +90,9 @@
       .from(roles, { y: 14, autoAlpha: 0, duration: 0.8, stagger: 0.08 }, 0.85)
       .from(line, { y: 14, autoAlpha: 0, duration: 0.8 }, 1.0)
       /* the cover swings toward you and up over the top, like opening a matchbook */
-      .to(lid, { rotationX: 125, duration: 1.5, ease: 'expo.inOut' }, 1.1)
+      .to(lid, { rotationX: 120, duration: 1.4, ease: 'expo.inOut' }, 1.1)
+      /* ...and once the match is lit it folds the rest of the way back and falls away, leaving a clean frame */
+      .to(lid, { rotationX: 178, autoAlpha: 0, duration: 1.1, ease: 'power2.in' }, 3.1)
       .to(header, { autoAlpha: 1, duration: 0.9 }, 1.5);
     if (video) {
       tl.call(function () { try { video.currentTime = 0; video.play().catch(function () { gsap.set(photo, { autoAlpha: 1 }); }); } catch (e) { gsap.set(photo, { autoAlpha: 1 }); } }, null, 1.2)
