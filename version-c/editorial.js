@@ -201,8 +201,7 @@
       /* the name catches the light just after the match does, with a faint flicker */
       gsap.timeline({ delay: 1.15 })
         .to(glow, { autoAlpha: 0.55, duration: 0.6, ease: 'power2.out' }, 0)
-        .fromTo(ldName, { autoAlpha: 0, filter: 'blur(6px)' }, { autoAlpha: 1, filter: 'blur(0px)', duration: 1.3, ease: 'power2.out' }, 0.15)
-        .to(ldName, { opacity: 0.86, duration: 0.12, repeat: 7, yoyo: true, ease: 'sine.inOut' }, 1.5);
+        .fromTo(ldName, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.3, ease: 'power2.out' }, 0.15);
       gsap.delayedCall(3.7, finish);
     };
     if (video.readyState >= 2) start(); else { video.addEventListener('loadeddata', start, { once: true }); gsap.delayedCall(2.5, function () { if (!video.classList.contains('is-on')) finish(); }); }
