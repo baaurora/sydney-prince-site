@@ -119,7 +119,7 @@
     var header = document.querySelector('.site-header');
     var chars = split(inner, 'chars');
     gsap.set(header, { autoAlpha: 0 });
-    gsap.set(win, { clipPath: 'inset(100% 0% 0% 0% round 4px)' });
+    gsap.set(win, { clipPath: 'inset(0% 0% 100% 0% round 4px)' });
     gsap.set(roles, { autoAlpha: 0 });
     root.classList.add('motion-ready');
 
@@ -157,15 +157,15 @@
   if (loaderActive) {
     var video = loader.querySelector('.ld-video');
     root.classList.add('ld-lit');
-    gsap.set(hero, { backgroundColor: 'rgba(11, 10, 12, 0)' });
+    gsap.set(hero, { backgroundColor: 'rgba(166, 198, 229, 0)' });
     if (nameEl) gsap.set(nameEl, { autoAlpha: 0 });
     var finish = function () {
       if (finish.done) return; finish.done = true;
-      gsap.timeline({ onComplete: function () { loader.remove(); root.classList.remove('ld-lit'); gsap.set(hero, { clearProps: 'backgroundColor' }); root.classList.add('is-loaded'); } })
+      gsap.timeline({ onComplete: function () { loader.remove(); root.classList.remove('ld-lit'); gsap.set(nameEl, { clearProps: 'color' }); gsap.set(hero, { clearProps: 'backgroundColor' }); root.classList.add('is-loaded'); } })
         .to(loader, { autoAlpha: 0, duration: 1.8, ease: 'power2.inOut' }, 0)
-        .to(hero, { backgroundColor: 'rgba(11, 10, 12, 1)', duration: 1.8, ease: 'power2.inOut' }, 0)
-        .to(nameEl, { autoAlpha: 1, duration: 0.6 }, 0)
-        .call(function () { heroReady(true); }, null, 0.5);
+        .to(hero, { backgroundColor: 'rgba(166, 198, 229, 1)', duration: 1.8, ease: 'power2.inOut' }, 0)
+        .to(nameEl, { autoAlpha: 1, color: "#1C1F3F", duration: 1.8, ease: "power2.inOut" }, 0)
+        .call(function () { heroReady(true); }, null, 1.1);
     };
     var start = function () {
       try { video.currentTime = 0; } catch (e) {}
