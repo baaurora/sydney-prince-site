@@ -67,47 +67,44 @@
 
   var mm = gsap.matchMedia();
 
-  /* ---------- home intro: words land, window opens, name rises ---------- */
+  /* ---------- home intro: the matchbook arrives, its lid flips open, the match strikes ---------- */
   var intro = document.querySelector('.intro');
   if (intro) {
-    var words = intro.querySelectorAll('.intro-words span');
-    var win = intro.querySelector('.intro-window');
+    var roles = intro.querySelectorAll('.intro-roles li');
+    var name = intro.querySelector('.intro-name .nm');
+    var line = intro.querySelector('.intro-line');
+    var book = intro.querySelector('.matchbook');
+    var lid = intro.querySelector('.mb-lid');
     var photo = intro.querySelector('.intro-photo');
     var video = intro.querySelector('.intro-video');
-    var name = intro.querySelector('.intro-name [aria-hidden]');
-    var foot = intro.querySelector('.intro-foot');
     var header = document.querySelector('.site-header');
     var chars = split(name, 'chars');
 
-    gsap.set([header, foot], { autoAlpha: 0 });
-    gsap.set(win, { clipPath: 'inset(50% 50% 50% 50% round 10px)' });
+    gsap.set(header, { autoAlpha: 0 });
+    if (video) gsap.set(photo, { autoAlpha: 0 });
     root.classList.add('motion-ready');
 
     var tl = gsap.timeline({ defaults: { ease: EASE } });
-    tl.from(words, { yPercent: 120, autoAlpha: 0, duration: 1, stagger: 0.14 }, 0.15)
-      .to(win, { clipPath: 'inset(0% 0% 0% 0% round 10px)', duration: 1.4, ease: 'expo.inOut' }, 0.75)
-      .from(video || photo, { scale: 1.3, duration: 1.8 }, 0.9)
-      .from(chars ? chars.chars : name, { yPercent: 115, duration: 1.1, stagger: 0.03 }, 1.35)
-      .to([header, foot], { autoAlpha: 1, duration: 0.9 }, 1.9);
-    /* the match strikes as the window opens, burns a beat, then Sydney fades in */
+    tl.from(book, { y: 80, rotation: -7, autoAlpha: 0, duration: 1.3 }, 0.1)
+      .from(chars ? chars.chars : name, { yPercent: 115, duration: 1.15, stagger: 0.028 }, 0.3)
+      .from(roles, { y: 14, autoAlpha: 0, duration: 0.8, stagger: 0.08 }, 0.85)
+      .from(line, { y: 14, autoAlpha: 0, duration: 0.8 }, 1.0)
+      /* the cover swings toward you and up over the top, like opening a matchbook */
+      .to(lid, { rotationX: 125, duration: 1.5, ease: 'expo.inOut' }, 1.1)
+      .to(header, { autoAlpha: 1, duration: 0.9 }, 1.5);
     if (video) {
-      gsap.set(photo, { autoAlpha: 0 });
-      tl.call(function () { try { video.currentTime = 0; video.play().catch(function () { gsap.set(photo, { autoAlpha: 1 }); }); } catch (e) { gsap.set(photo, { autoAlpha: 1 }); } }, null, 0.7)
-        .to(photo, { autoAlpha: 1, duration: 1.4, ease: 'power2.inOut' }, 4.1)
-        .from(photo, { scale: 1.12, duration: 2.4, ease: EASE }, 4.1)
-        .call(function () { video.pause(); }, null, 5.6);
+      tl.call(function () { try { video.currentTime = 0; video.play().catch(function () { gsap.set(photo, { autoAlpha: 1 }); }); } catch (e) { gsap.set(photo, { autoAlpha: 1 }); } }, null, 1.2)
+        .to(photo, { autoAlpha: 1, duration: 1.4, ease: 'power2.inOut' }, 4.4)
+        .from(photo, { scale: 1.12, duration: 2.4 }, 4.4)
+        .call(function () { video.pause(); }, null, 6);
     }
 
-    /* scroll: the name lifts away, the words slide to the top, the window grows to full bleed */
-    mm.add('(min-width: 800px)', function () {
-      var st = gsap.timeline({
-        scrollTrigger: { trigger: intro, start: 'top top', end: '+=110%', scrub: 0.6, pin: true, anticipatePin: 1 }
-      });
-      st.to(name, { yPercent: -70, autoAlpha: 0, ease: 'none' }, 0)
-        .to(foot, { autoAlpha: 0, y: 30, ease: 'none' }, 0)
-        .to('.intro-words', { top: 92, ease: 'none' }, 0)
-        .to(win, { width: '100vw', height: '100svh', borderRadius: 0, ease: 'none' }, 0)
-        .to(photo, { scale: 1.08, ease: 'none' }, 0);
+    /* scrolling away: the two lines of the name drift apart, the matchbook lifts and tilts */
+    mm.add('(min-width: 960px)', function () {
+      var st = { trigger: intro, start: 'top top', end: 'bottom top', scrub: 0.6 };
+      gsap.to('.nm-1', { xPercent: -5, ease: 'none', scrollTrigger: st });
+      gsap.to('.nm-2', { xPercent: 7, ease: 'none', scrollTrigger: st });
+      gsap.to('.book-wrap', { yPercent: -14, rotation: 3, ease: 'none', scrollTrigger: st });
     });
   }
 
@@ -129,27 +126,20 @@
     });
   });
 
-  /* ---------- pinned horizontal track (desktop) ---------- */
-  mm.add('(min-width: 800px)', function () {
-    var track = document.querySelector('.track');
-    var list = document.querySelector('.track-list');
-    if (!track || !list) return;
-    var distance = function () { return Math.max(0, list.scrollWidth - window.innerWidth); };
-    var move = gsap.to(list, {
-      x: function () { return -distance(); }, ease: 'none',
-      scrollTrigger: { trigger: track, start: 'top top', end: function () { return '+=' + distance(); }, scrub: 0.8, pin: true, anticipatePin: 1, invalidateOnRefresh: true }
-    });
-    /* each card's image drifts inside its frame as the track moves */
-    list.querySelectorAll('.tc-media:not(.tc-logo) img').forEach(function (img) {
-      gsap.fromTo(img, { xPercent: -5 }, {
-        xPercent: 5, ease: 'none',
-        scrollTrigger: { trigger: img.parentNode, containerAnimation: move, start: 'left right', end: 'right left', scrub: true }
+  /* ---------- stacked cards: each settles back as the next slides over it ---------- */
+  mm.add('(min-width: 960px)', function () {
+    var cards = gsap.utils.toArray('.stack-card');
+    cards.forEach(function (card, i) {
+      var next = cards[i + 1];
+      if (!next) return;
+      gsap.to(card.querySelector('.sc-inner'), {
+        scale: 0.93, filter: 'brightness(.97)', ease: 'none',
+        scrollTrigger: { trigger: next, start: 'top bottom', end: 'top 20%', scrub: true }
       });
     });
   });
-  /* phones: cards rise in as they arrive */
-  mm.add('(max-width: 799px)', function () {
-    gsap.utils.toArray('.track-card').forEach(function (c) {
+  mm.add('(max-width: 959px)', function () {
+    gsap.utils.toArray('.stack-card').forEach(function (c) {
       gsap.from(c, { y: 40, autoAlpha: 0, duration: 1, ease: EASE, scrollTrigger: { trigger: c, start: 'top 88%', once: true } });
     });
   });
