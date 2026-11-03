@@ -546,3 +546,20 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
   .hero-window { top: 40% !important; }
   .hero-name { --ns: 13vw; top: calc(40% + var(--ww) * 2 / 3); }
 }
+
+/* ---------- hero v3: back to baby blue. The match lights her name white, then the room lights up
+   and the name settles to navy in place ---------- */
+.hero { --night: var(--peri); background: var(--peri); }
+.hero-window { background: var(--peri-soft) !important; box-shadow: 0 40px 70px -40px rgba(28, 31, 63, .45) !important; }
+.hero-name { color: var(--ink); }
+.ld-lit .hero-name { color: #F4EDE4; }
+.hero .hr-1 { color: var(--ink); } .hero .hr-2 { color: var(--red-text); } .hero .hr-3 { color: var(--peri-deep); }
+.hero-welcome { color: var(--ink) !important; }
+:root:has(.hero) .site-header:not(.is-scrolled) .nav-link { color: var(--ink); }
+:root:has(.hero) .site-header:not(.is-scrolled) .btn { background: var(--ink); color: #F4EDE4; border-color: var(--ink); }
+/* the name sits just below the photo, clear of it */
+.hero-name { top: calc(41% + var(--ww) * 2 / 3 + var(--ns) * .62); }
+@media (max-width: 899px) { .hero-name { top: calc(40% + var(--ww) * 2 / 3 + var(--ns) * .62); } }
+/* centre the photo without translate (GSAP folds translate into its own transform and doubles it) */
+.hero-window { left: 0 !important; right: 0 !important; margin: 0 auto !important; translate: none !important; top: calc(41% - var(--ww) * 2 / 3) !important; }
+@media (max-width: 899px) { .hero-window { top: calc(40% - var(--ww) * 2 / 3) !important; } }
