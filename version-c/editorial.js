@@ -157,13 +157,13 @@
   if (loaderActive) {
     var video = loader.querySelector('.ld-video');
     root.classList.add('ld-lit');
-    gsap.set(hero, { backgroundColor: 'rgba(18, 21, 43, 0)' });
+    gsap.set(hero, { backgroundColor: 'rgba(11, 10, 12, 0)' });
     if (nameEl) gsap.set(nameEl, { autoAlpha: 0 });
     var finish = function () {
       if (finish.done) return; finish.done = true;
       gsap.timeline({ onComplete: function () { loader.remove(); root.classList.remove('ld-lit'); gsap.set(hero, { clearProps: 'backgroundColor' }); root.classList.add('is-loaded'); } })
         .to(loader, { autoAlpha: 0, duration: 1.8, ease: 'power2.inOut' }, 0)
-        .to(hero, { backgroundColor: 'rgba(18, 21, 43, 1)', duration: 1.8, ease: 'power2.inOut' }, 0)
+        .to(hero, { backgroundColor: 'rgba(11, 10, 12, 1)', duration: 1.8, ease: 'power2.inOut' }, 0)
         .to(nameEl, { autoAlpha: 1, duration: 0.6 }, 0)
         .call(function () { heroReady(true); }, null, 0.5);
     };
