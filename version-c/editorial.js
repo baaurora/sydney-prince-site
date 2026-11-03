@@ -73,6 +73,7 @@
     var words = intro.querySelectorAll('.intro-words span');
     var win = intro.querySelector('.intro-window');
     var photo = intro.querySelector('.intro-photo');
+    var video = intro.querySelector('.intro-video');
     var name = intro.querySelector('.intro-name [aria-hidden]');
     var foot = intro.querySelector('.intro-foot');
     var header = document.querySelector('.site-header');
@@ -85,9 +86,17 @@
     var tl = gsap.timeline({ defaults: { ease: EASE } });
     tl.from(words, { yPercent: 120, autoAlpha: 0, duration: 1, stagger: 0.14 }, 0.15)
       .to(win, { clipPath: 'inset(0% 0% 0% 0% round 10px)', duration: 1.4, ease: 'expo.inOut' }, 0.75)
-      .from(photo, { scale: 1.4, duration: 1.8 }, 0.9)
+      .from(video || photo, { scale: 1.3, duration: 1.8 }, 0.9)
       .from(chars ? chars.chars : name, { yPercent: 115, duration: 1.1, stagger: 0.03 }, 1.35)
       .to([header, foot], { autoAlpha: 1, duration: 0.9 }, 1.9);
+    /* the match strikes as the window opens, burns a beat, then Sydney fades in */
+    if (video) {
+      gsap.set(photo, { autoAlpha: 0 });
+      tl.call(function () { try { video.currentTime = 0; video.play().catch(function () { gsap.set(photo, { autoAlpha: 1 }); }); } catch (e) { gsap.set(photo, { autoAlpha: 1 }); } }, null, 0.7)
+        .to(photo, { autoAlpha: 1, duration: 1.4, ease: 'power2.inOut' }, 4.1)
+        .from(photo, { scale: 1.12, duration: 2.4, ease: EASE }, 4.1)
+        .call(function () { video.pause(); }, null, 5.6);
+    }
 
     /* scroll: the name lifts away, the words slide to the top, the window grows to full bleed */
     mm.add('(min-width: 800px)', function () {
@@ -152,6 +161,10 @@
     tl.from(ph, { clipPath: 'inset(100% 0% 0% 0%)', duration: 1.3, ease: 'expo.inOut' });
     if (img) tl.from(img, { scale: 1.25, duration: 1.6, ease: EASE }, 0.1);
   });
+
+  /* stage band parallax */
+  var band = document.querySelector('.band-img');
+  if (band) gsap.fromTo(band, { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '.band', start: 'top bottom', end: 'bottom top', scrub: true } });
 
   /* outro photo parallax */
   var outroPhoto = document.querySelector('.outro-photo');
