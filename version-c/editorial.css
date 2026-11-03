@@ -398,4 +398,22 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
 }
 /* outro is just the link now */
 .outro { display: block; }
-.logo-mark { width: 16px; }
+.logo-mark { width: 27px; }
+
+/* ---------- footer: the roles stacked in the serif, social icons ---------- */
+.site-footer { padding: clamp(56px, 9vh, 96px) var(--g) 28px; border-top: 1px solid var(--hair); }
+.footer-grid { max-width: var(--max); margin: 0 auto; display: grid; gap: 40px; align-items: end; }
+.footer-stack { margin: 0; font: 400 clamp(40px, 6.4vw, 104px)/.98 var(--display); font-variation-settings: 'opsz' 72; letter-spacing: -.03em; }
+.footer-stack span { display: block; }
+.fs-1 { color: var(--ink); }
+.fs-2 { color: var(--red-text); }
+.fs-3 { color: var(--peri-deep); font-style: italic; }
+.footer-side { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 20px; }
+.site-footer .socials { display: flex; gap: 10px; }
+.site-footer .socials a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--hair); color: var(--ink); transition: background-color .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease); }
+.site-footer .socials a:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { color: var(--ink); text-decoration: none; font-size: 15.5px; }
+.footer-links a:hover { color: var(--red-text); }
+.footer-fine { max-width: var(--max); margin: 48px auto 0; font-size: 13.5px; color: var(--muted); }
+@media (min-width: 900px) { .footer-grid { grid-template-columns: 1.6fr 1fr; } .footer-side { justify-content: flex-end; } }
