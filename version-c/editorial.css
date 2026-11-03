@@ -433,3 +433,36 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
 .resume-bleed { margin: clamp(48px, 8vh, 96px) 0 0; height: clamp(320px, 62vh, 720px); overflow: hidden; }
 .resume-bleed img { width: 100%; height: 100%; object-fit: cover; -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 38%); mask-image: linear-gradient(to bottom, transparent 0%, #000 38%); }
 .page-resume .site-footer { margin-top: 0; border-top: 0; }
+
+/* ---------- hero: bigger roles; the welcome line arrives as the photo glides aside ---------- */
+.hero-roles { font-size: clamp(28px, 3.4vw, 54px) !important; }
+.hero-welcome { display: none; }
+@media (min-width: 900px) {
+  .hero-welcome {
+    display: block; position: absolute; left: 50%; right: var(--g); top: 50%; translate: 0 -50%; margin: 0; z-index: 2;
+    font: 400 clamp(40px, 4.6vw, 76px)/1.04 var(--display); font-variation-settings: 'opsz' 72; letter-spacing: -.025em; color: var(--ink);
+    text-wrap: balance; opacity: 0; pointer-events: none;
+  }
+  .welcome .welcome-title { display: none; }
+  .welcome-text { grid-column: 4 / -1 !important; }
+}
+
+/* ---------- three-layer matchbook images (inside, paper, cover) when supplied ---------- */
+.layer-inside, .layer-paper { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; }
+.layer-inside { z-index: 0; } .layer-paper { z-index: 1; }
+.book-inside:has(.layer-inside) { background: none; }
+.book-inside:has(.layer-inside) .book-strike { display: none; }
+.book-paper { z-index: 2; }
+.book-inside:has(.layer-paper) .book-paper { background: transparent; inset: 9% 9% 16% 9%; padding-top: 18%; }
+.layer-cover { position: absolute; left: 0; top: 0; width: 100%; height: 111.12%; object-fit: fill; z-index: 1; }
+.book-front:has(.layer-cover) { background: transparent; overflow: visible; }
+.book-front:has(.layer-cover) .book-cover, .book-front:has(.layer-cover) .book-label { display: none; }
+.jbk-art:has(.jbk-photo) .jbk-cover { display: none; }
+
+/* ---------- home: the matchbook flat-lay behind "Get to know Sydney!" ---------- */
+.outro { position: relative; display: grid; place-items: center; max-width: var(--max); margin: clamp(96px, 14vh, 160px) auto 0; padding: 0; aspect-ratio: 1672 / 941; overflow: hidden; border-radius: var(--r); }
+.outro-photo { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; }
+.outro-link { position: relative; z-index: 1; text-align: center; font-size: clamp(34px, 4.6vw, 72px); }
+@media (max-width: 899px) { .outro { margin-left: var(--g); margin-right: var(--g); aspect-ratio: 4 / 5; } }
+.outro { grid-template-columns: 1fr !important; }
+.outro-link { grid-column: 1; grid-row: 1; padding: 24px 32px; background: color-mix(in srgb, var(--paper) 82%, transparent); border-radius: var(--r); }
