@@ -43,8 +43,9 @@ img { display: block; }
   position: fixed; inset: 0 0 auto; z-index: 50;
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
   padding: 18px var(--g);
-  mix-blend-mode: normal;
+  transition: background-color .5s var(--ease), box-shadow .5s var(--ease), padding .5s var(--ease);
 }
+.site-header.is-scrolled { background: color-mix(in srgb, var(--paper) 90%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 1px 0 var(--red-hair); padding-block: 12px; }
 .wordmark { font: 400 22px/1 var(--display); letter-spacing: .02em; text-transform: uppercase; color: var(--red); text-decoration: none; view-transition-name: wordmark; }
 nav ul { display: flex; align-items: center; gap: clamp(16px, 4vw, 56px); }
 .nav-link { position: relative; color: var(--red-text); text-decoration: none; font-size: 16px; }
@@ -97,7 +98,7 @@ main { display: block; }
 .track { position: relative; }
 .track-pin { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 36px; padding: 96px 0 56px; overflow: hidden; }
 .track-title { margin: 0; padding: 0 var(--g); font: 400 clamp(30px, 4vw, 60px)/.95 var(--display); text-transform: uppercase; color: var(--red); }
-.track-list { display: flex; gap: clamp(28px, 4vw, 64px); padding: 0 var(--g); width: max-content; will-change: transform; }
+ul.track-list { display: flex; gap: clamp(28px, 4vw, 64px); padding: 0 var(--g); width: max-content; will-change: transform; }
 .track-card { width: min(60vw, 780px); flex: none; }
 .tc-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 12px; }
 .tc-head h3 { margin: 0; font: 400 clamp(22px, 2.2vw, 32px)/1 var(--display); text-transform: uppercase; letter-spacing: .01em; }
@@ -249,11 +250,15 @@ em.c-sub { display: block; font-family: var(--serif); text-transform: none; font
 }
 /* phones and tablets: no pinned horizontal track, cards stack */
 @media (max-width: 799px) {
+  .wordmark { font-size: 18px; white-space: nowrap; }
+  nav ul { gap: 14px; }
+  .nav-link { font-size: 15px; }
+  .site-header .btn { min-height: 38px; padding: 0 14px; font-size: 15px; }
+  ul.track-list { flex-direction: column; width: auto; }
   .intro-window { width: min(78vw, 460px); aspect-ratio: 4 / 5; }
   .intro-words { top: 18%; translate: 0 0; justify-content: center; flex-wrap: wrap; gap: 4px 14px; }
   .intro-name { font-size: clamp(58px, 18vw, 120px); white-space: normal; line-height: .84; }
   .track-pin { padding-top: 40px; }
-  .track-list { flex-direction: column; width: auto; }
   .track-card { width: 100%; }
   .tc-media img { left: 0; width: 100%; }
 }

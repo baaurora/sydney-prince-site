@@ -34,6 +34,14 @@
   }
   matchJar();
 
+  /* header gets a soft paper backing once the page scrolls (works without GSAP too) */
+  var hdr = document.querySelector('.site-header');
+  if (hdr) {
+    var onScroll = function () { hdr.classList.toggle('is-scrolled', window.scrollY > 40); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
   if (reduce || !hasGsap) { root.classList.add('no-motion'); return; }
 
   var gsap = window.gsap;
