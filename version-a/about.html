@@ -10,9 +10,9 @@
 <script>(function(d){d.classList.add('js');try{if(location.hash.indexOf('loader-at')<0&&(sessionStorage.getItem('sp-loader-a')||matchMedia('(prefers-reduced-motion: reduce)').matches))d.classList.add('no-loader')}catch(e){d.classList.add('no-loader')}})(document.documentElement);</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400..700,100&family=Inter:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="../shared/base.css?v=202611031008">
-<link rel="stylesheet" href="matchbook.css?v=202611031008">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400..700,100&family=Inter:wght@400;500;600&family=Caveat:wght@600;700&display=swap">
+<link rel="stylesheet" href="../shared/base.css?v=202611031047">
+<link rel="stylesheet" href="matchbook.css?v=202611031047">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -71,35 +71,120 @@
 </header>
 <main id="main">
 <section class="intro">
-  <div class="intro-title">
-    <h1 class="page-title">Get to know <span class="accent">Sydney!</span></h1>
-    <p class="tagline"><strong>Production Manager. Stage Manager. Creator.</strong></p>
+  <div class="intro-grid">
+    <figure class="photo-card frame-f intro-l" tabindex="0" style="--tilt:-2deg; --ar:1048/1282"><div class="ph"><img src="../assets/img/about-red-door.webp" width="1048" height="1282" alt="Sydney smiling in a black dress in front of glossy red doors" loading="eager" decoding="async"></div></figure>
+    <div class="intro-c">
+      <h1 class="page-title">Get to know <span class="accent">Sydney!</span></h1>
+      <p class="tagline"><strong>Production Manager. Stage Manager. Creator.</strong></p>
+      <figure class="photo-card frame-a intro-m" tabindex="0" style="--tilt:1deg; --ar:1400/934"><div class="ph"><img src="../assets/img/about-beach.webp" width="1400" height="934" alt="Sydney making a playful face on the beach" loading="eager" decoding="async"></div></figure>
+    </div>
+    <figure class="photo-card frame-f intro-r" tabindex="0" style="--tilt:2deg; --ar:935/1400"><div class="ph"><img src="../assets/img/about-portrait.webp" width="935" height="1400" alt="Portrait of Sydney in a blue button-down with her arms crossed against a brick wall" loading="eager" decoding="async"></div></figure>
   </div>
-  <ul class="collage" role="list">
-    <li class="s1"><figure class="photo-card" tabindex="0"><img src="../assets/img/about-red-door.webp" width="1048" height="1282" alt="Sydney smiling in a black dress in front of glossy red doors" loading="eager" decoding="async"></figure></li>
-    <li class="s2"><figure class="photo-card" tabindex="0"><img src="../assets/img/about-pointing.webp" width="1400" height="933" alt="Black-and-white photo of Sydney in a cap, pointing while calling cues backstage" loading="eager" decoding="async"></figure></li>
-    <li class="s3"><figure class="photo-card" tabindex="0"><img src="../assets/img/about-sesame-street.webp" width="1400" height="1050" alt="Sydney with the Sesame Street puppets on the set of Sesame Street The Musical" loading="eager" decoding="async"></figure></li>
-    <li class="s4"><figure class="photo-card" tabindex="0"><img src="../assets/img/about-beach.webp" width="1400" height="934" alt="Sydney making a playful face on the beach" loading="lazy" decoding="async"></figure></li>
-    <li class="s5"><figure class="photo-card" tabindex="0"><img src="../assets/img/about-steps.webp" width="1050" height="1400" alt="Sydney sitting on the front steps of a glass building" loading="lazy" decoding="async"></figure></li>
-    <li class="s6"><figure class="photo-card" tabindex="0"><img src="../assets/img/about-portrait.webp" width="935" height="1400" alt="Portrait of Sydney in a blue button-down with her arms crossed against a brick wall" loading="lazy" decoding="async"></figure></li>
-  </ul>
 </section>
-<hr class="striker-rule">
-<section class="bio" aria-label="About Sydney">
-  <div class="bio-text">
-    <p class="lead">Well hello there!</p>
-    <p class="lead-2">I’m Sydney and I am so glad you are here.</p>
-    <p class="glow-p reveal">I’m a New York–based production manager and stage manager who has spent the last six years working throughout the Off-Broadway and NYC theatre scene. I’m passionate about supporting new, thoughtful work and collaborating with artists to bring ambitious ideas to life.</p><p class="glow-p reveal">Most recently, I’ve served as a Production Manager across a wide range of productions, from opera and musical theatre to workshops, children’s theatre, and large-scale live events. My work lives at the intersection of <strong class="glow">creativity</strong> and <strong class="glow">logistics</strong>: managing budgets, coordinating teams, and making sure every moving piece of a production works together. I often act as the central communicator between departments, keeping track of the smallest details while also protecting the big-picture vision of a project.</p>
-    <p>Having worked on many sides of the industry, including producing, directing, stage management, and production management, I’ve developed a whole-picture understanding of how a production comes together and how best to support the artists and teams creating it. I’m comfortable leading projects independently, but what excites me most is being part of a collaborative team building meaningful work together.</p><p>Currently, I’m an Associate with <a href="https://www.ironbloomny.com/" target="_blank" rel="noopener">Iron Bloom Creative Production</a>, where I serve as the in-house Production Manager for <a href="https://cherrylanetheatre.org/" target="_blank" rel="noopener">Cherry Lane Theater</a> while collaborating on projects ranging from theatre and festivals to large-scale live experiences. In my career, I’ve had the chance to work with organizations including Ars Nova, Spellbound Theatre, NYC Children’s Theater, Lincoln Center, Little Island, The Public Theater, and the NBA.</p><p>I’m a proud University of Michigan alum (Go Blue!) and am endlessly motivated by the passion that drives live performance - supporting artists, solving problems, and helping create spaces where great ideas can grow from the page to the stage.</p>
+
+<section class="promptbook" aria-label="About Sydney">
+  <div class="pb-page">
+    <img class="ill pb-corner" src="../assets/img/illustrations/ill-headset.png" alt="" loading="lazy" decoding="async" onerror="this.remove()">
+    <div class="cue-block reveal">
+      <span class="cue" aria-hidden="true">Q1 <b>STANDBY</b></span>
+      <p class="lead">Well hello there!</p>
+      <p class="lead-2">I’m Sydney and I am so glad you are here.</p>
+    </div>
+    <div class="cue-block reveal">
+      <span class="cue" aria-hidden="true">Q2 <b>GO</b></span>
+      <figure class="photo-card frame-a pb-fig r" tabindex="0" style="--tilt:1.5deg; --ar:1400/1050"><div class="ph"><img src="../assets/img/about-sesame-street.webp" width="1400" height="1050" alt="Sydney with the Sesame Street puppets on the set of Sesame Street The Musical" loading="lazy" decoding="async"></div></figure>
+      <p>I’m a New York–based production manager and stage manager who has spent the last six years working throughout the Off-Broadway and NYC theatre scene. I’m passionate about supporting new, thoughtful work and collaborating with artists to bring ambitious ideas to life.</p>
+    </div>
+    <div class="cue-block reveal">
+      <span class="cue" aria-hidden="true">Q3 <b>GO</b></span>
+      <figure class="photo-card frame-a pb-fig l" tabindex="0" style="--tilt:-1.5deg; --ar:1400/933"><div class="ph"><img src="../assets/img/about-pointing.webp" width="1400" height="933" alt="Black-and-white photo of Sydney in a cap, pointing while calling cues backstage" loading="lazy" decoding="async"></div></figure>
+      <p class="glow-p reveal">Most recently, I’ve served as a Production Manager across a wide range of productions, from opera and musical theatre to workshops, children’s theatre, and large-scale live events. My work lives at the intersection of <strong class="glow">creativity</strong> and <strong class="glow">logistics</strong>: managing budgets, coordinating teams, and making sure every moving piece of a production works together. I often act as the central communicator between departments, keeping track of the smallest details while also protecting the big-picture vision of a project.</p>
+      <div class="pb-ills"><img class="ill " src="../assets/img/illustrations/ill-creativity.png" alt="" loading="lazy" decoding="async" onerror="this.remove()"><img class="ill " src="../assets/img/illustrations/ill-logistics.png" alt="" loading="lazy" decoding="async" onerror="this.remove()"></div>
+    </div>
+    <div class="cue-block reveal">
+      <span class="cue" aria-hidden="true">Q4 <b>GO</b></span>
+      <figure class="photo-card frame-f pb-fig r" tabindex="0" style="--tilt:2deg; --ar:1400/1076"><div class="ph"><img src="../assets/img/about-wedding.webp" width="1400" height="1076" alt="Sydney and Delilah in white dresses outdoors, holding their puppy Pippin" loading="lazy" decoding="async"></div><figcaption>Sydney, her wife Delilah, and their puppy Pippin</figcaption><img class="ill pippin" src="../assets/img/illustrations/ill-pippin.png" alt="" loading="lazy" decoding="async" onerror="this.remove()"></figure>
+      <p>Having worked on many sides of the industry, including producing, directing, stage management, and production management, I’ve developed a whole-picture understanding of how a production comes together and how best to support the artists and teams creating it. I’m comfortable leading projects independently, but what excites me most is being part of a collaborative team building meaningful work together.</p>
+    </div>
+    <div class="cue-block reveal">
+      <span class="cue" aria-hidden="true">Q5 <b>GO</b></span>
+      <figure class="photo-card frame-f pb-fig l" tabindex="0" style="--tilt:-2deg; --ar:1050/1400"><div class="ph"><img src="../assets/img/about-steps.webp" width="1050" height="1400" alt="Sydney sitting on the front steps of a glass building" loading="lazy" decoding="async"></div></figure>
+      <p>Currently, I’m an Associate with <a href="https://www.ironbloomny.com/" target="_blank" rel="noopener">Iron Bloom Creative Production</a>, where I serve as the in-house Production Manager for <a href="https://cherrylanetheatre.org/" target="_blank" rel="noopener">Cherry Lane Theater</a> while collaborating on projects ranging from theatre and festivals to large-scale live experiences. In my career, I’ve had the chance to work with organizations including Ars Nova, Spellbound Theatre, NYC Children’s Theater, Lincoln Center, Little Island, The Public Theater, and the NBA.</p>
+      <div class="jar-wrap">
+        <div class="jar">
+          <img class="ill jar-art" src="../assets/img/illustrations/ill-jar.png" alt="" loading="lazy" decoding="async" onerror="this.remove()">
+          <svg class="jar-draw jar-back" viewBox="0 0 400 440" aria-hidden="true" focusable="false">
+            <path d="M92 74 C 18 150, 16 330, 118 396 Q 200 432 282 396 C 384 330, 382 150, 308 74 Z" fill="rgba(214,226,224,.32)"/>
+            <ellipse cx="200" cy="74" rx="108" ry="20" fill="rgba(31,27,24,.08)" stroke="#1F1B18" stroke-width="3" filter="url(#wobble)"/>
+          </svg>
+          <ul class="jar-items" role="list">
+          <li style="--x:15%; --y:57%; --r:-14deg; --i:0">
+            <button class="jbk" type="button" aria-pressed="false" data-name="Ars Nova" data-shows="Ant Fest 2024 &amp; 2025 · September L. Davis: The Apology Tour · Long">
+              <span class="jbk-art"><img class="ill org-art" src="../assets/img/illustrations/org-ars-nova.png" alt="" loading="lazy" decoding="async" onerror="this.remove()"><span class="jbk-cover" aria-hidden="true"><span>Ars Nova</span></span></span>
+              <span class="visually-hidden">Ars Nova</span>
+            </button>
+          </li>
+          <li style="--x:33%; --y:62%; --r:8deg; --i:1">
+            <button class="jbk" type="button" aria-pressed="false" data-name="Spellbound Theatre" data-shows="Shakespeare’s Stars · Lullaby Land">
+              <span class="jbk-art"><img class="ill org-art" src="../assets/img/illustrations/org-spellbound.png" alt="" loading="lazy" decoding="async" onerror="this.remove()"><span class="jbk-cover" aria-hidden="true"><span>Spellbound Theatre</span></span></span>
+              <span class="visually-hidden">Spellbound Theatre</span>
+            </button>
+          </li>
+          <li style="--x:50%; --y:59%; --r:-6deg; --i:2">
+            <button class="jbk" type="button" aria-pressed="false" data-name="NYC Children’s Theater" data-shows="My First Nutcracker">
+              <span class="jbk-art"><img class="ill org-art" src="../assets/img/illustrations/org-nyc-childrens.png" alt="" loading="lazy" decoding="async" onerror="this.remove()"><span class="jbk-cover" aria-hidden="true"><span>NYC Children’s Theater</span></span></span>
+              <span class="visually-hidden">NYC Children’s Theater</span>
+            </button>
+          </li>
+          <li style="--x:63%; --y:53%; --r:16deg; --i:3">
+            <button class="jbk" type="button" aria-pressed="false" data-name="Lincoln Center" data-shows="Rome Is Falling · Alice Tully Hall">
+              <span class="jbk-art"><img class="ill org-art" src="../assets/img/illustrations/org-lincoln-center.png" alt="" loading="lazy" decoding="async" onerror="this.remove()"><span class="jbk-cover" aria-hidden="true"><span>Lincoln Center</span></span></span>
+              <span class="visually-hidden">Lincoln Center</span>
+            </button>
+          </li>
+          <li style="--x:23%; --y:39%; --r:12deg; --i:4">
+            <button class="jbk" type="button" aria-pressed="false" data-name="Little Island" data-shows="Assistant Production Manager">
+              <span class="jbk-art"><img class="ill org-art" src="../assets/img/illustrations/org-little-island.png" alt="" loading="lazy" decoding="async" onerror="this.remove()"><span class="jbk-cover" aria-hidden="true"><span>Little Island</span></span></span>
+              <span class="visually-hidden">Little Island</span>
+            </button>
+          </li>
+          <li style="--x:42%; --y:37%; --r:-10deg; --i:5">
+            <button class="jbk" type="button" aria-pressed="false" data-name="The Public Theater" data-shows="Production Management Intern">
+              <span class="jbk-art"><img class="ill org-art" src="../assets/img/illustrations/org-public-theater.png" alt="" loading="lazy" decoding="async" onerror="this.remove()"><span class="jbk-cover" aria-hidden="true"><span>The Public Theater</span></span></span>
+              <span class="visually-hidden">The Public Theater</span>
+            </button>
+          </li>
+          <li style="--x:58%; --y:33%; --r:6deg; --i:6">
+            <button class="jbk" type="button" aria-pressed="false" data-name="NBA" data-shows="All Star Game 2024 &amp; 2025 · Production Coordinator">
+              <span class="jbk-art"><img class="ill org-art" src="../assets/img/illustrations/org-nba.png" alt="" loading="lazy" decoding="async" onerror="this.remove()"><span class="jbk-cover" aria-hidden="true"><span>NBA</span></span></span>
+              <span class="visually-hidden">NBA</span>
+            </button>
+          </li>
+          </ul>
+          <svg class="jar-draw jar-front" viewBox="0 0 400 440" aria-hidden="true" focusable="false">
+            <g fill="none" stroke="#1F1B18" stroke-width="3.2" stroke-linecap="round" filter="url(#wobble)">
+              <path d="M92 74 C 18 150, 16 330, 118 396 Q 200 432 282 396 C 384 330, 382 150, 308 74"/>
+              <path d="M92 74 Q 200 96 308 74"/>
+            </g>
+            <path d="M70 170 C 52 220, 54 285, 86 335" fill="none" stroke="#FBF6EC" stroke-width="9" stroke-linecap="round" opacity=".75"/>
+            <path d="M318 132 C 334 150, 342 170, 344 192" fill="none" stroke="#FBF6EC" stroke-width="6" stroke-linecap="round" opacity=".6"/>
+          </svg>
+          <span class="jar-shelf" aria-hidden="true"></span>
+        </div>
+        <div class="jar-note" aria-live="polite">
+          <p class="jar-hint">Pick a matchbook out of the jar.</p>
+          <p class="jar-name"></p>
+          <p class="jar-shows"></p>
+        </div>
+      </div>
+    </div>
+    <div class="cue-block reveal">
+      <span class="cue" aria-hidden="true">Q6 <b>GO</b></span>
+      <img class="ill pb-pennant" src="../assets/img/illustrations/ill-go-blue.png" alt="" loading="lazy" decoding="async" onerror="this.remove()">
+      <p>I’m a proud University of Michigan alum (Go Blue!) and am endlessly motivated by the passion that drives live performance - supporting artists, solving problems, and helping create spaces where great ideas can grow from the page to the stage.</p>
+    </div>
+    <img class="ill pb-foot" src="../assets/img/illustrations/ill-spike-marks.png" alt="" loading="lazy" decoding="async" onerror="this.remove()">
   </div>
-  <figure class="photo-card bio-photo" tabindex="0" style="--tilt:-2.5deg; --ar:1400/1076">
-    <img src="../assets/img/about-wedding.webp" width="1400" height="1076" alt="Sydney and Delilah in white dresses outdoors, holding their puppy Pippin" loading="lazy" decoding="async">
-    <figcaption>Sydney, her wife Delilah, and their puppy Pippin</figcaption>
-  </figure>
-</section>
-<hr class="striker-rule">
-<section class="credits-fan-wrap" aria-label="Organizations Sydney has worked with">
-  <ul class="fan" role="list"><li style="--i:0"><span>Ars Nova</span></li><li style="--i:1"><span>Spellbound Theatre</span></li><li style="--i:2"><span>NYC Children’s Theater</span></li><li style="--i:3"><span>Lincoln Center</span></li><li style="--i:4"><span>Little Island</span></li><li style="--i:5"><span>The Public Theater</span></li><li style="--i:6"><span>NBA</span></li></ul>
 </section>
 </main>
 <footer class="site-footer reveal">
@@ -113,7 +198,7 @@
     <ul class="socials" role="list"><li><a href="https://www.instagram.com/sydneyprince_/" target="_blank" rel="noopener" aria-label="Instagram (opens in a new tab)"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a></li><li><a href="https://www.facebook.com/sydney.prince.5" target="_blank" rel="noopener" aria-label="Facebook (opens in a new tab)"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.9v3h2.6V21h3z"/></svg></a></li></ul>
   </div>
 </footer>
-<script src="../shared/site.js?v=202611031008"></script>
-<script src="matchbook.js?v=202611031008"></script>
+<script src="../shared/site.js?v=202611031047"></script>
+<script src="matchbook.js?v=202611031047"></script>
 </body>
 </html>
