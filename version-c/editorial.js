@@ -40,6 +40,29 @@
     b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
   });
 
+  /* red-pen circles: draw a hand-made loop sized to the word, measured so it always closes */
+  function sizeCircles() {
+    document.querySelectorAll('.mk-circle').forEach(function (svg) {
+      var r = svg.getBoundingClientRect(), w = r.width, h = r.height;
+      if (!w || !h) return;
+      svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+      svg.setAttribute('preserveAspectRatio', 'none');
+      var p = svg.querySelector('path'), m = 2.5;
+      p.removeAttribute('pathLength');
+      p.setAttribute('d', 'M' + (w * .52) + ' ' + m +
+        ' C' + (w * .82) + ' ' + (m - 1) + ' ' + (w - m) + ' ' + (h * .22) + ' ' + (w - m) + ' ' + (h * .5) +
+        ' C' + (w - m) + ' ' + (h * .82) + ' ' + (w * .76) + ' ' + (h - m) + ' ' + (w * .48) + ' ' + (h - m) +
+        ' C' + (w * .2) + ' ' + (h - m) + ' ' + m + ' ' + (h * .78) + ' ' + m + ' ' + (h * .48) +
+        ' C' + m + ' ' + (h * .18) + ' ' + (w * .24) + ' ' + (m + 1) + ' ' + (w * .56) + ' ' + (m + 1.5) +
+        ' C' + (w * .74) + ' ' + (m + 2.5) + ' ' + (w * .86) + ' ' + (h * .16) + ' ' + (w * .92) + ' ' + (h * .28));
+      var len = Math.ceil(p.getTotalLength()) + 2;
+      p.style.setProperty('--len', len);
+    });
+  }
+  sizeCircles();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeCircles);
+  window.addEventListener('resize', sizeCircles);
+
   /* red-pen markup draws itself when it scrolls into view */
   SP.reveal('.mk', { rootMargin: '0px 0px -15% 0px', threshold: 0.6 });
 
