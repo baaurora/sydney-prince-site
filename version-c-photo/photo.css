@@ -1,0 +1,42 @@
+/* Version C, photo matchbooks: same site as Version C, but "What's Happening" uses real matchbook
+   photographs. The fold-out paper panel swings open on its hinge and carries Sydney's role. */
+
+.mbp { position: relative; aspect-ratio: var(--ar); }
+.mbp img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.mbp-base { clip-path: inset(0 calc(100% - var(--split)) 0 0); }
+.mbp-text { color: var(--ink); }
+.mbp-text p { margin: 0; }
+.mbp-text .bp-role { margin: 0 0 .55em; font: 400 1.32em/1.15 var(--display); font-variation-settings: 'opsz' 36; color: var(--red-text); }
+
+@media (min-width: 900px) {
+  .tc-photo { width: min(60vw, 820px) !important; }
+  .book-photo { width: 100% !important; aspect-ratio: auto !important; margin-top: 0 !important; perspective: 1900px; perspective-origin: 30% 50%; }
+  .book-photo::before, .book-photo::after { display: none !important; }
+  /* the panel hinges on the spine; closed, it is folded away behind the book */
+  .mbp-flap { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--split)); transform-origin: var(--split) 50%;
+    transform: rotateY(-118deg); backface-visibility: hidden; transition: transform 1s cubic-bezier(.22, .8, .2, 1); }
+  .track-card.is-open .mbp-flap { transform: rotateY(0deg); }
+  .mbp-text { position: absolute; left: var(--tx); right: var(--tr); top: var(--tt); bottom: var(--tb);
+    font: 400 clamp(12.5px, 1.08vw, 16.5px)/1.55 var(--sans); opacity: 0; translate: 0 8px;
+    transition: opacity .45s ease, translate .45s ease; }
+  .track-card.is-open .mbp-text { opacity: 1; translate: 0 0; transition-delay: .45s; }
+  /* the venue names under every matchbook sit on one line */
+  .track-list { align-items: flex-end; }
+}
+
+/* phones: the matchbook shows fully open, with the text underneath where it is easy to read */
+@media (max-width: 899px) {
+  .tc-photo .book-photo { width: 100% !important; aspect-ratio: auto !important; margin-top: 0 !important; display: block; }
+  .tc-photo .mbp { aspect-ratio: auto; }
+  .tc-photo .mbp-base { position: static; height: auto; clip-path: none; }
+  .tc-photo .mbp-flap { display: none; }
+  .tc-photo .mbp-text { margin-top: 18px; font: 400 16px/1.6 var(--sans); }
+}
+@media (max-width: 899px) {
+  /* show just the matchbook, larger and centred; the fold-out panel's text follows below */
+  .tc-photo .mbp { width: min(62%, 300px); margin: 0 auto; overflow: hidden; }
+  .tc-photo .mbp-base { width: calc(100% * 100 / var(--sn)); max-width: none; }
+  .tc-photo .mbp-text { position: static; }
+}
+.book-photo { position: relative; }
+.book-photo { padding: 0 !important; height: auto !important; }
