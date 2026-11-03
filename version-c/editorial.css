@@ -533,3 +533,16 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
   /* centred without translate, so GSAP's y tween can't double the offset */
   .hero-welcome { left: 0 !important; right: 0 !important; translate: none !important; width: auto !important; max-width: 980px; margin: 0 auto !important; padding: 0 var(--g); }
 }
+
+/* ---------- hero v2: the same black as the match video, smaller name under the photo ---------- */
+.hero { --night: #0B0A0C; }
+.hero-window { background: #19171A !important; }
+.hero-stage { --ww: min(23vw, 40svh, 380px); }
+.hero-window { width: var(--ww) !important; top: 41% !important; }
+/* the name overlaps only the bottom edge of the photo, never her face or body */
+.hero-name { --ns: clamp(48px, 6.4vw, 116px); top: calc(41% + var(--ww) * 2 / 3); }
+@media (max-width: 899px) {
+  .hero-stage { --ww: min(64vw, 40svh); }
+  .hero-window { top: 40% !important; }
+  .hero-name { --ns: 13vw; top: calc(40% + var(--ww) * 2 / 3); }
+}
