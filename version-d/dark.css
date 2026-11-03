@@ -81,3 +81,26 @@ h3, .jar-name { letter-spacing: .03em; font-weight: 500; }
 .hero-roles, .welcome-title, .tagline, .bp-role, .c-title, .jar-name, .section-title, .page-title { text-transform: uppercase !important; }
 /* caps "PRODUCTION MANAGER." is about 11.1 times its size wide; this keeps it inside the right margin */
 @media (min-width: 900px) { .hero-roles { font-size: clamp(30px, 3.95vw, 76px) !important; } }
+
+/* ---------- type, v2: Archivo, a strict grotesk with real bold weights (replaces Clash Grotesk) ---------- */
+:root { --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif; }
+.hero-name { font-weight: 700 !important; letter-spacing: -.005em !important; }
+.hero-roles { font-weight: 500 !important; letter-spacing: .01em !important; }
+.hero-roles .hr-2 { font-weight: 700; }
+.section-title, .page-title, .welcome-title, .lead { font-weight: 700 !important; letter-spacing: -.005em !important; }
+.footer-stack { font-weight: 500 !important; letter-spacing: .01em; }
+.footer-stack .fs-2 { font-weight: 700; }
+.footer-name { font-weight: 700 !important; letter-spacing: .02em; }
+.bp-role { font-weight: 700 !important; letter-spacing: .05em; font-size: .95em !important; }
+.c-title { font-weight: 700 !important; letter-spacing: .03em; }
+h3, .jar-name { font-weight: 700; letter-spacing: .01em; }
+.mbp-cover span { font-family: var(--display) !important; font-weight: 700 !important; letter-spacing: .12em !important; }
+.ink { font-weight: 700 !important; letter-spacing: .04em; }
+/* ivory matchbooks in the jar get near-black lettering */
+.jar-items li:nth-child(3n+2) .jbk-cover { --fg: #1D1D1F; }
+/* Archivo bold caps: "SYDNEY PRINCE" is about 8.27x its size wide; "PRODUCTION MANAGER." about 12.56x */
+@media (min-width: 900px) {
+  .hero-name { --ns: calc(var(--ww) / 8.27) !important; }
+  .hero-roles { font-size: clamp(28px, 3.55vw, 70px) !important; }
+}
+@media (max-width: 899px) { .hero-name { --ns: 10vw !important; } }
