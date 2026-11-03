@@ -665,3 +665,20 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
 .sc-mask, .sw-mask, .sl-mask { padding: .02em .06em .2em !important; margin: -.02em -.06em -.2em !important; }
 /* phones: the side photos land straight, without a sideways slide */
 @media (max-width: 899px) { .side { translate: none !important; } }
+
+/* ---------- About: key phrases in the serif italic, inked in left to right as they scroll into view ---------- */
+.ink {
+  --p: 1;
+  font-family: var(--display); font-style: italic; font-weight: 400; font-size: 1.12em; line-height: 1;
+  font-variation-settings: 'opsz' 36; letter-spacing: -.005em;
+  color: var(--ink);
+}
+.motion-ready .ink, .js:not(.no-motion) .ink {
+  color: transparent;
+  background-image: linear-gradient(90deg, var(--ink) 0 50%, #B4BBCB 50% 100%);
+  background-size: 200% 100%;
+  background-position: calc((1 - var(--p)) * 100%) 0;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-box-decoration-break: slice; box-decoration-break: slice;
+}
+.js:not(.no-motion) .ink { --p: 0; }

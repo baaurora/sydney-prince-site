@@ -284,6 +284,10 @@
     gsap.from(pic, { y: 120, x: dir * 50, rotation: dir * 9, autoAlpha: 0, duration: 1.5, ease: 'expo.out', scrollTrigger: { trigger: pic, start: 'top 88%', once: true } });
     gsap.from(pic.querySelector('img'), { scale: 1.2, duration: 2, ease: 'expo.out', scrollTrigger: { trigger: pic, start: 'top 88%', once: true } });
   });
+  /* key phrases fill with ink, left to right, as they scroll up the page */
+  gsap.utils.toArray('.ink').forEach(function (el) {
+    gsap.fromTo(el, { '--p': 0 }, { '--p': 1, ease: 'none', scrollTrigger: { trigger: el, start: 'top 85%', end: 'top 55%', scrub: 0.6 } });
+  });
   var jarEl = document.querySelector('.jar');
   if (jarEl) gsap.from(jarEl, { y: 80, scale: 0.92, autoAlpha: 0, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: jarEl, start: 'top 85%', once: true } });
 
