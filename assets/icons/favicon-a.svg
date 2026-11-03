@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Version A: a hand-sketched matchbook, wobbly ink lines over flat colour -->
+  <g stroke="#1F1B18" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- open flap -->
+    <path d="M5.6 13.4 L6.3 4.9 Q6.5 3.6 7.8 3.7 L24.6 3.3 Q26 3.3 26 4.7 L26.6 13.2" fill="#F6EEDF" stroke-width="1.05"/>
+    <!-- matches: cream sticks, lopsided red heads -->
+    <path d="M11 13 L11.2 8.6 M16.1 13 L15.9 8.2 M21 13 L21.3 8.7" stroke-width="1"/>
+    <ellipse cx="11.2" cy="7.1" rx="1.9" ry="2.6" transform="rotate(-8 11.2 7.1)" fill="#D9442B" stroke-width=".9"/>
+    <ellipse cx="15.9" cy="6.6" rx="2" ry="2.7" transform="rotate(5 15.9 6.6)" fill="#D9442B" stroke-width=".9"/>
+    <ellipse cx="21.3" cy="7.2" rx="1.9" ry="2.5" transform="rotate(10 21.3 7.2)" fill="#D9442B" stroke-width=".9"/>
+    <!-- cover -->
+    <path d="M3.4 13.6 Q16 12.2 28.7 13.3 Q29.4 20 28.4 28.2 Q16 29.4 3.8 28.4 Q2.8 21 3.4 13.6 Z" fill="#D9442B" stroke-width="1.2"/>
+    <!-- striker with scratchy hatching -->
+    <path d="M4 23.6 Q16 22.9 28.5 23.4" stroke-width=".9"/>
+    <path d="M6.5 26.6 L7.6 24.4 M9.8 26.7 L10.9 24.3 M13.1 26.7 L14.2 24.3 M16.4 26.8 L17.5 24.3 M19.7 26.7 L20.8 24.2 M23 26.6 L24.1 24.3" stroke="#6E533C" stroke-width=".8"/>
+    <!-- a second, looser pass on the outline, like a pen sketch -->
+    <path d="M3.1 15.5 Q2.6 22 3.6 27.4" stroke-width=".7" opacity=".55"/>
+    <path d="M29 15 Q29.5 21.5 28.8 27" stroke-width=".7" opacity=".55"/>
+  </g>
+</svg>
