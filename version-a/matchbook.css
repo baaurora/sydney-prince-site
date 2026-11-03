@@ -416,3 +416,7 @@ em.c-sub { display: block; font-weight: 400; letter-spacing: 0; }
 @media (prefers-reduced-motion: reduce) {
   .js .bounce .w { opacity: 1; transform: none; }
 }
+
+/* ---------- Home: Other work, the matchbook jar ---------- */
+.other-work { max-width: var(--max, 1200px); margin: clamp(72px, 12vh, 140px) auto 0; padding: 0 var(--g, 24px); }
+.other-work .jar-wrap { margin-top: 12px; }
