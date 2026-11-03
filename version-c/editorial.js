@@ -119,7 +119,7 @@
     var header = document.querySelector('.site-header');
     var chars = split(inner, 'chars');
     gsap.set(header, { autoAlpha: 0 });
-    gsap.set(win, { clipPath: 'inset(0% 0% 100% 0% round 4px)' });
+    gsap.set(win, { autoAlpha: 0, y: -90, filter: 'blur(10px)' });
     gsap.set(roles, { autoAlpha: 0 });
     root.classList.add('motion-ready');
 
@@ -127,8 +127,9 @@
        screen the name also rises in letter by letter; after the loader it is already in place. */
     heroReady = function (afterLoader) {
       var tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
-      tl.to(win, { clipPath: 'inset(0% 0% 0% 0% round 4px)', duration: 1.6, ease: 'expo.inOut' }, 0)
-        .from(photo, { scale: 1.15, duration: 2.2 }, 0)
+      /* the photo fades up out of the blue first, then drops softly into place */
+      tl.to(win, { autoAlpha: 1, filter: 'blur(0px)', duration: 1.3, ease: 'power1.out' }, 0)
+        .to(win, { y: 0, duration: 1.5, ease: 'power3.inOut' }, 0.35)
         .fromTo(roles, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.2 }, afterLoader ? 0.2 : 0.9)
         .to(header, { autoAlpha: 1, duration: 1 }, 1.0);
       if (!afterLoader) tl.from(chars ? chars.chars : inner, { yPercent: 110, duration: 1.3, stagger: 0.035 }, 0.35);
