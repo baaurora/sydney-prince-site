@@ -596,3 +596,15 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
   .welcome .welcome-title { display: block !important; grid-column: 1 / 6 !important; grid-row: 1; margin: 0 !important; padding-right: 24px !important; font-size: clamp(32px, 3.3vw, 52px) !important; text-wrap: balance; }
   .welcome-text { grid-column: 7 / -1 !important; grid-row: 1; }
 }
+
+/* ---------- hero v5: a big photo, with her name lower down and crossing its bottom edge ---------- */
+@media (min-width: 900px) {
+  .hero-stage { --ww: min(34vw, 52svh, 560px); --wt: 12%; }
+  /* name centre sits 15% up from the photo's bottom edge: over her legs, never her face */
+  .hero-name { top: calc(var(--wt) + var(--ww) * 4 / 3 * .85); }
+}
+/* the photo's lower edge dissolves into the blue, so her name reads cleanly where it crosses */
+@media (min-width: 900px) {
+  .hero-window { box-shadow: none !important; background: transparent !important;
+    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 90%); mask-image: linear-gradient(to bottom, #000 55%, transparent 90%); }
+}
