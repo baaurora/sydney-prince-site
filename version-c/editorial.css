@@ -8,8 +8,8 @@
   --surface: #FFFFFF;
   --ink: #1C1F3F;        /* deep navy */
   --muted: #585B76;
-  --peri: #CFE3F5;       /* Sydney's baby blue */
-  --peri-soft: #E7F0FA;
+  --peri: #A6C6E5;       /* Sydney's baby blue: the accent swatch from her current site, lightened a touch */
+  --peri-soft: #D6E6F5;
   --peri-deep: #3F6FA8;
   --red: #E2432A;        /* accent: matchbook cover, buttons, small labels */
   --red-text: #B8361F;   /* red at text sizes: 5:1 on paper */
@@ -338,3 +338,64 @@ em.c-sub { display: block; font-variant-caps: normal; font-size: 15px; letter-sp
 /* footer: quiet */
 .site-footer { background: var(--paper); margin-top: clamp(96px, 14vh, 160px); }
 .footer-inner { border-top: 1px solid var(--hair); }
+
+/* ---------- logo: a modern matchbook mark beside her name ---------- */
+.wordmark { display: inline-flex; align-items: center; gap: 10px; }
+.logo-mark { width: 18px; height: auto; flex: none; transition: transform .5s var(--ease); }
+.wordmark:hover .logo-mark { transform: translateY(-2px) rotate(-4deg); }
+
+/* ---------- welcome: the greeting is the headline ---------- */
+.welcome-title { grid-column: 1 / -1 !important; margin: 0 0 32px; padding: 0 !important; font: 400 clamp(36px, 4.6vw, 68px)/1.04 var(--display) !important; font-variation-settings: 'opsz' 72; letter-spacing: -.025em !important; color: var(--ink) !important; text-wrap: balance; max-width: 18ch; }
+.welcome-text { grid-column: 1 / -1 !important; max-width: 34ch; font-size: clamp(24px, 2.4vw, 34px) !important; }
+@media (min-width: 900px) { .welcome-text { grid-column: 5 / -1 !important; } }
+
+/* ---------- red-pen markup, drawn as you reach it ---------- */
+.mk { position: relative; white-space: nowrap; }
+.mk-c .mk-circle { position: absolute; left: -.35em; right: -.35em; top: -.32em; bottom: -.3em; width: calc(100% + .7em); height: calc(100% + .62em); overflow: visible; pointer-events: none; }
+.mk-c .mk-circle path { fill: none; stroke: var(--red); stroke-width: 2.2; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1s .2s cubic-bezier(.45, .05, .35, 1); }
+.mk-u {
+  white-space: normal; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6 C 22 2.5, 42 8.5, 62 5 S 100 3, 118 6' fill='none' stroke='%23E2432A' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") 0 100% / 0% .42em no-repeat;
+  padding-bottom: .12em; transition: background-size 1.1s .5s cubic-bezier(.45, .05, .35, 1);
+}
+.mk.is-in .mk-circle path, .no-motion .mk .mk-circle path { stroke-dashoffset: 0; }
+.mk-u.is-in, .no-motion .mk-u { background-size: 100% .42em; }
+.hero-roles .mk-c .mk-circle { top: -.5em; bottom: -.45em; height: calc(100% + .95em); }
+
+/* ---------- What's Happening: openable matchbooks on the pinned track ---------- */
+.track-pin { gap: 20px; padding: 88px 0 32px; }
+ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
+.track-card { --bk: min(24vw, 300px, 44svh); width: var(--bk); }
+.book { position: relative; width: var(--bk); aspect-ratio: 3 / 4; margin-top: calc(var(--bk) * .62); perspective: 1600px; perspective-origin: 50% 0; cursor: pointer; outline-offset: 8px; }
+.book-inside { position: absolute; inset: 0; border-radius: var(--r); background: #F1ECE4; overflow: hidden; }
+.book-paper { position: absolute; inset: 7% 7% 14%; padding: 14px 14px 12px; overflow: auto; background: var(--surface); border-radius: 2px; font-size: 13.5px; line-height: 1.5; color: var(--ink); scrollbar-width: thin; }
+.book-paper p { margin: 0; }
+.bp-role { margin-bottom: 8px !important; font-weight: 500; color: var(--red-text); }
+.book-strike { position: absolute; left: 0; right: 0; bottom: 0; height: 10%; background: var(--grain), var(--striker); }
+.book-lid { position: absolute; inset: 0 0 10% 0; transform-origin: 50% 0; transform-style: preserve-3d; transition: transform .9s var(--ease); z-index: 2; }
+.book-front, .book-back { position: absolute; inset: 0; border-radius: var(--r) var(--r) 0 0; overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.book-front { background: var(--cover, var(--ink)); }
+.book-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.book-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.book-front:has(.book-art) .book-cover { display: none; }
+.book-label { z-index: 2; }
+.book-label { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 12px; background: var(--paper); color: var(--ink); font: 400 15px/1.15 var(--display); text-align: center; }
+.book-back { transform: rotateX(180deg); background: var(--back, var(--red-text)); }
+.tc-iron-bloom { --cover: var(--ink); --back: var(--ink); }
+.tc-nba-all-star { --cover: var(--peri); --back: #6E93BF; }
+.tc-iron-bloom .book-cover img, .tc-nba-all-star .book-cover img { object-fit: contain; padding: 16% 14% 30%; }
+.book:hover .book-lid, .book:focus-visible .book-lid, .track-card.is-open .book-lid { transform: rotateX(112deg); }
+.track-card h3 { margin: 18px 0 0; font-size: clamp(22px, 2vw, 30px); }
+.tc-role, .tc-text, .tc-media { display: none; }
+@media (max-width: 899px) {
+  .track-card { --bk: min(78vw, 340px); width: 100%; display: grid; justify-items: center; }
+  .track-card h3 { text-align: center; }
+}
+@media (min-width: 900px) {
+  .track-card { --slot: min(56vw, 720px); width: var(--slot); display: grid; justify-items: center; }
+  ul.track-list { gap: 0; padding-left: calc(50vw - var(--slot-half, min(28vw, 360px))); padding-right: calc(50vw - min(28vw, 360px)); --slot-half: min(28vw, 360px); }
+  .track-title { text-align: left; }
+}
+/* outro is just the link now */
+.outro { display: block; }
+.logo-mark { width: 16px; }

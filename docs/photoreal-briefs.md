@@ -79,3 +79,26 @@ Colors (cover / border): ars-nova black / cream · spellbound deep red / cream �
 
 ## 4. Where the files go
 Save them into **`/Users/bianca/sydney-prince-site/assets/img/objects/`** with the exact names above (PNG is fine; I'll convert to WebP), or just send them to Claude in chat.
+
+---
+
+# Part 2: matchbook cover illustrations for "What's Happening" (Version C)
+
+The home page shows three matchbooks on the sideways scroll: **Cherry Lane Theatre, Iron Bloom Creative Production and NBA All-Star**. Each opens to reveal Sydney's role. Right now the covers use photos and logos. These briefs replace them with one consistent, modern illustration set.
+
+**Format for all three:** 900 × 1080 px PNG (portrait, 5:6), artwork filling the whole canvas edge to edge, **no text, letters or logos** (the site prints each name on a label strip itself, so it's always spelled correctly). Save as `assets/img/objects/cover-cherry-lane.png`, `cover-iron-bloom.png` and `cover-nba-all-star.png`.
+
+### Style brief (paste first, in a new ChatGPT chat)
+> I need three matching cover illustrations for small matchbooks on a theatre production manager's portfolio website. The site is clean, modern and editorial. Every image must follow these rules:
+> - **Style:** modern flat editorial illustration, like a contemporary New Yorker spot illustration or a boutique hotel's printed collateral. Simple geometric shapes, crisp edges, no outlines or very fine ones only, a subtle risograph-style grain. Sophisticated, not cartoonish or cute.
+> - **Palette only:** deep navy #1C1F3F, baby blue #A6C6E5, tomato red #E2432A, warm paper white #F7F6F2, plus one mid blue #6E93BF if needed. Flat colour, no gradients, no shading ramps.
+> - **Composition:** portrait 900×1080, artwork fills the whole frame, one clear focal subject, generous negative space in the bottom fifth (a label strip covers it).
+> - **Never:** no words, letters, numbers, logos or signage text. No people's faces. No 3D render, no photorealism, no glossy shine.
+> Reply "Ready" and wait for each request.
+
+### Then one at a time
+1. **`cover-cherry-lane.png`:** "The Cherry Lane Theatre in Greenwich Village: a narrow brick façade with a scalloped red awning (no lettering on it) over arched red double doors, two small framed poster cases, a slim street lamp and a bare tree branch. Navy night sky, warm paper-white light spilling from the doorway, the awning in tomato red."
+2. **`cover-iron-bloom.png`:** "An original emblem for a live-events production company called Iron Bloom: a blacksmith's hammer crossed with a single long-stemmed rose, centered on a deep navy field, the hammer in paper white, the rose in tomato red with a baby-blue leaf. A thin circular rule around the emblem. No text. Do not copy any existing logo."
+3. **`cover-nba-all-star.png`:** "A basketball all-star weekend: a single basketball with clean navy seams arcing through a large five-pointed star, a few short motion lines, on a baby-blue field, the star in paper white, the ball in tomato red. No league logo, no silhouette logo, no text."
+
+**Fix-up replies:** too cute → *"More sophisticated and editorial, fewer details, cleaner shapes."* Text appeared → *"Remove all letters and words entirely."* Colours drifted → *"Use only the five palette colours, flat fills."*

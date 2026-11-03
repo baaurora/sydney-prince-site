@@ -33,6 +33,16 @@
   }
   matchJar();
 
+  /* tap or press Enter on a matchbook to open or close it */
+  document.querySelectorAll('.book').forEach(function (b) {
+    var toggle = function () { b.closest('.track-card').classList.toggle('is-open'); };
+    b.addEventListener('click', toggle);
+    b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+  });
+
+  /* red-pen markup draws itself when it scrolls into view */
+  SP.reveal('.mk', { rootMargin: '0px 0px -15% 0px', threshold: 0.6 });
+
   /* header gets a soft paper backing once the page scrolls (works without GSAP too) */
   var hdr = document.querySelector('.site-header');
   if (hdr) {
@@ -99,20 +109,16 @@
         .to(header, { autoAlpha: 1, duration: 0.9 }, 1.0);
     };
 
+    /* scrolling away: the two words drift apart and the photo rises a little. No zoom. */
     mm.add('(min-width: 900px)', function () {
-      var tl = gsap.timeline({
-        scrollTrigger: { trigger: hero, start: 'top top', end: '+=120%', scrub: 0.7, pin: true, anticipatePin: 1 }
-      });
-      tl.to(n1, { xPercent: -40, autoAlpha: 0, ease: 'none' }, 0)
-        .to(n2, { xPercent: 40, autoAlpha: 0, ease: 'none' }, 0)
-        .to(roles, { autoAlpha: 0, y: 20, ease: 'none' }, 0)
-        .to(win, { width: '100vw', height: '100svh', borderRadius: 0, ease: 'none' }, 0)
-        .to(photo, { scale: 1.06, ease: 'none' }, 0);
+      var st = { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.6 };
+      gsap.to(n1, { xPercent: -14, autoAlpha: 0.15, ease: 'none', scrollTrigger: st });
+      gsap.to(n2, { xPercent: 14, autoAlpha: 0.15, ease: 'none', scrollTrigger: st });
+      gsap.to(win, { yPercent: -12, ease: 'none', scrollTrigger: st });
     });
   }
 
   if (loaderActive) {
-    SP.store.set('sp-loader-c', '1');
     var video = loader.querySelector('.ld-video');
     var ldName = loader.querySelector('.ld-name');
     var finish = function () {
@@ -148,11 +154,16 @@
       x: function () { return -distance(); }, ease: 'none',
       scrollTrigger: { trigger: track, start: 'top top', end: function () { return '+=' + distance(); }, scrub: 0.8, pin: true, anticipatePin: 1, invalidateOnRefresh: true }
     });
-    list.querySelectorAll('.tc-media:not(.tc-logo) img').forEach(function (img) {
-      gsap.fromTo(img, { xPercent: -5 }, {
-        xPercent: 5, ease: 'none',
-        scrollTrigger: { trigger: img.parentNode, containerAnimation: move, start: 'left right', end: 'right left', scrub: true }
-      });
+    /* each matchbook opens as it slides through the middle of the screen */
+    list.querySelectorAll('.track-card').forEach(function (card) {
+      ScrollTrigger.create({ trigger: card, containerAnimation: move, start: 'center 72%', end: 'center 28%', toggleClass: 'is-open' });
+    });
+  });
+
+  /* phones: each matchbook opens when it reaches the middle of the screen */
+  mm.add('(max-width: 899px)', function () {
+    gsap.utils.toArray('.track-card').forEach(function (card) {
+      ScrollTrigger.create({ trigger: card.querySelector('.book'), start: 'top 55%', end: 'bottom 35%', toggleClass: { targets: card, className: 'is-open' } });
     });
   });
 
