@@ -138,24 +138,6 @@
     heroReady();
   }
 
-  /* ---------- masked line reveals for statement text ---------- */
-  document.querySelectorAll('.split-lines, .lead-2, .welcome-title').forEach(function (el) {
-    var s = split(el, 'lines');
-    gsap.from(s ? s.lines : el, {
-      yPercent: 110, duration: 1.2, ease: EASE, stagger: 0.08,
-      scrollTrigger: { trigger: el, start: 'top 82%', once: true }
-    });
-  });
-
-  /* ---------- page titles: characters rise on load ---------- */
-  document.querySelectorAll('.page-title, .lead').forEach(function (el, i) {
-    var s = split(el, 'chars');
-    gsap.from(s ? s.chars : el, {
-      yPercent: 115, duration: 1.1, ease: EASE, stagger: 0.025, delay: i === 0 ? 0.15 : 0,
-      scrollTrigger: i === 0 ? null : { trigger: el, start: 'top 85%', once: true }
-    });
-  });
-
   /* ---------- pinned sideways track (desktop) ---------- */
   mm.add('(min-width: 900px)', function () {
     var track = document.querySelector('.track');
@@ -173,42 +155,6 @@
       });
     });
   });
-  mm.add('(max-width: 899px)', function () {
-    gsap.utils.toArray('.track-card').forEach(function (c) {
-      gsap.from(c, { y: 40, autoAlpha: 0, duration: 1, ease: EASE, scrollTrigger: { trigger: c, start: 'top 88%', once: true } });
-    });
-  });
-
-  /* ---------- photos: clip open from the bottom, image settles ---------- */
-  gsap.utils.toArray('.pic .ph, .outro').forEach(function (ph) {
-    var img = ph.querySelector('img');
-    var tl = gsap.timeline({ scrollTrigger: { trigger: ph, start: 'top 88%', once: true } });
-    tl.from(ph, { clipPath: 'inset(100% 0% 0% 0%)', duration: 1.3, ease: 'expo.inOut' });
-    if (img) tl.from(img, { scale: 1.25, duration: 1.6, ease: EASE }, 0.1);
-  });
-
-  /* stage band parallax */
-  var band = document.querySelector('.band-img');
-  if (band) gsap.fromTo(band, { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '.band', start: 'top bottom', end: 'bottom top', scrub: true } });
-
-  /* outro photo parallax */
-  var outroPhoto = document.querySelector('.outro-photo');
-  if (outroPhoto) {
-    gsap.fromTo(outroPhoto, { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '.outro', start: 'top bottom', end: 'bottom top', scrub: true } });
-  }
-
-  /* ---------- credits rows and cue marks arrive in sequence ---------- */
-  ScrollTrigger.batch('.credit, .cue, .jar-wrap', {
-    start: 'top 90%', once: true,
-    onEnter: function (els) { gsap.from(els, { y: 18, autoAlpha: 0, duration: 0.9, ease: EASE, stagger: 0.05 }); }
-  });
-
-  /* ---------- footer wordmark rises as you reach the bottom ---------- */
-  var fname = document.querySelector('.footer-name');
-  if (fname) {
-    var fs = split(fname, 'chars');
-    gsap.from(fs ? fs.chars : fname, { yPercent: 100, duration: 1.2, ease: EASE, stagger: 0.03, scrollTrigger: { trigger: '.site-footer', start: 'top 85%', once: true } });
-  }
 
   /* fonts change line breaks; re-measure once they're in */
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
