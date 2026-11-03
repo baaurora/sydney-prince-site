@@ -159,21 +159,27 @@
       /* the photo fades up out of the blue first, then drops softly into place */
       tl.to(win, { autoAlpha: 1, filter: 'blur(0px)', duration: 1.3, ease: 'power1.out' }, 0)
         .to(win, { y: 0, duration: 1.5, ease: 'power3.inOut' }, 0.35)
-        .fromTo(roles, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.2 }, afterLoader ? 0.2 : 0.9)
         .to(header, { autoAlpha: 1, duration: 1 }, 1.0);
       if (!afterLoader) tl.from(chars ? chars.chars : inner, { yPercent: 110, duration: 1.3, stagger: 0.035 }, 0.35);
+      /* on phones the roles sit under the name from the start; on desktop they wait for the scroll */
+      if (!window.matchMedia('(min-width: 900px)').matches) tl.fromTo(roles, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.2 }, afterLoader ? 0.2 : 0.9);
     };
 
-    /* scroll (desktop): the hero holds; the name slides sideways like a marquee, the photo rises
-       behind it. No zoom. */
+    /* scroll (desktop): the hero holds; the photo and her name glide to the left (the name a touch
+       further, like a marquee) and her three roles arrive stacked in the space they leave. No zoom. */
     mm.add('(min-width: 900px)', function () {
+      var lines = roles.querySelectorAll('.hr-1, .hr-2, .hr-3');
+      var shift = function () { return -window.innerWidth * 0.2; };
+      gsap.set(roles, { autoAlpha: 1 });
+      gsap.set(lines, { autoAlpha: 0, y: 50 });
       gsap.timeline({
         defaults: { ease: 'none' },
-        scrollTrigger: { trigger: hero, start: 'top top', end: '+=120%', scrub: 1, pin: true, anticipatePin: 1 }
+        scrollTrigger: { trigger: hero, start: 'top top', end: '+=130%', scrub: 1, pin: true, anticipatePin: 1, invalidateOnRefresh: true }
       })
-        .fromTo(inner, { xPercent: 0 }, { xPercent: -38, duration: 1, immediateRender: false }, 0)
-        .fromTo(win, { yPercent: 0 }, { yPercent: -14, duration: 1, immediateRender: false }, 0)
-        .to({}, { duration: 0.2 });
+        .fromTo(win, { x: 0 }, { x: shift, duration: 0.6, ease: 'power1.inOut', immediateRender: false }, 0)
+        .fromTo(inner, { x: 0 }, { x: function () { return shift() - window.innerWidth * 0.03; }, duration: 0.7, ease: 'power1.inOut', immediateRender: false }, 0)
+        .fromTo(lines, { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.12, ease: 'power2.out', immediateRender: false }, 0.4)
+        .to({}, { duration: 0.25 });
     });
     /* phones: the name drifts as you scroll past */
     mm.add('(max-width: 899px)', function () {

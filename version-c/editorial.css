@@ -620,3 +620,13 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
 @media (min-width: 900px) {
   .track-card { --bk: min(30vw, 330px, calc((100svh - 110px) / 1.96)); }
 }
+
+/* ---------- hero v6 (desktop): the roles stack big on the right, arriving as the photo and name move left ---------- */
+@media (min-width: 900px) {
+  .hero-roles {
+    left: 52vw !important; right: var(--g) !important; bottom: auto !important;
+    top: calc(var(--wt) + var(--ww) * 2 / 3); translate: 0 -50%;
+    text-align: left !important; font-size: clamp(40px, 4.6vw, 80px) !important; line-height: 1.04 !important;
+  }
+  .hero-roles .hr-1, .hero-roles .hr-2, .hero-roles .hr-3 { display: block; }
+}
