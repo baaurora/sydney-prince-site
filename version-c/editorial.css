@@ -70,34 +70,16 @@ main { display: block; }
 #loader { position: fixed; inset: 0; z-index: 100; align-items: center; justify-content: center; background: #0B0A0C; overflow: hidden; }
 .ld-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 50%; opacity: 0; transition: opacity .6s var(--ease); }
 .ld-video.is-on { opacity: 1; }
-.ld-name {
-  position: absolute; margin: 0; white-space: nowrap; z-index: 2; opacity: 0;
-  font: 400 clamp(30px, 3.6vw, 54px)/1 var(--display); font-variation-settings: 'opsz' 72; letter-spacing: -.01em;
-  color: #F4EDE4;
-}
-.ld-glow { position: fixed; width: 46vmax; height: 46vmax; margin: -23vmax 0 0 -23vmax; border-radius: 50%; z-index: 101; opacity: 0; pointer-events: none;
-  background: radial-gradient(circle, rgba(255, 178, 96, .42), rgba(255, 150, 70, .16) 42%, transparent 70%); mix-blend-mode: normal; }
-/* the light spreads out from the flame and dissolves the dark */
-#loader { --r: -26vmax; --fx: 69%; --fy: 40%;
-  -webkit-mask-image: radial-gradient(circle at var(--fx) var(--fy), transparent var(--r), #000 calc(var(--r) + 26vmax));
-          mask-image: radial-gradient(circle at var(--fx) var(--fy), transparent var(--r), #000 calc(var(--r) + 26vmax)); }
-
 /* ---------- home: hero, her name either side of the photo window ---------- */
 .hero { background: var(--peri); }
 .hero-stage { position: relative; min-height: 100svh; display: grid; place-items: center; padding: 96px var(--g) 56px; overflow: hidden; }
-.hero-row { display: flex; align-items: center; justify-content: center; gap: clamp(14px, 2.6vw, 44px); width: 100%; }
-.hn { font: 400 clamp(56px, 8.6vw, 156px)/1 var(--display); font-variation-settings: 'opsz' 72; letter-spacing: -.035em; color: var(--ink); white-space: nowrap; }
 .hero-window { position: relative; flex: none; width: clamp(200px, 24vw, 400px); aspect-ratio: 3 / 4; border-radius: 14px; overflow: hidden; background: var(--peri-soft); box-shadow: 0 40px 60px -40px rgba(28, 31, 63, .5); }
 .hero-window img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
 .hero-roles { position: absolute; left: var(--g); right: var(--g); bottom: clamp(24px, 6vh, 56px); margin: 0; text-align: center; font: 600 12.5px/1.4 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
 @media (min-width: 900px) {
   /* the window sits dead centre; the two words hang off its edges, so it can grow evenly to full bleed */
   .hero-stage { padding: 0; }
-  .hero-row { --ww: clamp(220px, 24vw, 400px); position: relative; display: block; width: 100%; height: 100svh; }
   .hero-window { position: absolute; left: 50%; top: 50%; width: var(--ww); translate: -50% -50%; }
-  .hn { position: absolute; top: 50%; translate: 0 -50%; }
-  .hn-1 { right: calc(50% + var(--ww) / 2 + clamp(18px, 2.6vw, 44px)); }
-  .hn-2 { left: calc(50% + var(--ww) / 2 + clamp(18px, 2.6vw, 44px)); }
 }
 /* hold the hero until the motion script takes over (shows anyway after 3.5s) */
 .js .hero-stage > * { visibility: hidden; animation: show-anyway 0s 3.5s forwards; }
@@ -268,8 +250,6 @@ em.c-sub { display: block; font-variant-caps: normal; font-size: 15px; letter-sp
   .contact { grid-template-columns: 1.15fr 1fr; }
 }
 @media (max-width: 899px) {
-  .hero-row { flex-direction: column; gap: 10px; }
-  .hn { font-size: clamp(54px, 17vw, 110px); line-height: .95; }
   .hero-window { width: min(72vw, 360px); }
   .hero-stage { padding-top: 92px; padding-bottom: 72px; }
   .hero-roles { position: static; margin-top: 22px; }
@@ -476,3 +456,80 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
 @media (max-width: 899px) { .outro { margin-left: var(--g); margin-right: var(--g); aspect-ratio: 4 / 5; } }
 .outro { grid-template-columns: 1fr !important; }
 .outro-link { grid-column: 1; grid-row: 1; padding: 24px 32px; background: color-mix(in srgb, var(--paper) 82%, transparent); border-radius: var(--r); }
+
+/* =====================================================================
+   Hero, marquee version: "Sydney Prince" on one line across the screen, in front of
+   the photo. The same element is lit by the match on the loading screen, so it never moves.
+   ===================================================================== */
+.hero-stage { position: relative; display: block; height: 100svh; min-height: 560px; padding: 0 !important; overflow: hidden; }
+.hero-window { position: absolute !important; left: 50% !important; top: 47% !important; translate: -50% -50% !important; width: min(26vw, 39svh, 400px) !important; aspect-ratio: 3 / 4; z-index: 1; }
+.hero-name {
+  --ns: clamp(56px, 11vw, 200px);
+  position: absolute; left: 0; right: 0; top: 47%; translate: 0 -50%; margin: 0; z-index: 3;
+  text-align: center; white-space: nowrap; pointer-events: none;
+  font: 400 var(--ns)/1 var(--display); font-variation-settings: 'opsz' 72; letter-spacing: -.035em; color: var(--ink);
+}
+.hn-in { display: inline-block; }
+.hero-name.is-lit { z-index: 102; color: #F4EDE4; }
+.hero-roles { position: absolute !important; left: var(--g); right: var(--g); bottom: 6svh; margin: 0 !important; text-align: center; }
+@media (min-width: 900px) {
+  .hero-welcome { left: 50% !important; right: auto !important; top: auto !important; bottom: 6svh; translate: -50% 0 !important; width: min(86vw, 980px); text-align: center; font-size: clamp(30px, 3.4vw, 54px) !important; }
+}
+@media (max-width: 899px) {
+  .hero-window { width: min(72vw, 44svh) !important; top: 46% !important; }
+  .hero-name { --ns: 15.5vw; top: 46%; }
+  .hero-roles { font-size: clamp(22px, 6vw, 30px) !important; bottom: 5svh; }
+}
+
+/* ---------- home outro: just the link, no photo ---------- */
+.outro { aspect-ratio: auto !important; display: block !important; text-align: center; margin-bottom: clamp(40px, 8vh, 96px); overflow: visible; }
+.outro-link { display: inline-block; background: none !important; padding: 0 !important; color: var(--ink); }
+
+/* ---------- About: rounder photos, scattered like prints on a table ---------- */
+.about-intro .pic .ph, .book .pic .ph { border-radius: 22px !important; }
+.pic img { transition: none; }
+.pic:hover img { scale: 1; }
+.pic { will-change: transform; }
+@media (min-width: 900px) {
+  .intro-grid { position: relative; }
+  .intro-l { rotate: -4deg; margin-top: 110px !important; translate: 18px 0; z-index: 2; }
+  .intro-m { rotate: 2deg; }
+  .intro-r { rotate: 5deg; margin-top: 210px !important; translate: -24px 0; }
+  .side.r { rotate: 3deg; }
+  .side.l { rotate: -3deg; }
+  .book .pic .ph, .about-intro .pic .ph { box-shadow: 0 30px 50px -30px rgba(28, 31, 63, .45); }
+}
+
+/* ---------- the jar: bigger, no shelf, note sits further right ---------- */
+.jar { width: min(100%, 500px) !important; }
+.jar-shelf { display: none !important; }
+@media (min-width: 900px) {
+  .jar-wrap { grid-template-columns: 1.2fr 1fr !important; }
+  .jar-note { padding-left: clamp(24px, 4vw, 72px); }
+}
+
+/* ---------- home: Other work (the jar) ---------- */
+.other-work { max-width: var(--max); margin: clamp(80px, 12vh, 140px) auto 0; padding: 0 var(--g); }
+.ow-title { margin: 0; }
+.other-work .jar-wrap { margin-top: 24px; }
+/* the name crosses below her face, never over it */
+.hero-window { top: 44% !important; }
+.hero-name { top: 63%; }
+@media (max-width: 899px) { .hero-window { top: 42% !important; } .hero-name { top: 62%; } }
+
+/* ---------- dark hero: the match lights her name in white and it stays lit ---------- */
+.hero { --night: #12152B; background: var(--night); }
+/* while the match burns, the hero floats above the loader with no backdrop, so only her name shows */
+.ld-lit .hero { position: relative; z-index: 101; }
+.hero-name, .hero-name.is-lit { color: #F4EDE4; }
+.hero .hr-1 { color: #F4EDE4; } .hero .hr-2 { color: #F0634A; } .hero .hr-3 { color: var(--peri); }
+.hero-welcome { color: #F4EDE4 !important; }
+.hero-window { box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .7) !important; background: #1E2242 !important; }
+/* the header reads light while it floats over the dark hero */
+:root:has(.hero) .site-header:not(.is-scrolled) .nav-link { color: #F4EDE4; }
+:root:has(.hero) .site-header:not(.is-scrolled) .btn { background: #F4EDE4; color: var(--ink); border-color: #F4EDE4; }
+.ld-lit .hero-roles, .ld-lit .hero-welcome { visibility: hidden !important; }
+@media (min-width: 900px) {
+  /* centred without translate, so GSAP's y tween can't double the offset */
+  .hero-welcome { left: 0 !important; right: 0 !important; translate: none !important; width: auto !important; max-width: 980px; margin: 0 auto !important; padding: 0 var(--g); }
+}

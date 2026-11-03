@@ -103,113 +103,84 @@
 
   var mm = gsap.matchMedia();
 
-  /* ---------- loading screen (home, once per session): a match strikes, the curtain rises ---------- */
+  /* ---------- home hero: her name runs across the screen in front of the photo ---------- */
   var loader = document.getElementById('loader');
   var loaderActive = !!loader && !root.classList.contains('no-loader');
-  var heroReady = function () {};   // replaced below; called when the page is revealed
-
-  /* ---------- home hero: name either side of the window; pinned, the window grows to full bleed ---------- */
+  var heroReady = function () {};
   var hero = document.querySelector('.hero');
+  var nameEl = hero && hero.querySelector('.hero-name');
+
   if (hero) {
+    var inner = hero.querySelector('.hn-in');
     var win = hero.querySelector('.hero-window');
     var photo = hero.querySelector('.hero-photo');
-    var n1 = hero.querySelector('.hn-1');
-    var n2 = hero.querySelector('.hn-2');
     var roles = hero.querySelector('.hero-roles');
+    var welcome = hero.querySelector('.hero-welcome');
     var header = document.querySelector('.site-header');
+    var chars = split(inner, 'chars');
     gsap.set(header, { autoAlpha: 0 });
     gsap.set(win, { clipPath: 'inset(100% 0% 0% 0% round 4px)' });
-    gsap.set([n1, n2, roles], { autoAlpha: 0 });
+    gsap.set(roles, { autoAlpha: 0 });
     root.classList.add('motion-ready');
 
-    var welcome = hero.querySelector('.hero-welcome');
-    var c1 = split(n1, 'chars'), c2 = split(n2, 'chars');
-    gsap.set([n1, n2], { autoAlpha: 1 });
-
-    /* entrance: the window opens, each name rises letter by letter, the roles follow */
-    heroReady = function () {
-      gsap.timeline({ defaults: { ease: 'expo.out' } })
-        .to(win, { clipPath: 'inset(0% 0% 0% 0% round 4px)', duration: 1.5, ease: 'expo.inOut' }, 0)
-        .from(photo, { scale: 1.18, duration: 2.2 }, 0)
-        .from(c1 ? c1.chars : n1, { yPercent: 110, duration: 1.3, stagger: 0.04 }, 0.5)
-        .from(c2 ? c2.chars : n2, { yPercent: 110, duration: 1.3, stagger: 0.04 }, 0.62)
-        .fromTo(roles, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.2 }, 1.05)
-        .to(header, { autoAlpha: 1, duration: 1 }, 1.1);
+    /* entrance: the photo opens behind the name, the roles follow. When there was no loading
+       screen the name also rises in letter by letter; after the loader it is already in place. */
+    heroReady = function (afterLoader) {
+      var tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+      tl.to(win, { clipPath: 'inset(0% 0% 0% 0% round 4px)', duration: 1.6, ease: 'expo.inOut' }, 0)
+        .from(photo, { scale: 1.15, duration: 2.2 }, 0)
+        .fromTo(roles, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.2 }, afterLoader ? 0.2 : 0.9)
+        .to(header, { autoAlpha: 1, duration: 1 }, 1.0);
+      if (!afterLoader) tl.from(chars ? chars.chars : inner, { yPercent: 110, duration: 1.3, stagger: 0.035 }, 0.35);
     };
 
-    /* scroll (desktop): the hero holds while the names part, the photo glides left at the same size,
-       and the welcome line arrives on the right. No zoom. */
+    /* scroll (desktop): the hero holds; the name slides sideways like a marquee, the photo rises
+       behind it, the roles give way to the welcome line. No zoom. */
     mm.add('(min-width: 900px)', function () {
-      var tl = gsap.timeline({
+      gsap.timeline({
         defaults: { ease: 'none' },
-        scrollTrigger: { trigger: hero, start: 'top top', end: '+=110%', scrub: 1, pin: true, anticipatePin: 1 }
-      });
-      tl.to(n1, { xPercent: -60, autoAlpha: 0, duration: 0.5 }, 0)
-        .to(n2, { xPercent: 60, autoAlpha: 0, duration: 0.5 }, 0)
-        .fromTo(roles, { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: 30, duration: 0.4, immediateRender: false }, 0)
-        .to(win, { left: '27%', duration: 1 }, 0.1)
-        .fromTo(welcome, { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.45)
-        .to({}, { duration: 0.25 });
+        scrollTrigger: { trigger: hero, start: 'top top', end: '+=120%', scrub: 1, pin: true, anticipatePin: 1 }
+      })
+        .fromTo(inner, { xPercent: 0 }, { xPercent: -38, duration: 1, immediateRender: false }, 0)
+        .fromTo(win, { yPercent: 0 }, { yPercent: -14, duration: 1, immediateRender: false }, 0)
+        .fromTo(roles, { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: 20, duration: 0.3, immediateRender: false }, 0)
+        .fromTo(welcome, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.45, immediateRender: false }, 0.4)
+        .to({}, { duration: 0.2 });
+    });
+    /* phones: the name drifts as you scroll past */
+    mm.add('(max-width: 899px)', function () {
+      gsap.fromTo(inner, { xPercent: 0 }, { xPercent: -22, ease: 'none', immediateRender: false, scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
     });
   }
 
+  /* ---------- loading screen: the match lights her name, then the dark fades away around it ---------- */
   if (loaderActive) {
     var video = loader.querySelector('.ld-video');
-    var ldName = loader.querySelector('.ld-name');
-    var glow = document.createElement('div');
-    glow.className = 'ld-glow';
-    document.body.appendChild(glow);   /* above the dark layer, so the revealed page looks lit by it */
-
-    /* where the flame sits on screen: the video is 1920x1080, cover-fitted at object-position 62% 50%,
-       and the lit match settles at about 69% across, 40% down the frame */
-    var flame = function () {
-      var vw = window.innerWidth, vh = window.innerHeight;
-      var sc = Math.max(vw / 1920, vh / 1080), w = 1920 * sc, h = 1080 * sc;
-      return { x: (vw - w) * 0.62 + 0.69 * w, y: (vh - h) * 0.5 + 0.40 * h };
-    };
-    var place = function () {
-      var f = flame();
-      loader.style.setProperty('--fx', f.x + 'px');
-      loader.style.setProperty('--fy', f.y + 'px');
-      glow.style.left = f.x + 'px'; glow.style.top = f.y + 'px';
-      /* her name sits just left of the flame, at its height, as if lit by it */
-      var nw = ldName.offsetWidth;
-      ldName.style.left = Math.max(16, f.x - nw - Math.max(28, window.innerWidth * 0.035)) + 'px';
-      ldName.style.top = (f.y - ldName.offsetHeight * 0.55) + 'px';
-    };
-    place();
-    window.addEventListener('resize', place);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
-
+    root.classList.add('ld-lit');
+    gsap.set(hero, { backgroundColor: 'rgba(18, 21, 43, 0)' });
+    if (nameEl) gsap.set(nameEl, { autoAlpha: 0 });
     var finish = function () {
       if (finish.done) return; finish.done = true;
-      place();
-      gsap.timeline({ onComplete: function () { window.removeEventListener('resize', place); loader.remove(); glow.remove(); root.classList.add('is-loaded'); } })
-        /* the warm light swells... */
-        .to(glow, { scale: 3.2, autoAlpha: 0.9, duration: 1.1, ease: 'power2.in' }, 0)
-        /* ...and spreads outward from the flame, dissolving the dark into the page */
-        .fromTo(loader, { '--r': '-26vmax' }, { '--r': '150vmax', duration: 2, ease: 'power2.inOut' }, 0.35)
-        .to(ldName, { autoAlpha: 0, duration: 0.9, ease: 'power1.in' }, 0.9)
-        .to(glow, { autoAlpha: 0, duration: 0.9, ease: 'power1.out' }, 1.5)
-        .call(heroReady, null, 1.2);
+      gsap.timeline({ onComplete: function () { loader.remove(); root.classList.remove('ld-lit'); gsap.set(hero, { clearProps: 'backgroundColor' }); root.classList.add('is-loaded'); } })
+        .to(loader, { autoAlpha: 0, duration: 1.8, ease: 'power2.inOut' }, 0)
+        .to(hero, { backgroundColor: 'rgba(18, 21, 43, 1)', duration: 1.8, ease: 'power2.inOut' }, 0)
+        .to(nameEl, { autoAlpha: 1, duration: 0.6 }, 0)
+        .call(function () { heroReady(true); }, null, 0.5);
     };
     var start = function () {
       try { video.currentTime = 0; } catch (e) {}
       var p = video.play();
       video.classList.add('is-on');
       if (p && p.catch) p.catch(function () { finish(); });
-      /* the name catches the light just after the match does, with a faint flicker */
-      gsap.timeline({ delay: 1.15 })
-        .to(glow, { autoAlpha: 0.55, duration: 0.6, ease: 'power2.out' }, 0)
-        .fromTo(ldName, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.3, ease: 'power2.out' }, 0.15);
-      gsap.delayedCall(3.7, finish);
+      if (nameEl) gsap.to(nameEl, { autoAlpha: 1, duration: 1.4, ease: 'power2.out', delay: 1.0 });
+      gsap.delayedCall(3.8, finish);
     };
     if (video.readyState >= 2) start(); else { video.addEventListener('loadeddata', start, { once: true }); gsap.delayedCall(2.5, function () { if (!video.classList.contains('is-on')) finish(); }); }
     loader.addEventListener('click', finish);
   } else {
     if (loader) loader.remove();
     root.classList.add('is-loaded');
-    heroReady();
+    heroReady(false);
   }
 
   /* ---------- pinned sideways track (desktop) ---------- */
@@ -234,6 +205,34 @@
       ScrollTrigger.create({ trigger: card.querySelector('.book'), start: 'top 55%', end: 'bottom 35%', toggleClass: { targets: card, className: 'is-open' } });
     });
   });
+
+  /* ---------- About: the photos land like prints dropped on a table, then drift at their own pace ---------- */
+  var intro = document.querySelector('.about-intro');
+  if (intro) {
+    var title = intro.querySelector('.page-title');
+    var tsplit = split(title, 'chars');
+    var prints = gsap.utils.toArray('.about-intro .pic');
+    var tl = gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.15 });
+    if (tsplit) tl.from(tsplit.chars, { yPercent: 110, duration: 1.2, stagger: 0.025 }, 0);
+    tl.from(intro.querySelector('.tagline'), { autoAlpha: 0, y: 16, duration: 1 }, 0.4);
+    prints.forEach(function (pic, i) {
+      var dir = i % 2 ? 1 : -1;
+      tl.from(pic, { y: 160, x: dir * 60, rotation: dir * 12, scale: 0.86, autoAlpha: 0, duration: 1.7 }, 0.25 + i * 0.16);
+      tl.from(pic.querySelector('img'), { scale: 1.25, duration: 2.2 }, 0.25 + i * 0.16);
+    });
+    mm.add('(min-width: 900px)', function () {
+      prints.forEach(function (pic, i) {
+        gsap.to(pic, { yPercent: [-14, -6, -22][i % 3], ease: 'none', scrollTrigger: { trigger: intro, start: 'top top', end: 'bottom top', scrub: true } });
+      });
+    });
+  }
+  gsap.utils.toArray('.book .pic').forEach(function (pic) {
+    var dir = pic.classList.contains('l') ? -1 : 1;
+    gsap.from(pic, { y: 120, x: dir * 50, rotation: dir * 9, autoAlpha: 0, duration: 1.5, ease: 'expo.out', scrollTrigger: { trigger: pic, start: 'top 88%', once: true } });
+    gsap.from(pic.querySelector('img'), { scale: 1.2, duration: 2, ease: 'expo.out', scrollTrigger: { trigger: pic, start: 'top 88%', once: true } });
+  });
+  var jarEl = document.querySelector('.jar');
+  if (jarEl) gsap.from(jarEl, { y: 80, scale: 0.92, autoAlpha: 0, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: jarEl, start: 'top 85%', once: true } });
 
   /* fonts change line breaks; re-measure once they're in */
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
