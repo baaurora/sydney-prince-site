@@ -162,24 +162,27 @@
         .to(header, { autoAlpha: 1, duration: 1 }, 1.0);
       if (!afterLoader) tl.from(chars ? chars.chars : inner, { yPercent: 110, duration: 1.3, stagger: 0.035 }, 0.35);
       /* on phones the roles sit under the name from the start; on desktop they wait for the scroll */
+      if (glide) glide(tl, 1.7);
       if (!window.matchMedia('(min-width: 900px)').matches) tl.fromTo(roles, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.2 }, afterLoader ? 0.2 : 0.9);
     };
 
-    /* scroll (desktop): the hero holds; the photo and her name glide to the left (the name a touch
-       further, like a marquee) and her three roles arrive stacked in the space they leave. No zoom. */
+    /* desktop: once the photo has landed, it and her name glide to the left on their own (the name
+       a touch further, like a marquee) and her three roles arrive stacked in the space they leave. */
+    var glide = null;
     mm.add('(min-width: 900px)', function () {
       var lines = roles.querySelectorAll('.hr-1, .hr-2, .hr-3');
       var shift = function () { return -window.innerWidth * 0.2; };
       gsap.set(roles, { autoAlpha: 1 });
       gsap.set(lines, { autoAlpha: 0, y: 50 });
-      gsap.timeline({
-        defaults: { ease: 'none' },
-        scrollTrigger: { trigger: hero, start: 'top top', end: '+=130%', scrub: 1, pin: true, anticipatePin: 1, invalidateOnRefresh: true }
-      })
-        .fromTo(win, { x: 0 }, { x: shift, duration: 0.6, ease: 'power1.inOut', immediateRender: false }, 0)
-        .fromTo(inner, { x: 0 }, { x: function () { return shift() - window.innerWidth * 0.03; }, duration: 0.7, ease: 'power1.inOut', immediateRender: false }, 0)
-        .fromTo(lines, { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.12, ease: 'power2.out', immediateRender: false }, 0.4)
-        .to({}, { duration: 0.25 });
+      glide = function (tl, at) {
+        tl.to(win, { x: shift, duration: 1.6, ease: 'power3.inOut' }, at)
+          .to(inner, { x: function () { return shift() - window.innerWidth * 0.03; }, duration: 1.9, ease: 'power3.inOut' }, at)
+          .to(lines, { autoAlpha: 1, y: 0, duration: 1.1, stagger: 0.18, ease: 'expo.out' }, at + 0.9);
+      };
+      /* keep the end position right if the window is resized afterwards */
+      var onResize = function () { if (gsap.getProperty(win, 'x')) { gsap.set(win, { x: shift() }); gsap.set(inner, { x: shift() - window.innerWidth * 0.03 }); } };
+      window.addEventListener('resize', onResize);
+      return function () { glide = null; window.removeEventListener('resize', onResize); };
     });
     /* phones: the name drifts as you scroll past */
     mm.add('(max-width: 899px)', function () {
