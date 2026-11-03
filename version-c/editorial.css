@@ -608,3 +608,11 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
   .hero-window { box-shadow: none !important; background: transparent !important;
     -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 90%); mask-image: linear-gradient(to bottom, #000 55%, transparent 90%); }
 }
+
+/* ---------- jar: link from a picked matchbook to the resume ---------- */
+.jar-link { display: inline-block; margin-top: 14px; font: 500 16px/1.3 var(--sans); color: var(--ink); text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 1.5px; text-underline-offset: .25em; }
+.jar-link::after { content: ' →'; }
+.jar-link:hover { color: var(--red-text); }
+.jar-link[hidden] { display: none; }
+/* resume: the credits you arrived for are marked */
+.credit.is-focus { background: var(--peri-soft); box-shadow: inset 3px 0 0 var(--red); border-radius: var(--r); padding-left: 14px !important; padding-right: 10px; transition: background-color .6s var(--ease); }
