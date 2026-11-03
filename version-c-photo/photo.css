@@ -93,3 +93,22 @@
   .mbp-drawer .mbp-text { font-size: 2.45cqw !important; }
   .mbp-lid .mbp-text { font-size: 4.35cqw !important; }
 }
+
+/* ---------- Cherry Lane, real flip: the cover swings up on its hinge and its underside is the inside of the lid ---------- */
+@media (min-width: 900px) {
+  .mbp-lid .mbp-base, .track-card.is-open .mbp-lid .mbp-base { clip-path: inset(var(--hinge) 0 0 0); transition: none; }
+  .mbp-lid .mbp { perspective: 1700px; perspective-origin: 50% 30%; }
+  .mbp-cover { display: block; background: none; box-shadow: none; height: var(--hinge); transform-style: preserve-3d;
+    transition: transform 1.15s cubic-bezier(.32, .72, .18, 1); }
+  .track-card.is-open .mbp-lid .mbp-cover { transform: rotateX(180deg); }
+  .mbp-cover-front, .mbp-cover-back { position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 3px; }
+  .mbp-cover-front { display: grid; place-items: center; background: radial-gradient(120% 90% at 40% 30%, #D8392F, #B32823 70%, #9E2420);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12), 0 12px 20px -12px rgba(60, 10, 8, .55); }
+  .mbp-cover-back { transform: rotateX(180deg); background-repeat: no-repeat; background-position: 50% 0;
+    background-size: 100% calc(100% * 100 / var(--hingeN)); }
+  .mbp-lid-text { position: absolute; left: 10%; right: 10%; top: 12.6%; bottom: 9.7%; color: var(--ink); font: 400 4.35cqw/1.55 var(--sans); }
+  .mbp-lid-text p { margin: 0; }
+  .mbp-lid-text .bp-role { margin: 0 0 .55em; font: 400 1.32em/1.15 var(--display); font-variation-settings: 'opsz' 36; color: var(--red-text); }
+  .mbp-lid + .mbp-text, .mbp-lid .mbp-text { display: none; }
+}
+@media (min-width: 900px) { .mbp-cover { -webkit-backface-visibility: visible; backface-visibility: visible; } }

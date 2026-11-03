@@ -249,11 +249,10 @@
     var open = function () { this.classList.add('is-open'); };
     var close = function () { this.classList.remove('is-open'); };
     cards.forEach(function (card) { card.classList.remove('is-open'); card.addEventListener('mouseenter', open); card.addEventListener('mouseleave', close); });
-    /* square cards swing in from an angle and settle flat as the row slides past */
-    list.querySelectorAll('.sq').forEach(function (sq, i) {
-      gsap.fromTo(sq, { rotateY: -38, rotateZ: i % 2 ? -3 : 3, y: 0, transformPerspective: 1200 },
-        { rotateY: 0, rotateZ: 0, ease: 'none', immediateRender: false,
-          scrollTrigger: { trigger: sq, containerAnimation: move, start: 'left 100%', end: 'left 45%', scrub: 0.6 } });
+    /* the photo inside each card drifts slowly against the row's movement, for depth without any tilt */
+    list.querySelectorAll('.sq img').forEach(function (img) {
+      gsap.fromTo(img, { xPercent: 4 }, { xPercent: -4, ease: 'none', immediateRender: false,
+        scrollTrigger: { trigger: img.parentNode, containerAnimation: move, start: 'left 100%', end: 'right 0%', scrub: true } });
     });
     return function () { cards.forEach(function (card) { card.removeEventListener('mouseenter', open); card.removeEventListener('mouseleave', close); }); };
   });
@@ -263,9 +262,9 @@
     gsap.utils.toArray('.track-card').forEach(function (card) {
       var bk = card.querySelector('.book');
       if (bk) ScrollTrigger.create({ trigger: bk, start: 'top 55%', end: 'bottom 35%', toggleClass: { targets: card, className: 'is-open' } });
-      /* square cards tip up into place as they arrive; a tap flips them */
+      /* square cards rise softly into place as they arrive */
       var sq = card.querySelector('.sq');
-      if (sq) gsap.from(sq, { rotateX: 32, y: 70, autoAlpha: 0, transformPerspective: 1100, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: sq, start: 'top 90%', once: true } });
+      if (sq) gsap.from(card, { y: 48, autoAlpha: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: sq, start: 'top 92%', once: true } });
     });
   });
 
