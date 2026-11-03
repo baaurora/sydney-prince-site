@@ -112,3 +112,9 @@
   .mbp-lid + .mbp-text, .mbp-lid .mbp-text { display: none; }
 }
 @media (min-width: 900px) { .mbp-cover { -webkit-backface-visibility: visible; backface-visibility: visible; } }
+/* no fades: the text is simply there once the paper has swung into place */
+@media (min-width: 900px) {
+  .mbp-text, .track-card.is-open .mbp-text { opacity: 1; translate: none; }
+  .mbp-text { visibility: hidden; transition: visibility 0s linear 0s; }
+  .track-card.is-open .mbp-text { visibility: visible; transition: visibility 0s linear .8s; }
+}
