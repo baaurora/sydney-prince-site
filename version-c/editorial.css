@@ -714,10 +714,3 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
   .sq-text { width: var(--tw); }
 }
 @media (min-width: 900px) { .tc-square h3 { width: auto !important; text-align: left !important; justify-self: start; white-space: nowrap; } }
-/* no fades or wipes: the role is simply there on hover */
-@media (min-width: 900px) {
-  .sq-text, .track-card.is-open .sq-text { clip-path: none; transition: none; }
-  .sq-text { visibility: hidden; }
-  .track-card.is-open .sq-text { visibility: visible; }
-  .sq-text-in, .track-card.is-open .sq-text-in { opacity: 1; translate: none; transition: none; }
-}

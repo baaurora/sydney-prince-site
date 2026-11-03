@@ -264,7 +264,7 @@
       if (bk) ScrollTrigger.create({ trigger: bk, start: 'top 55%', end: 'bottom 35%', toggleClass: { targets: card, className: 'is-open' } });
       /* square cards rise softly into place as they arrive */
       var sq = card.querySelector('.sq');
-      if (sq) gsap.from(card, { y: 48, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: sq, start: 'top 92%', once: true } });
+      if (sq) gsap.from(card, { y: 48, autoAlpha: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: sq, start: 'top 92%', once: true } });
     });
   });
 
