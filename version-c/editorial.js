@@ -204,14 +204,18 @@
   if (loaderActive) {
     var video = loader.querySelector('.ld-video');
     root.classList.add('ld-lit');
-    gsap.set(hero, { backgroundColor: 'rgba(166, 198, 229, 0)' });
+    /* the loader lands on this version's own hero colour and ink (read from the stylesheet) */
+    var heroBg = getComputedStyle(hero).backgroundColor;
+    var heroClear = heroBg.replace(/rgba?\(([^)]+)\)/, function (m, a) { return 'rgba(' + a.split(',').slice(0, 3).join(',') + ', 0)'; });
+    var inkColor = getComputedStyle(root).getPropertyValue('--ink').trim() || '#1C1F3F';
+    gsap.set(hero, { backgroundColor: heroClear });
     if (nameEl) gsap.set(nameEl, { autoAlpha: 0 });
     var finish = function () {
       if (finish.done) return; finish.done = true;
       gsap.timeline({ onComplete: function () { loader.remove(); root.classList.remove('ld-lit'); gsap.set(nameEl, { clearProps: 'color' }); gsap.set(hero, { clearProps: 'backgroundColor' }); root.classList.add('is-loaded'); } })
         .to(loader, { autoAlpha: 0, duration: 1.3, ease: 'power2.inOut' }, 0)
-        .to(hero, { backgroundColor: 'rgba(166, 198, 229, 1)', duration: 1.3, ease: 'power2.inOut' }, 0)
-        .to(nameEl, { autoAlpha: 1, color: "#1C1F3F", duration: 1.3, ease: "power2.inOut" }, 0)
+        .to(hero, { backgroundColor: heroBg, duration: 1.3, ease: 'power2.inOut' }, 0)
+        .to(nameEl, { autoAlpha: 1, color: inkColor, duration: 1.3, ease: "power2.inOut" }, 0)
         .call(function () { heroReady(true); }, null, 0.6);
     };
     var start = function () {

@@ -1,0 +1,50 @@
+/* Version D: the photo-matchbook site, dark. Charcoal (never pure black), ivory type, red only as an accent.
+   Loaded after Version C's stylesheet and the photo matchbook styles, so it only re-colours. */
+:root {
+  --paper: #1D1D1F;      /* charcoal */
+  --surface: #262628;
+  --ink: #EFEAE0;        /* ivory */
+  --muted: #A39D92;
+  --peri: #1D1D1F;       /* the old blue fields become charcoal */
+  --peri-soft: #2A2A2D;
+  --peri-deep: #CBC4B6;  /* the old blue accents become soft ivory */
+  --red: #E2432A;
+  --red-text: #EE5A3F;   /* red at text sizes, bright enough on charcoal */
+  --hair: rgba(239, 234, 224, .14);
+  --grain: radial-gradient(rgba(255, 255, 255, .06) .8px, transparent 1.2px) 0 0 / 3px 3px;
+}
+html { background: var(--paper); color-scheme: dark; }
+::selection { background: var(--red); color: #fff; }
+
+/* buttons: ivory on charcoal, red on hover */
+.btn, .contact-form .pill { background: var(--ink); color: #1D1D1F; border-color: var(--ink); }
+.btn:hover { background: var(--red); color: #fff; border-color: var(--red); }
+.btn[aria-current="page"] { background: var(--red); color: #fff; }
+:root:has(.hero) .site-header:not(.is-scrolled) .btn { background: var(--ink); color: #1D1D1F; border-color: var(--ink); }
+.site-header.is-scrolled { background: rgba(29, 29, 31, .92); box-shadow: 0 1px 0 var(--hair); }
+
+/* hero roles: ivory, red, soft ivory (no blue) */
+.hero .hr-1, .fs-1 { color: var(--ink); }
+.hero .hr-2, .fs-2 { color: var(--red-text); }
+.hero .hr-3, .fs-3 { color: var(--muted); }
+.hero-window { box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .8) !important; }
+
+/* About: the inked phrases fill from a dim grey to ivory */
+.motion-ready .ink, .js:not(.no-motion) .ink { background-image: linear-gradient(90deg, var(--ink) 0 50%, #5B5751 50% 100%); }
+
+/* text printed on the cream matchbook paper stays dark so it reads like real print */
+.mbp-text, .mbp-lid-text { color: #1F1D1B; }
+.mbp-text .bp-role, .mbp-lid-text .bp-role { color: #B8361F; }
+@media (max-width: 899px) {
+  /* on phones the text sits on the charcoal page instead */
+  .tc-photo .mbp-text { color: var(--ink); }
+  .tc-photo .mbp-text .bp-role { color: var(--red-text); }
+}
+
+/* forms */
+.field input, .field textarea { background: var(--surface); color: var(--ink); border-color: var(--hair); }
+.field input::placeholder, .field textarea::placeholder { color: #77726A; }
+
+/* photos and objects get a deeper shadow on charcoal */
+.pic .ph, .book .pic .ph, .about-intro .pic .ph { box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .7) !important; }
+.credit.is-focus { background: var(--peri-soft); }
