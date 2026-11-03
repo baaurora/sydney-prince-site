@@ -643,3 +643,25 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
 @media (min-width: 900px) {
   .hero-roles { left: 51.5vw !important; font-size: clamp(44px, 5vw, 92px) !important; white-space: nowrap; }
 }
+
+/* ---------- About v2: airier reading, cue numbers in their own left margin, bigger type ---------- */
+.book { padding-top: clamp(72px, 12vh, 140px); }
+.book-col { font-size: clamp(18px, 1.45vw, 21px); line-height: 1.78; }
+.cue-block p { max-width: 60ch; }
+.cue-block p + p { margin-top: 1.3em; }
+.cue-block + .cue-block { margin-top: clamp(64px, 10vh, 112px) !important; }
+@media (min-width: 900px) {
+  .book-col { max-width: 860px; }
+  .cue { left: -150px !important; width: 96px !important; font-size: 13px !important; letter-spacing: .16em; }
+  .side { width: min(40%, 360px) !important; }
+}
+/* the paintbrush and the Michigan pennant (ChatGPT photos) */
+.obj-pair { justify-content: flex-end; margin-top: 8px !important; }
+.obj-pair .obj { width: clamp(120px, 14vw, 190px) !important; rotate: 24deg; filter: drop-shadow(0 18px 18px rgba(28, 31, 63, .18)); }
+.obj-float { width: min(58%, 420px) !important; rotate: -7deg; margin: 4px -40px 24px 32px !important; filter: drop-shadow(0 18px 20px rgba(28, 31, 63, .2)); }
+@media (max-width: 899px) { .obj-float { float: none; margin: 8px auto 24px !important; } }
+
+/* letter-by-letter reveals clip descenders (the y in Sydney); give each mask room below the baseline */
+.sc-mask, .sw-mask, .sl-mask { padding: .02em .06em .2em !important; margin: -.02em -.06em -.2em !important; }
+/* phones: the side photos land straight, without a sideways slide */
+@media (max-width: 899px) { .side { translate: none !important; } }

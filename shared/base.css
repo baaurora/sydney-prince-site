@@ -30,3 +30,9 @@ button, input, textarea { font: inherit; color: inherit; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* balanced, widow-free line breaks where the browser supports it */
+p, li, figcaption { text-wrap: pretty; }
+h1, h2, h3 { text-wrap: balance; }
+/* nothing should ever push the page sideways */
+html, body { overflow-x: clip; }

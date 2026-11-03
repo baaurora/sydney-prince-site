@@ -124,6 +124,14 @@
   }
   creditFocus(lenis || null);
 
+  /* the home page always starts at the top on load or reload, so the match lights her name in view
+     (Lenis switches scroll restoration back on, so this runs after it starts) */
+  if (document.getElementById('loader') && !window.location.hash) {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    if (lenis) lenis.scrollTo(0, { immediate: true });
+  }
+
   function split(el, type) {
     if (!window.SplitText || !el) return null;
     // keep words intact when splitting into characters so titles never break mid-word
@@ -157,12 +165,14 @@
     heroReady = function (afterLoader) {
       var tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
       /* the photo fades up out of the blue first, then drops softly into place */
-      tl.to(win, { autoAlpha: 1, filter: 'blur(0px)', duration: 1.3, ease: 'power1.out' }, 0)
-        .to(win, { y: 0, duration: 1.5, ease: 'power3.inOut' }, 0.35)
+      tl.to(win, { autoAlpha: 1, filter: 'blur(0px)', duration: 1.0, ease: 'power1.out' }, 0)
+        .to(win, { y: 0, duration: 1.2, ease: 'power3.inOut' }, 0.25)
         .to(header, { autoAlpha: 1, duration: 1 }, 1.0);
       if (!afterLoader) tl.from(chars ? chars.chars : inner, { yPercent: 110, duration: 1.3, stagger: 0.035 }, 0.35);
+      /* once everything has landed, undo the letter split so no mask can clip a descender */
+      tl.eventCallback('onComplete', function () { if (chars) chars.revert(); });
       /* on phones the roles sit under the name from the start; on desktop they wait for the scroll */
-      if (glide) glide(tl, 1.7);
+      if (glide) glide(tl, 1.2);
       if (!window.matchMedia('(min-width: 900px)').matches) tl.fromTo(roles, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.2 }, afterLoader ? 0.2 : 0.9);
     };
 
@@ -175,9 +185,9 @@
       gsap.set(roles, { autoAlpha: 1 });
       gsap.set(lines, { autoAlpha: 0, y: 50 });
       glide = function (tl, at) {
-        tl.to(win, { x: shift, duration: 1.6, ease: 'power3.inOut' }, at)
-          .to(inner, { x: shift, duration: 1.6, ease: 'power3.inOut' }, at)
-          .to(lines, { autoAlpha: 1, y: 0, duration: 1.1, stagger: 0.18, ease: 'expo.out' }, at + 0.9);
+        tl.to(win, { x: shift, duration: 1.3, ease: 'power3.inOut' }, at)
+          .to(inner, { x: shift, duration: 1.3, ease: 'power3.inOut' }, at)
+          .to(lines, { autoAlpha: 1, y: 0, duration: 1.0, stagger: 0.14, ease: 'expo.out' }, at + 0.7);
       };
       /* keep the end position right if the window is resized afterwards */
       var onResize = function () { if (gsap.getProperty(win, 'x')) { gsap.set(win, { x: shift() }); gsap.set(inner, { x: shift() }); } };
@@ -199,18 +209,19 @@
     var finish = function () {
       if (finish.done) return; finish.done = true;
       gsap.timeline({ onComplete: function () { loader.remove(); root.classList.remove('ld-lit'); gsap.set(nameEl, { clearProps: 'color' }); gsap.set(hero, { clearProps: 'backgroundColor' }); root.classList.add('is-loaded'); } })
-        .to(loader, { autoAlpha: 0, duration: 1.8, ease: 'power2.inOut' }, 0)
-        .to(hero, { backgroundColor: 'rgba(166, 198, 229, 1)', duration: 1.8, ease: 'power2.inOut' }, 0)
-        .to(nameEl, { autoAlpha: 1, color: "#1C1F3F", duration: 1.8, ease: "power2.inOut" }, 0)
-        .call(function () { heroReady(true); }, null, 1.1);
+        .to(loader, { autoAlpha: 0, duration: 1.3, ease: 'power2.inOut' }, 0)
+        .to(hero, { backgroundColor: 'rgba(166, 198, 229, 1)', duration: 1.3, ease: 'power2.inOut' }, 0)
+        .to(nameEl, { autoAlpha: 1, color: "#1C1F3F", duration: 1.3, ease: "power2.inOut" }, 0)
+        .call(function () { heroReady(true); }, null, 0.6);
     };
     var start = function () {
-      try { video.currentTime = 0; } catch (e) {}
+      /* skip the dark lead-in so the strike comes almost straight away */
+      try { video.currentTime = 0.55; } catch (e) {}
       var p = video.play();
       video.classList.add('is-on');
       if (p && p.catch) p.catch(function () { finish(); });
-      if (nameEl) gsap.to(nameEl, { autoAlpha: 1, duration: 1.4, ease: 'power2.out', delay: 1.0 });
-      gsap.delayedCall(3.8, finish);
+      if (nameEl) gsap.to(nameEl, { autoAlpha: 1, duration: 1.1, ease: 'power2.out', delay: 0.5 });
+      gsap.delayedCall(2.4, finish);
     };
     if (video.readyState >= 2) start(); else { video.addEventListener('loadeddata', start, { once: true }); gsap.delayedCall(2.5, function () { if (!video.classList.contains('is-on')) finish(); }); }
     loader.addEventListener('click', finish);
@@ -233,10 +244,12 @@
       x: function () { return -distance(); }, ease: 'none',
       scrollTrigger: { trigger: track, start: function () { return 'top+=' + headOffset() + ' top'; }, end: function () { return '+=' + distance(); }, scrub: 0.8, pin: true, anticipatePin: 1, invalidateOnRefresh: true }
     });
-    /* each matchbook opens as it slides through the middle of the screen */
-    list.querySelectorAll('.track-card').forEach(function (card) {
-      ScrollTrigger.create({ trigger: card, containerAnimation: move, start: 'center 72%', end: 'center 28%', toggleClass: 'is-open' });
-    });
+    /* each matchbook stays closed until you hover it */
+    var cards = list.querySelectorAll('.track-card');
+    var open = function () { this.classList.add('is-open'); };
+    var close = function () { this.classList.remove('is-open'); };
+    cards.forEach(function (card) { card.classList.remove('is-open'); card.addEventListener('mouseenter', open); card.addEventListener('mouseleave', close); });
+    return function () { cards.forEach(function (card) { card.removeEventListener('mouseenter', open); card.removeEventListener('mouseleave', close); }); };
   });
 
   /* phones: each matchbook opens when it reaches the middle of the screen */
@@ -252,7 +265,7 @@
     var title = intro.querySelector('.page-title');
     var tsplit = split(title, 'chars');
     var prints = gsap.utils.toArray('.about-intro .pic');
-    var tl = gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.15 });
+    var tl = gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.15, onComplete: function () { if (tsplit) tsplit.revert(); } });
     if (tsplit) tl.from(tsplit.chars, { yPercent: 110, duration: 1.2, stagger: 0.025 }, 0);
     tl.from(intro.querySelector('.tagline'), { autoAlpha: 0, y: 16, duration: 1 }, 0.4);
     prints.forEach(function (pic, i) {
@@ -267,7 +280,7 @@
     });
   }
   gsap.utils.toArray('.book .pic').forEach(function (pic) {
-    var dir = pic.classList.contains('l') ? -1 : 1;
+    var dir = (pic.classList.contains('l') ? -1 : 1) * (window.innerWidth < 900 ? 0 : 1);
     gsap.from(pic, { y: 120, x: dir * 50, rotation: dir * 9, autoAlpha: 0, duration: 1.5, ease: 'expo.out', scrollTrigger: { trigger: pic, start: 'top 88%', once: true } });
     gsap.from(pic.querySelector('img'), { scale: 1.2, duration: 2, ease: 'expo.out', scrollTrigger: { trigger: pic, start: 'top 88%', once: true } });
   });

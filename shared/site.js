@@ -101,6 +101,21 @@
     });
   }
 
+  /* No widows: tie the last two words of running text together so one word never sits alone on a line */
+  function noWidows(selector) {
+    Array.prototype.forEach.call(document.querySelectorAll(selector), function (el) {
+      if ((el.textContent.trim().match(/\s+/g) || []).length < 3) return;
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodes = [], n;
+      while ((n = walker.nextNode())) nodes.push(n);
+      for (var i = nodes.length - 1; i >= 0; i--) {
+        var t = nodes[i].nodeValue.replace(/\s+$/, '');
+        var k = t.lastIndexOf(' ');
+        if (k > 0) { nodes[i].nodeValue = t.slice(0, k) + '\u00A0' + t.slice(k + 1) + nodes[i].nodeValue.slice(t.length); return; }
+        if (/\S/.test(t)) continue;
+      }
+    });
+  }
+
   window.SP = {
     store: store,
     reducedMotion: function () { return mqReduce.matches; },
@@ -109,9 +124,18 @@
     reveal: reveal,
     touchActivate: touchActivate,
     markNav: markNav,
-    mailtoForm: mailtoForm
+    mailtoForm: mailtoForm,
+    noWidows: noWidows
   };
 
+  /* pages with an intro always open at the top, even on reload, so the intro plays where it can be seen */
+  if (document.getElementById('loader') && !location.hash) {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    window.addEventListener('beforeunload', function () { window.scrollTo(0, 0); });
+  }
+
   markNav();
+  noWidows('main p, main li, main figcaption, main h2, main h3, footer p');
   mailtoForm(document.querySelector('form[data-mailto]'));
 })();
