@@ -563,3 +563,7 @@ ul.track-list { gap: clamp(40px, 6vw, 96px); align-items: end; }
 /* centre the photo without translate (GSAP folds translate into its own transform and doubles it) */
 .hero-window { left: 0 !important; right: 0 !important; margin: 0 auto !important; translate: none !important; top: calc(41% - var(--ww) * 2 / 3) !important; }
 @media (max-width: 899px) { .hero-window { top: calc(40% - var(--ww) * 2 / 3) !important; } }
+@media (min-width: 900px) {
+  /* the welcome line sits toward the right of the hero */
+  .hero-welcome { max-width: 760px; margin: 0 var(--g) 0 auto !important; padding: 0 !important; text-align: right !important; }
+}
