@@ -395,10 +395,32 @@
     });
   }
 
+  /* ---------- Matchbook jar: pull one out to see what she did there ---------- */
+  function matchJar() {
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.jbk'));
+    if (!btns.length) return;
+    var nameEl = document.querySelector('.jar-name');
+    var showsEl = document.querySelector('.jar-shows');
+    function pick(b) {
+      btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      nameEl.textContent = b ? b.dataset.name : '';
+      showsEl.textContent = b ? b.dataset.shows : '';
+    }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function (e) {
+        e.stopPropagation();
+        pick(b.getAttribute('aria-pressed') === 'true' ? null : b);
+      });
+    });
+    document.addEventListener('click', function (e) { if (!e.target.closest('.jar-wrap')) pick(null); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') pick(null); });
+  }
+
   var scrubbing = playLoader();
   if (!scrubbing) SP.runLoader({ key: 'sp-loader-a', durationMs: 4650, fadeMs: 550 });
-  SP.reveal('.reveal, .fan');
+  SP.reveal('.reveal');
   SP.touchActivate('.photo-card, .mb-card');
   footerMatch();
   photoTilt();
+  matchJar();
 })();
